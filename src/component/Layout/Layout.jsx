@@ -19,9 +19,8 @@ export default function Layout() {
   return (
     <>
       <NavBar />
-      <div className="container py-14">
+      <div className="container py-30">
         <Outlet />
-
       </div>
       <Footer />
     </>

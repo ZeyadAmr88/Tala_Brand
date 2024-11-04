@@ -43,19 +43,22 @@ function App() {
 
 
   return (
+    <main className='container max-w-11/12 mx-auto'>
+      <QueryClientProvider client={query}>
+        <CartContextProvider>
+          <UserContextProvider>
 
-    <QueryClientProvider client={query}>
-      <CartContextProvider>
-        <UserContextProvider>
+            <RouterProvider router={routes}></RouterProvider>
+            <ReactQueryDevtools />
+            <Toaster />
 
-          <RouterProvider router={routes}></RouterProvider>
-          <ReactQueryDevtools />
-          <Toaster />
+          </UserContextProvider>
+        </CartContextProvider>
+      </QueryClientProvider>
 
-        </UserContextProvider>
-      </CartContextProvider>
-    </QueryClientProvider>
-   
+    </main>
+
+
   )
 
 }

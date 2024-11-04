@@ -42,6 +42,7 @@ export default function Home() {
           <div className="flex flex-wrap justify-center py-16 mx-20">
             {data?.map((products, index) => < RecentProducts products={products} key={index} />)}
           </div>
+          
         </Fragment> : <div className="flex justify-center text-center">
           <Loader /></div>}
 

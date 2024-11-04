@@ -69,7 +69,7 @@ const NavBar = () => {
                             <NavLink to="/login" className="text-white text-lg " >Login</NavLink>
                         </>
                     }
-
+ 
                 </div>
             </nav >
         </>

@@ -21,14 +21,14 @@ export default function MainSlider() {
         <div className="w-3/4">
                 <Slider {...settings}>
                     
-                        <img src={slider1} className="w-full h-[400px]" alt="carousel" />
-                    <img src={slider2} className="w-full h-[400px]" alt="carousel" />
+                        <img src={slider1} className="w-full h-[400px] mt-5" alt="carousel" />
+                    <img src={slider2} className="w-full h-[400px] mt-5" alt="carousel" />
                     
                 </Slider>
         </div>
         <div className="w-1/4 ">
-        <img src={slider3} alt="" className='w-full h-[200px]'/>
-                <img src={slider4} alt="" className='w-full h-[200px]'/>
+        <img src={slider3} alt="" className='w-full h-[200px] mt-5'/>
+                <img src={slider4} alt="" className='w-full h-[200px] '/>
         </div>
     </div>
   )
