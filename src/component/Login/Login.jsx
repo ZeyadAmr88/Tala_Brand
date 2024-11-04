@@ -52,8 +52,8 @@ export default function Login() {
   return (
 
 
-    <div className="pt-8 w-auto">
-      <h2 className="text-3xl font-semibold text-center py-4">Login Now...</h2>
+    <div className="pt-8 w-auto ">
+      <h2 className="text-3xl font-semibold text-center py-4 mt-5">Login Now...</h2>
 
       <form onSubmit={formik.handleSubmit} className="max-w-xl mx-auto">
         {apiError && <div className="p-2 mb-4 mx-auto text-sm text-center w-fit   text-red-800 rounded-lg bg-red-50 dark:text-red-400" role="alert">

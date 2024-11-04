@@ -2,7 +2,7 @@
 export default function Footer() {
   return (
 
-    <footer className="bg-white dark:bg-teal-700  ">
+    <footer className="bg-white dark:bg-teal-700 mt-20 ">
       <div className=" w-full max-w-screen-l   ">
         <div className="grid grid-cols-2  px-4 py-6  md:grid-cols-4">
           <div>

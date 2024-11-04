@@ -43,8 +43,8 @@ export default function CheckOut() {
     return (
 
 
-        <div className="pt-8 w-auto">
-            <h2 className="text-3xl font-semibold text-center py-4">CheckOut Now...</h2>
+        <div className="pt-8 w-auto ">
+            <h2 className="text-3xl font-semibold text-center py-4 mt-6">CheckOut Now...</h2>
 
             <form onSubmit={formik.handleSubmit} className="max-w-xl mx-auto">
 

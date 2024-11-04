@@ -43,7 +43,7 @@ function App() {
 
 
   return (
-    <main className='container max-w-11/12 mx-auto'>
+    
       <QueryClientProvider client={query}>
         <CartContextProvider>
           <UserContextProvider>
@@ -56,7 +56,7 @@ function App() {
         </CartContextProvider>
       </QueryClientProvider>
 
-    </main>
+    
 
 
   )
