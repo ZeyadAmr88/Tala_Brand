@@ -84,8 +84,8 @@ export default function ProductDetails() {
                 </div>
             </div>
 
-            <h2 className="text-3xl mx-2 mt-10">Related Products</h2>
-            <div className="grid grid-cols-7 gap-4 mt-6">
+            <h2 className="text-3xl mx-5 mt-10">Related Products</h2>
+            <div className="grid grid-cols-7 gap-4 mt-6 mx-9">
                 {relatedProducts.map((product) => (
                     <Link to={`/productdetails/${product._id}`} key={product._id}>
                         <div className="p-4 product">

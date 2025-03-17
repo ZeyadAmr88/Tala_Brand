@@ -1,53 +1,30 @@
-import { Fragment, } from "react"
-import RecentProducts from "../RecentProducts/RecentProducts"
-import Loader from "../Loader/Loader"
-import CategoriesSlider from "../Sliders/CategoriesSlider"
-import MainSlider from "../Sliders/MainSlider"
-import useProducts from "../../Hooks/useProducts"
+import RecentProducts from "../RecentProducts/RecentProducts";
+import Loader from "../Loader/Loader";
+import useProducts from "../../Hooks/useProducts";
 
 
 export default function Home() {
-  // const [products, setProducts] = useState([])
-
-  // async function getRecentProducts() {
-  //   try {
-  //     let { data } = await axios.get(`https://ecommerce.routemisr.com/api/v1/products`)
-
-  //     setProducts(data.data)
-
-  //   } catch (error) {
-  //     console.log(error)
-
-  //   }
-
-  // }
-  // useEffect(() => {
-  //   getRecentProducts()
-  // }, [])
-
-
-  let { data, isLoading } = useProducts()
-
+  let { data, isLoading } = useProducts();
 
   return (
     <>
+      {!isLoading ? (
+        <div className="px-4 sm:px-8 md:px-12">
+          {/* <MainSlider />
+          <CategoriesSlider /> */}
 
-
-      {!isLoading ?
-
-        <Fragment className="px-15">
-          <MainSlider />
-          <CategoriesSlider />
-
-          <div className="flex flex-wrap justify-center py-16 mx-20">
-            {data?.map((products, index) => < RecentProducts products={products} key={index} />)}
+          {/* Responsive Grid for Products */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-16">
+            {data?.map((product, index) => (
+              <RecentProducts products={product} key={index} />
+            ))}
           </div>
-          
-        </Fragment> : <div className="flex justify-center text-center">
-          <Loader /></div>}
-
-
+        </div>
+      ) : (
+        <div className="flex justify-center items-center h-screen">
+          <Loader />
+        </div>
+      )}
     </>
-
-  )
+  );
 }

@@ -19,9 +19,16 @@ const NavBar = () => {
 
     return (
         <>
-            <nav className="bg-teal-700 p-4 left-0 right-0 md:fixed z-50 flex justify-between items-center">
+            <nav className="bg-[#ff42a0] p-4 left-0 right-0 top-0 md:fixed z-50 flex justify-between items-center h-20">
                 <div className="text-white   text-2xl font-bold">
-                    <NavLink to="/" end>Fresh Cart</NavLink>
+                    <NavLink to="/" end>
+                        <img
+                            src="https://res.cloudinary.com/dsf7jh6jb/image/upload/v1742084773/logo-grid-2x_bty7py.png"
+                            className="h-[250px] w-auto  object-contain"
+                            alt="Logo"
+                        />
+                    </NavLink>
+
                 </div>
                 {userData &&
                     <ul className="flex space-x-6">
