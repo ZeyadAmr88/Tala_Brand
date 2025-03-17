@@ -1,13 +1,14 @@
 
 import { RotatingLines } from 'react-loader-spinner'
 
-export default function Loader() {
+// eslint-disable-next-line react/prop-types
+export default function Loader({color ="pink"}) {
     return (
         <RotatingLines
             visible={true}
             height="96"
             width="96"
-            color="pink"
+            color= {color}
             strokeWidth="5"
             animationDuration="0.75"
             ariaLabel="rotating-lines-loading"

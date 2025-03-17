@@ -47,28 +47,7 @@ export default function Home() {
         </div>
       </motion.div>
 
-      {/* Navigation Bar */}
-      <header className="sticky top-0 bg-pink-500 text-white z-20 shadow-md">
-        <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-          <h1 className="text-2xl font-serif">Tala Brand</h1>
-          <nav className="hidden md:flex space-x-6">
-            <a href="#" className="hover:underline">Home</a>
-            <a href="#" className="hover:underline">Cart</a>
-            <a href="#" className="hover:underline">Brands</a>
-            <a href="#" className="hover:underline">Products</a>
-            <a href="#" className="hover:underline">Categories</a>
-          </nav>
-          <div className="flex items-center space-x-4">
-            <a href="#" className="relative">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-              <span className="absolute -top-2 -right-2 bg-white text-pink-500 rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">2</span>
-            </a>
-            <a href="#" className="hover:underline">Logout</a>
-          </div>
-        </div>
-      </header>
+    
 
       {/* Products Section */}
       <section className="pt-[100vh] px-4 sm:px-8 md:px-12">
@@ -80,7 +59,7 @@ export default function Home() {
           </div>
         ) : (
           <div className="flex justify-center items-center h-screen">
-            <Loader />
+            <Loader color="pink" />
           </div>
         )}
       </section>
