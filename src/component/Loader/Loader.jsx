@@ -7,7 +7,7 @@ export default function Loader() {
             visible={true}
             height="96"
             width="96"
-            color="grey"
+            color="pink"
             strokeWidth="5"
             animationDuration="0.75"
             ariaLabel="rotating-lines-loading"
