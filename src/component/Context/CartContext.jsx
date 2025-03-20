@@ -8,115 +8,108 @@ export let CartContext = createContext();
 export default function CartContextProvider({ children }) {
     let headers = {
         token: localStorage.getItem('userToken')
+    };
 
-    }
+    const [cartItems, setCartItems] = useState(null);
 
-    const [cartItems, setCartItems] = useState(null)
+    async function createCart(token) {
+        if (!token) {
+            console.error("Cannot create cart: Token is missing")
+            return false
+        }
 
-    async function addToCart(productId) {
         try {
-            let { data } = await axios.post(`https://ecommerce.routemisr.com/api/v1/cart`, { productId }, {
-                headers
-            })
-            toast.success(data.message,
+            const response = await axios.post(
+                `https://tala-store.vercel.app/cart/create`,
+                {}, 
                 {
-                    duration: 1000
-                })
-            setCartItems(data)
-
-
-
+                    headers: {
+                        token: token, 
+                    },
+                }
+            );
+            console.log("Cart created successfully", response.data);
+            return true;
         } catch (error) {
-            console.log(error)
-        }
-    }
-    
-    // async function addToWishList(productId) {
-    //     try {
-    //         let { data } = await axios.post(`https://ecommerce.routemisr.com/api/v1/wishlist`, { productId }, {
-    //             headers
-    //         })
-    //         toast.success(data.message,
-    //             {
-    //                 duration: 1000
-    //             })
-    //         setCartItems(data)
-
-
-
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
-    async function checkOutSession(shippingAddress) {
-        try {
-            let { data } = await axios.post(`https://ecommerce.routemisr.com/api/v1/orders/checkout-session/${cartItems.data._id}?url=http://localhost:5173`, { shippingAddress }, {
-
-                headers
-            })
-
-            return data
-
-
-
-        } catch (error) {
-            console.log(error)
+            console.error("Error creating cart:", error.response?.data?.message || error.message);
+            return false;
         }
     }
 
-
-    async function updateProductCount(productId, count) {
+    // eslint-disable-next-line no-unused-vars
+    async function addToCart(productId, quantity) {
         try {
-            let { data } = await axios.put(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, { count }, {
-                headers
-            })
+            let { data } = await axios.post(
+                `https://tala-store.vercel.app/cart`,
+                { "productId": productId, "quantity": 1 },
+                { headers }
+            );
+
+            toast.success(data.message, { duration: 1000 });
+            setCartItems(data.cart || data);
+        } catch (error) {
+            console.error("Error adding to cart:", error);
+        }
+    }
+
+    async function updateProductCount(productId, quantity) {
+        try {
+            let { data } = await axios.patch(
+                `https://tala-store.vercel.app/cart`,
+                { productId, quantity },
+                { headers }
+            );
+
+            setCartItems(data.cart || data);
             return data;
-
-
-
-
-
         } catch (error) {
-            console.log(error)
+            console.error("Error updating product count:", error);
         }
     }
-
     async function deleteProduct(productId) {
         try {
-            let { data } = await axios.delete(`https://ecommerce.routemisr.com/api/v1/cart/${productId}`, {
-                headers
-            })
-            setCartItems(data)
+            let { data } = await axios.patch(
+                `https://tala-store.vercel.app/cart/${productId}`,
+                {},
+                { headers }
+            );
+
             return data;
-
         } catch (error) {
-            console.log(error)
+            console.error("Error deleting product:", error);
         }
     }
 
-    async function getCartItems() {
-        try {
-            let { data } = await axios.get(`https://ecommerce.routemisr.com/api/v1/cart`, {
-                headers
-            })
+    async function getCartItems(token) {
+        console.log("token",headers.token)
+        let { data } = await axios.get(
+            `https://tala-store.vercel.app/cart`,
+            
+             // Empty body, unless you need to send data
+            {
+                headers: {
+                    token: headers.token, // Corrected token usage
+                },
+            }
+        );
+        // setCartItems(data?.cart?.products);
+        return data;
 
-            setCartItems(data)
-
-            return data
-
-        } catch (error) {
-            console.log(error)
-        }
     }
+
+
     useEffect(() => {
-        getCartItems()
-    }, [])
+        if (headers.token) {
+            
+            getCartItems(headers.token);
+        }
+    }, [headers.token]);
+
     return (
         <CartContext.Provider value={{
-            addToCart, getCartItems, cartItems, setCartItems, updateProductCount, deleteProduct, checkOutSession 
+            addToCart, getCartItems, cartItems, setCartItems, updateProductCount, deleteProduct, createCart
         }}>
             {children}
         </CartContext.Provider>
-    )
+    );
 }

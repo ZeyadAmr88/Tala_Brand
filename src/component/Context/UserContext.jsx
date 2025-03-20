@@ -1,24 +1,21 @@
-import { createContext, useState,useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 
-
-export let UserContext = createContext()
+export let UserContext = createContext();
 
 // eslint-disable-next-line react/prop-types
 export default function UserContextProvider({ children }) {
-    const [userData, setUserData] = useState("")
+    const [userData, setUserData] = useState(null);
 
     useEffect(() => {
+        const storedToken = localStorage.getItem("userToken");
+        if (storedToken) {
+            setUserData(storedToken); 
+        }
+    }, []);
 
-        if (localStorage.getItem('userToken')) {
-            setUserData('userToken')
-
-        } 
-
-    }, [])
     return (
-        <UserContext.Provider value={{userData,setUserData}}>
-
-            { children }
+        <UserContext.Provider value={{ userData, setUserData }}>
+            {children}
         </UserContext.Provider>
-    )
+    );
 }
