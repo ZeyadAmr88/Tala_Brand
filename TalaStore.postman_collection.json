@@ -1,0 +1,872 @@
+{
+	"info": {
+		"_postman_id": "70c8ca5a-0617-4b08-8a24-d96dd2e86ab0",
+		"name": "TalaStore",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26559151"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"yousef\",\r\n    \"email\":\"yousefsalah1242003@gmail.com\",\r\n    \"password\":\"123\",\r\n    \"confirmPassword\":\"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"yousef\",\r\n    \"email\":\"yousefsalah1242003@gmail.com\",\r\n    \"password\":\"123\",\r\n    \"confirmPassword\":\"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"yousef\",\r\n    \"email\":\"yousefsalah1242003@gmail.com\",\r\n    \"password\":\"123\",\r\n    \"confirmPassword\":\"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "category",
+			"item": [
+				{
+					"name": "create category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/category",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update category",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3ZDY0ZDUwN2FkMzgwZGQ1ZGI3ZGRjZSIsImlhdCI6MTc0MjEzNDcxMn0.ZJ0GUiwLt9odPL_WysckkWF62TpZyfJYqF3zr6g7PSQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "laps",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"type": "file",
+									"src": "postman-cloud:///1ef92911-38d1-4120-8cfb-69762f4a5586"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/category/67d6de35f3eee66136931d1a",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"67d6de35f3eee66136931d1a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dalete category",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3ZDY0ZDUwN2FkMzgwZGQ1ZGI3ZGRjZSIsImlhdCI6MTc0MjEzNDcxMn0.ZJ0GUiwLt9odPL_WysckkWF62TpZyfJYqF3zr6g7PSQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "laps",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"type": "file",
+									"src": "postman-cloud:///1ef92911-38d1-4120-8cfb-69762f4a5586"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/category/67d6de35f3eee66136931d1a",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"67d6de35f3eee66136931d1a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all categories",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "get one Category",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "filter(search)",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subcategory",
+			"item": [
+				{
+					"name": "create subcategory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3MGM1ZmZhMzU0MTFjYjZhZGNjZTI0OCIsImlhdCI6MTcyODg2NDI3Nn0.bVmCD6R5KndzllVPog0kYt9RIjaUYJ_395uDfylXNxk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "dell lap",
+									"type": "text"
+								},
+								{
+									"key": "subcategory",
+									"type": "file",
+									"src": "/C:/Users/youse/Downloads/eCommerce-logo.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/category/671106181cc53ce5370ad064/subcategory",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"category",
+								"671106181cc53ce5370ad064",
+								"subcategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Subcategories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/subcategory",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"subcategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Subcategories depend on category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/category/671106181cc53ce5370ad064/subcategory",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"category",
+								"671106181cc53ce5370ad064",
+								"subcategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update subcategory",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3MGM1ZmZhMzU0MTFjYjZhZGNjZTI0OCIsImlhdCI6MTcyODg2NDI3Nn0.bVmCD6R5KndzllVPog0kYt9RIjaUYJ_395uDfylXNxk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "t shirt sports",
+									"type": "text"
+								},
+								{
+									"key": "subcategory",
+									"type": "file",
+									"src": "/C:/Users/youse/Downloads/eCommerce-logo.jpg",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/category/670c5cee9d159c6aa2a58282/subcategory/670eeeeb0e5f6bd77a1967a2",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"category",
+								"670c5cee9d159c6aa2a58282",
+								"subcategory",
+								"670eeeeb0e5f6bd77a1967a2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete subcategory",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3MGM1ZmZhMzU0MTFjYjZhZGNjZTI0OCIsImlhdCI6MTcyODg2NDI3Nn0.bVmCD6R5KndzllVPog0kYt9RIjaUYJ_395uDfylXNxk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "t shirt sports",
+									"type": "text"
+								},
+								{
+									"key": "subcategory",
+									"type": "file",
+									"src": "/C:/Users/youse/Downloads/eCommerce-logo.jpg",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/category/670c54f7a0db58b447891f6e/subcategory/670efba135f8528d39812531",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"category",
+								"670c54f7a0db58b447891f6e",
+								"subcategory",
+								"670efba135f8528d39812531"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "create product",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3ZDY0ZDUwN2FkMzgwZGQ1ZGI3ZGRjZSIsImlhdCI6MTc0MjEzNDcxMn0.ZJ0GUiwLt9odPL_WysckkWF62TpZyfJYqF3zr6g7PSQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Wireless Headphones",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "High-quality wireless headphones with noise cancellation.",
+									"type": "text"
+								},
+								{
+									"key": "avaliableItems",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "soldItems",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "67d6e22c977d68d11f76b66b",
+									"type": "text"
+								},
+								{
+									"key": "defaultImage",
+									"type": "file",
+									"src": "postman-cloud:///1efe4988-498e-47f0-9f75-fef41d7da583"
+								},
+								{
+									"key": "subImages",
+									"type": "file",
+									"src": [
+										"postman-cloud:///1efee862-fc34-4750-b57c-1814eff7442e",
+										"postman-cloud:///1ef92911-38d1-4120-8cfb-69762f4a5586"
+									]
+								},
+								{
+									"key": "subcategory",
+									"value": "670f37599855aea5bcc0abc2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "brand",
+									"value": "671334f3614145b21803ebf2",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/product",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update product",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3ZDY0ZDUwN2FkMzgwZGQ1ZGI3ZGRjZSIsImlhdCI6MTc0MjEzNDcxMn0.ZJ0GUiwLt9odPL_WysckkWF62TpZyfJYqF3zr6g7PSQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Wireless Headphones",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "High-quality wireless headphones with noise cancellation.",
+									"type": "text"
+								},
+								{
+									"key": "avaliableItems",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "soldItems",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "67d6e22c977d68d11f76b66b",
+									"type": "text"
+								},
+								{
+									"key": "defaultImage",
+									"type": "file",
+									"src": "postman-cloud:///1efe4988-498e-47f0-9f75-fef41d7da583"
+								},
+								{
+									"key": "subImages",
+									"type": "file",
+									"src": [
+										"postman-cloud:///1efee862-fc34-4750-b57c-1814eff7442e",
+										"postman-cloud:///1ef92911-38d1-4120-8cfb-69762f4a5586"
+									]
+								},
+								{
+									"key": "subcategory",
+									"value": "670f37599855aea5bcc0abc2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "brand",
+									"value": "671334f3614145b21803ebf2",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/product",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dalate product",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3ZDY0ZDUwN2FkMzgwZGQ1ZGI3ZGRjZSIsImlhdCI6MTc0MjEzNDcxMn0.ZJ0GUiwLt9odPL_WysckkWF62TpZyfJYqF3zr6g7PSQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Wireless Headphones",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "High-quality wireless headphones with noise cancellation.",
+									"type": "text"
+								},
+								{
+									"key": "avaliableItems",
+									"value": "50",
+									"type": "text"
+								},
+								{
+									"key": "soldItems",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "200",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "67d6e22c977d68d11f76b66b",
+									"type": "text"
+								},
+								{
+									"key": "defaultImage",
+									"type": "file",
+									"src": "postman-cloud:///1efe4988-498e-47f0-9f75-fef41d7da583"
+								},
+								{
+									"key": "subImages",
+									"type": "file",
+									"src": [
+										"postman-cloud:///1efee862-fc34-4750-b57c-1814eff7442e",
+										"postman-cloud:///1ef92911-38d1-4120-8cfb-69762f4a5586"
+									]
+								},
+								{
+									"key": "subcategory",
+									"value": "670f37599855aea5bcc0abc2",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "brand",
+									"value": "671334f3614145b21803ebf2",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/product/67d6ed39e4dc09c3c0bdcbff",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"product",
+								"67d6ed39e4dc09c3c0bdcbff"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all products",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/product",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get one product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/product",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filter product by category , price , ...",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cart",
+			"item": [
+				{
+					"name": "add to  cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWthc2FsYWg0QGdtYWlsLmNvbSIsImlkIjoiNjcxZGM0NWVhYzk5MzhkOWNhYmI4OWYyIiwiaWF0IjoxNzMwMDA0MzMxfQ.plzWqWcDuKw_DOxdM1Al_aBley4nPVi4C_TR9RorunM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\": \"671ce1610a1baf56b9185f09\",\r\n    \"quantity\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/cart",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create cart",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWthc2FsYWg0QGdtYWlsLmNvbSIsImlkIjoiNjcxZGM0NWVhYzk5MzhkOWNhYmI4OWYyIiwiaWF0IjoxNzMwMDA0MzMxfQ.plzWqWcDuKw_DOxdM1Al_aBley4nPVi4C_TR9RorunM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\": \"671ce1610a1baf56b9185f09\",\r\n    \"quantity\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/cart",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user cart",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3ZDY0ZDUwN2FkMzgwZGQ1ZGI3ZGRjZSIsImlhdCI6MTc0MjEzNDcxMn0.ZJ0GUiwLt9odPL_WysckkWF62TpZyfJYqF3zr6g7PSQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{host}}/cart",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update cart",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWthc2FsYWg0QGdtYWlsLmNvbSIsImlkIjoiNjcxZGM0NWVhYzk5MzhkOWNhYmI4OWYyIiwiaWF0IjoxNzMwMDA0MzMxfQ.plzWqWcDuKw_DOxdM1Al_aBley4nPVi4C_TR9RorunM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\": \"671ce1610a1baf56b9185f09\",\r\n    \"quantity\":500\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/cart",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cart"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove from cart",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWthc2FsYWg0QGdtYWlsLmNvbSIsImlkIjoiNjcxZGM0NWVhYzk5MzhkOWNhYmI4OWYyIiwiaWF0IjoxNzMwMDA0MzMxfQ.plzWqWcDuKw_DOxdM1Al_aBley4nPVi4C_TR9RorunM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/cart/671ce1610a1baf56b9185f09",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cart",
+								"671ce1610a1baf56b9185f09"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clear cart",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3ZDY0ZDUwN2FkMzgwZGQ1ZGI3ZGRjZSIsImlhdCI6MTc0MjE1NDU2Nn0.6C0AiK9KTdBQdP5Bw2UIawC37gdHQWyVXXS4Wg_Jhs8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/cart/clear",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cart",
+								"clear"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

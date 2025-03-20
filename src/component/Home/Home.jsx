@@ -1,30 +1,34 @@
+"use client";
 import RecentProducts from "../RecentProducts/RecentProducts";
 import Loader from "../Loader/Loader";
 import useProducts from "../../Hooks/useProducts";
-
+import Welcome from "./Welcome";
 
 export default function Home() {
   let { data, isLoading } = useProducts();
+  const products = Array.isArray(data) ? data : [];
 
   return (
-    <>
-      {!isLoading ? (
-        <div className="px-4 sm:px-8 md:px-12">
-          {/* <MainSlider />
-          <CategoriesSlider /> */}
+    <main className="min-h-screen">
+      <Welcome />
 
-          {/* Responsive Grid for Products */}
+      <section className="pt-[100vh] px-4 sm:px-8 md:px-12 ">
+        <div className="text-center text-3xl  ">
+          Discover our exclusive collection of fashion accessories and <span className="text-red-400 font-bold font-serif">clothing</span>
+
+        </div>
+        {!isLoading ? (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-16">
-            {data?.map((product, index) => (
-              <RecentProducts products={product} key={index} />
+            {products.map((product) => (
+              <RecentProducts product={product} key={product._id} />
             ))}
           </div>
-        </div>
-      ) : (
-        <div className="flex justify-center items-center h-screen">
-          <Loader />
-        </div>
-      )}
-    </>
+        ) : (
+          <div className="flex justify-center items-center h-screen">
+            <Loader />
+          </div>
+        )}
+      </section>
+    </main>
   );
 }

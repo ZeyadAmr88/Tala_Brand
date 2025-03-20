@@ -3,44 +3,43 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { CartContext } from "../Context/CartContext";
 
-export default function RecentProducts({ products }) {
+export default function RecentProducts({ product }) {
     let { addToCart } = useContext(CartContext);
 
     return (
         <div className="bg-white shadow-md rounded-lg p-4 product my-10 hover:shadow-lg transition-all">
-            <Link to={`productdetails/${products.id}`} className="block">
-                {/* Image Container */}
+            <Link to={`/productdetails/${product?._id }`} className="block">
                 <div className="flex justify-center mb-3">
                     <img
-                        src={products.imageCover}
-                        alt={products.title}
-                        className="object-contain h-40 w-full rounded-lg"
+                        src={product?.images?.[0]?.url || product?.defaultImage?.url}
+                        alt={product?.name || "No Name"}
+                        className="object-contain h-[15rem] w-full rounded-lg"
                     />
                 </div>
 
-                {/* Category */}
-                <h2 className="text-main text-sm font-semibold">{products.category.name}</h2>
+                <h2 className="text-main text-sm font-semibold">{product?.category?.name || "Unknown Category"}</h2>
 
-                {/* Product Title */}
-                <h2 className="font-medium text-black truncate">{products.title}</h2>
+                <h2 className="font-medium text-black truncate">{product?.name || "No Product Name"}</h2>
 
-                {/* Price & Rating */}
                 <div className="flex justify-between my-2">
-                    <h3 className="text-black font-bold">{products.price} EGP</h3>
+                    <h3 className="text-black font-bold">{product?.finalPrice ? `${product.finalPrice} EGP` : "No Price Available"}</h3>
                     <h3 className="text-black flex items-center">
                         <i className="fas fa-star text-yellow-400 mr-1"></i>
-                        {products.ratingsAverage}
+                        {product?.ratingsAverage || "No Rating"}
                     </h3>
                 </div>
             </Link>
-
-            {/* Add to Cart Button */}
             <button
-                onClick={() => addToCart(products.id)}
+                onClick={() => {
+                    addToCart(product?._id)
+        
+                }}
                 className="w-full bg-main text-white rounded-md py-2 mt-2 transition hover:bg-opacity-90"
+
             >
                 ADD TO CART
             </button>
+
         </div>
     );
 }

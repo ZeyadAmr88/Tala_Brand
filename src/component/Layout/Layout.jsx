@@ -4,25 +4,27 @@ import Footer from "../Footer/Footer";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../Context/UserContext";
 
-
 export default function Layout() {
-  let Navigate = useNavigate()
-  let { setUserData } = useContext(UserContext)
-  useEffect(() => {
-    if (localStorage.getItem('userToken')) {
-      setUserData('userToken')
+  const navigate = useNavigate();
+  const { setUserData } = useContext(UserContext);
 
+  useEffect(() => {
+    const userToken = localStorage.getItem("userToken");
+
+    if (userToken) {
+      setUserData(userToken); // ✅ الآن يتم تمرير القيمة الحقيقية بدلاً من النص فقط
     } else {
-      Navigate('/login')
+      navigate("/login"); // ✅ تجنب مشاكل الإعادة غير الضرورية
     }
-  }, [Navigate, setUserData])
+  }, [setUserData, navigate]);
+
   return (
     <>
       <NavBar />
-      <div className="">
+      <div>
         <Outlet />
       </div>
       <Footer />
     </>
-  )
+  );
 }
