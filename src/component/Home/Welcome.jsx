@@ -6,10 +6,10 @@ export default function Welcome() {
     const welcomeRef = useRef(null);
     const { scrollY } = useScroll();
     const opacity = useTransform(scrollY, [0, 600], [1, 0]);
-    const scale = useTransform(scrollY, [0, 300], [1, 0.9]);
+    const scale = useTransform(scrollY, [0, 200], [1, 0.9]);
     const scrollToProducts = () => {
         window.scrollTo({
-            top: window.innerHeight,
+            top: window.innerHeight-100,
             behavior: "smooth",
         });
     };
@@ -22,7 +22,7 @@ export default function Welcome() {
         >
 
             <div className="text-center px-4 max-w-3xl">
-                <h1 className="text-5xl md:text-7xl font-bold mb-6 font-serif">Tala Brand</h1>
+                <h1 className="text-5xl md:text-7xl font-bold mb-6 font-serif" translate="no">Tala Brand</h1>
                 <p className="text-xl md:text-2xl mb-8">
                     Discover our exclusive collection of fashion accessories and clothing
                 </p>

@@ -2,6 +2,10 @@
 
 export default function Category() {
   return (
-    <div className="h-screen mt-24">Category</div>
+    <div className="h-screen mt-24">
+      <div>
+        
+      </div>
+    </div>
   )
 }

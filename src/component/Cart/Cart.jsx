@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../Context/CartContext";
 import Loader from "../Loader/Loader";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import toast from "react-hot-toast";
 
 export default function Cart() {
@@ -69,7 +68,7 @@ export default function Cart() {
           <div className="text-center text-gray-600">
             <h2 className="text-xl font-semibold">Your Cart is Empty 🛒</h2>
             <p className="text-sm">Browse our products and add items to your cart!</p>
-            <Link to="/" className="text-blue-500 hover:underline">
+            <Link to="/" className="text-blue-500 hover:underline hover:text-pink-600">
               Go Shopping
             </Link>
           </div>
@@ -138,7 +137,6 @@ export default function Cart() {
             </tbody>
           </table>
 
-          {/* Total Price Section */}
           <div className="flex justify-between px-8 py-2 my-5">
             <span>Total Cart Price</span>
             <span>{cart.totalCartPrice || 0} EGP</span>

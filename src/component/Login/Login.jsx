@@ -11,15 +11,13 @@ import { CartContext } from "../Context/CartContext"
 
 export default function Login() {
   const { setUserData } = useContext(UserContext)
-  const { getCartItems, createCart } = useContext(CartContext)
+  const {  createCart } = useContext(CartContext)
 
   const [apiError, setApiError] = useState("")
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-
   async function handleLogin(values) {
-
     try {
       setLoading(true);
       const { data } = await axios.post(`https://tala-store.vercel.app/auth/signin`, values);
@@ -27,20 +25,12 @@ export default function Login() {
       if (data.results.token) {
         localStorage.setItem("userToken", data.results.token);
         setUserData(data.results.token);
-        console.log("Token saved", data.results.token);
 
         try {
-          console.log(data);
-          // const cartResponse = await getCartItems();
-
-          // If cart is empty or undefined, create a new cart
-
-          if (data.results.token){
-
+          if (data.results.token) {
             await createCart(data.results.token);
           }
-        }
-        catch (cartError) {
+        } catch (cartError) {
           console.error("Error fetching or creating cart:", cartError);
         }
 
@@ -48,18 +38,14 @@ export default function Login() {
           navigate("/");
         }, 100);
       } else {
-        console.log("Token not saved");
         setApiError("Login successful but no token received");
       }
     } catch (err) {
-      console.error("Login error:", err);
       setApiError(err.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }
   }
-
-
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Email is invalid").required("Email required"),
@@ -78,74 +64,56 @@ export default function Login() {
   })
 
   return (
-    <div className="pt-8 w-auto mt-20 ">
-      <h2 className="text-3xl font-semibold text-center py-4 mt-5">Login Now...</h2>
+    <div className="flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-lg">
+        <h2 className="text-3xl font-semibold text-center text-gray-900">Login Now</h2>
 
-      <form onSubmit={formik.handleSubmit} className="max-w-xl mx-auto">
         {apiError && (
-          <div
-            className="p-2 mb-4 mx-auto text-sm text-center w-fit text-red-800 rounded-lg bg-red-50 dark:text-red-400"
-            role="alert"
-          >
-            {apiError}
-          </div>
+          <div className="p-2 text-sm text-red-800 bg-red-50 text-center rounded-lg">{apiError}</div>
         )}
 
-        <div className="mb-5">
-          <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-            Your Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            onChange={formik.handleChange}
-            value={formik.values.email}
-            onBlur={formik.handleBlur}
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:text-black"
-          />
-          {formik.errors.email && formik.touched.email && (
-            <div className="p-2 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:text-red-400" role="alert">
-              {formik.errors.email}
-            </div>
-          )}
-        </div>
+        <form onSubmit={formik.handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+              Your Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              {...formik.getFieldProps("email")}
+              className="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-pink-200"
+            />
+            {formik.errors.email && formik.touched.email && (
+              <p className="text-sm text-red-600">{formik.errors.email}</p>
+            )}
+          </div>
 
-        <div className="mb-5">
-          <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-            Your Password
-          </label>
-          <input
-            type="password"
-            id="password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:border-gray-600 dark:text-black"
-          />
-          {formik.errors.password && formik.touched.password && (
-            <div className="p-2 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:text-red-400" role="alert">
-              {formik.errors.password}
-            </div>
-          )}
-        </div>
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-gray-900">
+              Your Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              {...formik.getFieldProps("password")}
+              className="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-pink-200"
+            />
+            {formik.errors.password && formik.touched.password && (
+              <p className="text-sm text-red-600">{formik.errors.password}</p>
+            )}
+          </div>
 
-        {loading ? (
-          <button
-            type="button"
-            className="text-white bg-[#ff42a0] hover:bg-pink-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-          >
-            <i className="fas fa-spinner fa-spin-pulse"></i>
-          </button>
-        ) : (
           <button
             type="submit"
-            className="text-white bg-[#ff42a0] hover:bg-pink-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+            className={`w-full px-5 py-2 text-white bg-pink-500 rounded-lg ${
+              loading ? "opacity-50 cursor-not-allowed" : "hover:bg-pink-600"
+            }`}
+            disabled={loading}
           >
-            Submit
+            {loading ? <i className="fas fa-spinner fa-spin"></i> : "Submit"}
           </button>
-        )}
-      </form>
+        </form>
+      </div>
     </div>
   )
 }
-

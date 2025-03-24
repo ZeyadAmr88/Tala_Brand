@@ -16,7 +16,7 @@ export default function Products() {
   const productsPerPage = 20
 
   // Available categories - could be derived from data if needed
-  const categories = ["All categories", "Mockups", "Templates", "Design", "Logos"]
+  const categories = ["New Born Girls", "New Born Boys", "Girls", "Boys", "Mother and Child", "Women", "Accessories"]
 
   // Memoize filtered products to avoid unnecessary recalculations
   const filteredProducts = useMemo(() => {
@@ -35,7 +35,13 @@ export default function Products() {
       }
 
       if (selectedCategory !== "All categories") {
-        results = results.filter((product) => product.category?.toLowerCase() === selectedCategory.toLowerCase())
+        results = results.filter((product) => {
+          // Check if category exists and is a string before calling toLowerCase
+          if (typeof product.category === "string") {
+            return product.category.toLowerCase() === selectedCategory.toLowerCase()
+          }
+          return false
+        })
       }
     }
 
@@ -130,6 +136,19 @@ export default function Products() {
                 {isDropdownOpen && (
                   <div className="absolute top-full left-0 bg-white rounded-lg w-[140px] mt-1 shadow-lg z-10">
                     <ul className="py-2 text-sm text-gray-700" role="listbox" aria-labelledby="category-dropdown">
+                      <li>
+                        <button
+                          type="button"
+                          onClick={() => selectCategory("All categories")}
+                          onKeyDown={(e) => handleKeyDown(e, "All categories")}
+                          className="inline-flex w-full px-4 py-2 text-black hover:bg-pink-100 focus:bg-pink-100 focus:outline-none"
+                          role="option"
+                          aria-selected={selectedCategory === "All categories"}
+                          tabIndex={0}
+                        >
+                          All categories
+                        </button>
+                      </li>
                       {categories.map((category) => (
                         <li key={category}>
                           <button
@@ -199,7 +218,17 @@ export default function Products() {
               currentProducts.map((product, index) => <RecentProducts product={product} key={product.id || index} />)
             ) : (
               <div className="col-span-full text-center py-10">
-                <p className="text-lg text-gray-500">No products found.</p>
+                {selectedCategory !== "All categories" ? (
+                  <div>
+                    <p className="text-lg text-gray-500 mb-2">
+                      We don&apos;t have any products in the <span className="font-semibold">{selectedCategory}</span>{" "}
+                      category at the moment.
+                    </p>
+                    <p className="text-md text-gray-500">Please check back later or try another category.</p>
+                  </div>
+                ) : (
+                  <p className="text-lg text-gray-500">No products found.</p>
+                )}
                 {isSearching && (
                   <button
                     onClick={resetSearch}
@@ -243,9 +272,8 @@ export default function Products() {
                     <button
                       key={page}
                       onClick={() => setCurrentPage(page)}
-                      className={`px-3 py-2 border mx-1 rounded ${
-                        currentPage === page ? "bg-pink-500 text-white" : "bg-white text-pink-500 hover:bg-pink-50"
-                      }`}
+                      className={`px-3 py-2 border mx-1 rounded ${currentPage === page ? "bg-pink-500 text-white" : "bg-white text-pink-500 hover:bg-pink-50"
+                        }`}
                       aria-label={`Page ${page}`}
                       aria-current={currentPage === page ? "page" : undefined}
                     >

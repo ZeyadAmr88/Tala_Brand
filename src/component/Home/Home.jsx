@@ -3,6 +3,7 @@ import RecentProducts from "../RecentProducts/RecentProducts";
 import Loader from "../Loader/Loader";
 import useProducts from "../../Hooks/useProducts";
 import Welcome from "./Welcome";
+import CategorySlideshow from "../Category/category-slideshow";
 
 export default function Home() {
   let { data, isLoading } = useProducts();
@@ -13,10 +14,11 @@ export default function Home() {
       <Welcome />
 
       <section className="pt-[100vh] px-4 sm:px-8 md:px-12 ">
-        <div className="text-center text-3xl  ">
+        {/* <div className="text-center text-3xl  ">
           Discover our exclusive collection of fashion accessories and <span className="text-red-400 font-bold font-serif">clothing</span>
 
-        </div>
+        </div> */}
+        <CategorySlideshow />
         {!isLoading ? (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 py-16">
             {products.map((product) => (
