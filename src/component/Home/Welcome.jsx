@@ -9,7 +9,7 @@ export default function Welcome() {
     const scale = useTransform(scrollY, [0, 200], [1, 0.9]);
     const scrollToProducts = () => {
         window.scrollTo({
-            top: window.innerHeight-100,
+            top: window.innerHeight - 100,
             behavior: "smooth",
         });
     };
@@ -18,7 +18,7 @@ export default function Welcome() {
             ref={welcomeRef}
             style={{ opacity, scale }}
             className="absolute top-0 left-0 w-full h-[98vh] flex flex-col items-center rounded-b-[550px] justify-center 
-               bg-gradient-to-r from-pink-400 to-pink-600 text-white"
+            bg-gradient-to-r from-pink-400 to-pink-600 text-white"
         >
 
             <div className="text-center px-4 max-w-3xl">
