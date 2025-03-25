@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "70c8ca5a-0617-4b08-8a24-d96dd2e86ab0",
+		"_postman_id": "a51233cc-93a0-4bf3-ba13-14e0f960bb55",
 		"name": "TalaStore",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "26559151"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26559151",
+		"_collection_link": "https://e-commerce-ezzat.postman.co/workspace/New-Team-Workspace~8e78f715-f809-4d5d-976e-d7be9b634979/collection/26559151-a51233cc-93a0-4bf3-ba13-14e0f960bb55?action=share&source=collection_link&creator=26559151"
 	},
 	"item": [
 		{
@@ -23,16 +24,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/auth/signup",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"auth",
-								"signup"
-							]
-						}
+						"url": "{{baseUrl}}/auth/signup"
 					},
 					"response": []
 				},
@@ -50,16 +42,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/auth/signup",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"auth",
-								"signup"
-							]
-						}
+						"url": "{{baseUrl}}/auth/signup"
 					},
 					"response": []
 				},
@@ -77,16 +60,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/auth/signup",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"auth",
-								"signup"
-							]
-						}
+						"url": "{{baseUrl}}/auth/signup"
 					},
 					"response": []
 				}
@@ -99,16 +73,29 @@
 					"name": "create category",
 					"request": {
 						"method": "POST",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/category",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"category"
+						"header": [
+							{
+								"key": "token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "category",
+									"value": "",
+									"type": "text"
+								}
 							]
-						}
+						},
+						"url": "{{baseUrl}}/category"
 					},
 					"response": []
 				},
@@ -138,16 +125,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "{{baseUrl}}/category/67d6de35f3eee66136931d1a",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"category",
-								"67d6de35f3eee66136931d1a"
-							]
-						}
+						"url": "{{baseUrl}}/category/67d6de35f3eee66136931d1a"
 					},
 					"response": []
 				},
@@ -177,16 +155,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "{{baseUrl}}/category/67d6de35f3eee66136931d1a",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"category",
-								"67d6de35f3eee66136931d1a"
-							]
-						}
+						"url": "{{baseUrl}}/category/67d6de35f3eee66136931d1a"
 					},
 					"response": []
 				},
@@ -194,7 +163,8 @@
 					"name": "get all categories",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": ""
 					},
 					"response": []
 				},
@@ -202,7 +172,8 @@
 					"name": "get one Category",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": "{{baseUrl}}/category/67d6de35f3eee66136931d1a"
 					},
 					"response": []
 				},
@@ -210,170 +181,20 @@
 					"name": "filter(search)",
 					"request": {
 						"method": "GET",
-						"header": []
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Subcategory",
-			"item": [
-				{
-					"name": "create subcategory",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3MGM1ZmZhMzU0MTFjYjZhZGNjZTI0OCIsImlhdCI6MTcyODg2NDI3Nn0.bVmCD6R5KndzllVPog0kYt9RIjaUYJ_395uDfylXNxk",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "dell lap",
-									"type": "text"
-								},
-								{
-									"key": "subcategory",
-									"type": "file",
-									"src": "/C:/Users/youse/Downloads/eCommerce-logo.jpg"
-								}
-							]
-						},
-						"url": {
-							"raw": "{{host}}/category/671106181cc53ce5370ad064/subcategory",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"category",
-								"671106181cc53ce5370ad064",
-								"subcategory"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "All Subcategories",
-					"request": {
-						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/subcategory",
+							"raw": "{{baseUrl}}/category?keyword=laps",
 							"host": [
-								"{{host}}"
+								"{{baseUrl}}"
 							],
 							"path": [
-								"subcategory"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "All Subcategories depend on category",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{host}}/category/671106181cc53ce5370ad064/subcategory",
-							"host": [
-								"{{host}}"
+								"category"
 							],
-							"path": [
-								"category",
-								"671106181cc53ce5370ad064",
-								"subcategory"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update subcategory",
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3MGM1ZmZhMzU0MTFjYjZhZGNjZTI0OCIsImlhdCI6MTcyODg2NDI3Nn0.bVmCD6R5KndzllVPog0kYt9RIjaUYJ_395uDfylXNxk",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
+							"query": [
 								{
-									"key": "name",
-									"value": "t shirt sports",
-									"type": "text"
-								},
-								{
-									"key": "subcategory",
-									"type": "file",
-									"src": "/C:/Users/youse/Downloads/eCommerce-logo.jpg",
-									"disabled": true
+									"key": "keyword",
+									"value": "laps"
 								}
-							]
-						},
-						"url": {
-							"raw": "{{host}}/category/670c5cee9d159c6aa2a58282/subcategory/670eeeeb0e5f6bd77a1967a2",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"category",
-								"670c5cee9d159c6aa2a58282",
-								"subcategory",
-								"670eeeeb0e5f6bd77a1967a2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete subcategory",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3MGM1ZmZhMzU0MTFjYjZhZGNjZTI0OCIsImlhdCI6MTcyODg2NDI3Nn0.bVmCD6R5KndzllVPog0kYt9RIjaUYJ_395uDfylXNxk",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "name",
-									"value": "t shirt sports",
-									"type": "text"
-								},
-								{
-									"key": "subcategory",
-									"type": "file",
-									"src": "/C:/Users/youse/Downloads/eCommerce-logo.jpg",
-									"disabled": true
-								}
-							]
-						},
-						"url": {
-							"raw": "{{host}}/category/670c54f7a0db58b447891f6e/subcategory/670efba135f8528d39812531",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"category",
-								"670c54f7a0db58b447891f6e",
-								"subcategory",
-								"670efba135f8528d39812531"
 							]
 						}
 					},
@@ -455,15 +276,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "{{host}}/product",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"product"
-							]
-						}
+						"url": "{{host}}/product"
 					},
 					"response": []
 				},
@@ -538,15 +351,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "{{host}}/product",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"product"
-							]
-						}
+						"url": "{{host}}/product"
 					},
 					"response": []
 				},
@@ -621,16 +426,7 @@
 								}
 							]
 						},
-						"url": {
-							"raw": "{{host}}/product/67d6ed39e4dc09c3c0bdcbff",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"product",
-								"67d6ed39e4dc09c3c0bdcbff"
-							]
-						}
+						"url": "{{host}}/product/67d6ed39e4dc09c3c0bdcbff"
 					},
 					"response": []
 				},
@@ -639,15 +435,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{host}}/product",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"product"
-							]
-						}
+						"url": "{{host}}/product"
 					},
 					"response": []
 				},
@@ -656,15 +444,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": {
-							"raw": "{{host}}/product",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"product"
-							]
-						}
+						"url": "{{host}}/product"
 					},
 					"response": []
 				},
@@ -672,7 +452,8 @@
 					"name": "filter product by category , price , ...",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": ""
 					},
 					"response": []
 				}
@@ -701,15 +482,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{host}}/cart",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"cart"
-							]
-						}
+						"url": "{{host}}/cart"
 					},
 					"response": []
 				},
@@ -733,15 +506,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{host}}/cart",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"cart"
-							]
-						}
+						"url": "{{host}}/cart"
 					},
 					"response": []
 				},
@@ -756,15 +521,7 @@
 								"type": "text"
 							}
 						],
-						"url": {
-							"raw": "{{host}}/cart",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"cart"
-							]
-						}
+						"url": "{{host}}/cart"
 					},
 					"response": []
 				},
@@ -788,15 +545,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{host}}/cart",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"cart"
-							]
-						}
+						"url": "{{host}}/cart"
 					},
 					"response": []
 				},
@@ -820,16 +569,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{host}}/cart/671ce1610a1baf56b9185f09",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"cart",
-								"671ce1610a1baf56b9185f09"
-							]
-						}
+						"url": "{{host}}/cart/671ce1610a1baf56b9185f09"
 					},
 					"response": []
 				},
@@ -853,16 +593,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{host}}/cart/clear",
-							"host": [
-								"{{host}}"
-							],
-							"path": [
-								"cart",
-								"clear"
-							]
-						}
+						"url": "{{host}}/cart/clear"
 					},
 					"response": []
 				}

@@ -46,7 +46,7 @@ const NavBar = () => {
             <ul className={`md:flex md:space-x-6  absolute md:static top-20 left-0 right-0 w-full bg-[#ff42a0] md:bg-transparent md:w-auto p-4 md:p-0 transition-all duration-300 ${isOpen ? 'block' : 'hidden md:flex '}`}>
                 {userData && (
                     <>
-                        <li><NavLink to="/" end className="text-white text-lg block md:inline">Home</NavLink></li>
+                        <li><NavLink to="/" end className="text-white text-lg block md:inline " >Home</NavLink></li>
                         <li><NavLink to="/cart" className="text-white text-lg block md:inline">Cart</NavLink></li>
                         <li><NavLink to="/products" className="text-white text-lg block md:inline">Products</NavLink></li>
                         <li><NavLink to="/categories" className="text-white text-lg block md:inline">Categories</NavLink></li>

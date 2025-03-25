@@ -1,6 +1,8 @@
-"use client"
 
-import { useState, useEffect, useMemo } from "react"
+import { useMemo } from "react"
+
+import { useState, useEffect } from "react"
+import { useLocation, useSearchParams } from "react-router-dom"
 import { ChevronDown, Search, X } from "lucide-react"
 import Loader from "../Loader/Loader"
 import RecentProducts from "../RecentProducts/RecentProducts"
@@ -15,8 +17,41 @@ export default function Products() {
   const [currentPage, setCurrentPage] = useState(1)
   const productsPerPage = 20
 
+  // Get location and search params for accessing the category
+  const location = useLocation()
+  const [searchParams] = useSearchParams()
+
   // Available categories - could be derived from data if needed
   const categories = ["New Born Girls", "New Born Boys", "Girls", "Boys", "Mother and Child", "Women", "Accessories"]
+
+  // Check for category in different sources when component mounts
+  useEffect(() => {
+    // Priority 1: Check React Router state
+    if (location.state && location.state.selectedCategory) {
+      setSelectedCategory(location.state.selectedCategory)
+      setIsSearching(true)
+      // Clear the state after using it to prevent it from persisting on refresh
+      window.history.replaceState({}, document.title)
+    }
+    // Priority 2: Check URL parameters
+    else if (searchParams.get("category")) {
+      const categoryFromUrl = searchParams.get("category")
+      if (categoryFromUrl && (categories.includes(categoryFromUrl) || categoryFromUrl === "All categories")) {
+        setSelectedCategory(categoryFromUrl)
+        setIsSearching(true)
+      }
+    }
+    // Priority 3: Check localStorage (fallback)
+    else {
+      const savedCategory = localStorage.getItem("selectedCategory")
+      if (savedCategory && (categories.includes(savedCategory) || savedCategory === "All categories")) {
+        setSelectedCategory(savedCategory)
+        setIsSearching(true)
+        // Clear localStorage after using it
+        localStorage.removeItem("selectedCategory")
+      }
+    }
+  }, [location, searchParams, categories])
 
   // Memoize filtered products to avoid unnecessary recalculations
   const filteredProducts = useMemo(() => {

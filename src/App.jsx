@@ -19,6 +19,9 @@ import CheckOut from './component/CheckOut/CheckOut'
 import AllOrders from './component/AllOrders/AllOrders'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import Dashboard from './component/dashboard/Dashboard'
+import ProductForm from './component/Products/ProductForm'
+import ManageProduct from './component/Products/ManageProduct'
 
 let query = new QueryClient()
 
@@ -36,6 +39,12 @@ let routes = createBrowserRouter([
       { path: 'register', element: <Register /> },
       { path: 'login', element: <Login /> },
       { path: '*', element: <NotFound /> },
+      { path: 'dashboard', element: <Dashboard /> },
+      { path: 'manage', element: <ManageProduct /> },
+      { path: 'dashboard/manage/create', element: <ProductForm /> },
+
+
+
     ]
   }
 ])
@@ -43,23 +52,18 @@ function App() {
 
 
   return (
-    
-      <QueryClientProvider client={query}>
+    <QueryClientProvider client={query}>
+       {/* Wrap the whole app with AuthProvider */}
         <CartContextProvider>
           <UserContextProvider>
-
-            <RouterProvider router={routes}></RouterProvider>
+            <RouterProvider router={routes} />
             <ReactQueryDevtools />
             <Toaster />
-
           </UserContextProvider>
         </CartContextProvider>
-      </QueryClientProvider>
-
-    
-
-
-  )
+      
+    </QueryClientProvider>
+  );
 
 }
 

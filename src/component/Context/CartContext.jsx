@@ -80,19 +80,18 @@ export default function CartContextProvider({ children }) {
         }
     }
 
+    // eslint-disable-next-line no-unused-vars
     async function getCartItems(token) {
         console.log("token",headers.token)
         let { data } = await axios.get(
             `https://tala-store.vercel.app/cart`,
             
-             // Empty body, unless you need to send data
             {
                 headers: {
-                    token: headers.token, // Corrected token usage
+                    token: headers.token, 
                 },
             }
         );
-        // setCartItems(data?.cart?.products);
         return data;
 
     }
@@ -103,6 +102,7 @@ export default function CartContextProvider({ children }) {
             
             getCartItems(headers.token);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [headers.token]);
 
     return (

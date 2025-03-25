@@ -9,7 +9,7 @@ export default function Welcome() {
     const scale = useTransform(scrollY, [0, 200], [1, 0.9]);
     const scrollToProducts = () => {
         window.scrollTo({
-            top: window.innerHeight - 100,
+            top: window.innerHeight - 80,
             behavior: "smooth",
         });
     };
