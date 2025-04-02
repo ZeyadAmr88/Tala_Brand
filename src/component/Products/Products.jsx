@@ -288,7 +288,6 @@ export default function Products() {
                 &laquo;
               </button>
 
-              {/* Show limited page numbers with ellipsis for better UX */}
               {Array.from({ length: totalPages }, (_, i) => i + 1)
                 .filter(
                   (page) => page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1),

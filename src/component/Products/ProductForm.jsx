@@ -6,9 +6,7 @@ import toast from "react-hot-toast"
 import { ArrowLeft, Upload, X } from "lucide-react"
 
 const ProductForm = () => {
-    let headers = {
-        token: localStorage.getItem('userToken')
-    };// Get the token from context
+
 
     const { id } = useParams()
     const navigate = useNavigate()
@@ -63,7 +61,6 @@ const ProductForm = () => {
                             description: product.description || "",
                             price: product.price?.toString() || "",
                             avaliableItems: product.avaliableItems?.toString() || "",
-                            soldItems: product.soldItems?.toString() || "0",
                             category: product.category?.id || "",
                         })
 
@@ -140,7 +137,6 @@ const ProductForm = () => {
             productFormData.append("description", formData.description)
             productFormData.append("price", formData.price)
             productFormData.append("avaliableItems", formData.avaliableItems)
-            productFormData.append("soldItems", formData.soldItems)
             productFormData.append("category", formData.category)
 
             if (defaultImage) {
@@ -151,11 +147,15 @@ const ProductForm = () => {
                 productFormData.append("subImages", image)
             })
 
-           
+
 
             let response
             if (isEditMode) {
-                response = await axios.patch(`https://tala-store.vercel.app/product/${id}`, productFormData, )
+                response = await axios.patch(`https://tala-store.vercel.app/product/${id}`, productFormData,{
+                    headers: {
+                        token: localStorage.getItem('userToken')
+                    },
+                })
             } else {
                 response = await axios.post(`https://tala-store.vercel.app/product`, productFormData, {
                     headers: {
@@ -221,7 +221,7 @@ const ProductForm = () => {
                             </label>
                             <div className="mt-1 relative rounded-md shadow-sm">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <span className="text-gray-500 sm:text-sm">$</span>
+                                    <span className="text-gray-500 sm:text-sm">EGP</span>
                                 </div>
                                 <input
                                     type="number"
@@ -297,22 +297,7 @@ const ProductForm = () => {
                             </div>
                         </div>
 
-                        <div className="sm:col-span-3">
-                            <label htmlFor="soldItems" className="block text-sm font-medium text-gray-700">
-                                Sold Items
-                            </label>
-                            <div className="mt-1">
-                                <input
-                                    type="number"
-                                    name="soldItems"
-                                    id="soldItems"
-                                    min="0"
-                                    value={formData.soldItems}
-                                    onChange={handleInputChange}
-                                    className="shadow-sm focus:ring-pink-500 focus:border-pink-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                                />
-                            </div>
-                        </div>
+                        
 
                         {/* Default Image */}
                         <div className="sm:col-span-6">
