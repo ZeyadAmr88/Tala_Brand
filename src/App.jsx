@@ -1,11 +1,9 @@
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
 import Layout from './component/Layout/Layout'
 import Home from './component/Home/Home'
 import Cart from './component/Cart/Cart'
 import Category from './component/Category/Category'
-import Brands from './component/Brands/Brands'
 import Products from './component/Products/Products'
 import Register from './component/Register/Register'
 import Login from './component/Login/Login'
@@ -22,32 +20,30 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import Dashboard from './component/dashboard/Dashboard'
 import ProductForm from './component/Products/ProductForm'
 import ManageProduct from './component/Products/ManageProduct'
-import ManageCategory from './component/Category/ManageCategory'
-import CategoryForm from './component/Category/CategoryForm'
 
 let query = new QueryClient()
 
 let routes = createBrowserRouter([
   {
     path: '', element: <Layout />, children: [
-      { index: true, element: <ProtectedRoute> <Home /></ProtectedRoute> },
+      { index: true, element: <Home /> },
+      { path: 'categories', element: <Category /> },
+      { path: 'products', element: <Products />},
+      { path: 'productdetails/:id', element: <ProductDetails /> },
+
       { path: 'cart', element: <ProtectedRoute> <Cart /></ProtectedRoute> },
-      { path: 'categories', element: <ProtectedRoute><Category /></ProtectedRoute> },
-      { path: 'brands', element: <ProtectedRoute><Brands /></ProtectedRoute> },
-      { path: 'products', element: <ProtectedRoute><Products /></ProtectedRoute> },
-      { path: 'productdetails/:id', element: <ProtectedRoute><ProductDetails /></ProtectedRoute> },
       { path: 'checkout', element: <ProtectedRoute><CheckOut /></ProtectedRoute> },
       { path: 'allorders', element: <ProtectedRoute><AllOrders /></ProtectedRoute> },
+
       { path: 'register', element: <Register /> },
       { path: 'login', element: <Login /> },
+
+      { path: 'dashboard', element: <ProtectedRoute><Dashboard /></ProtectedRoute> },
+      { path: 'manage', element: <ProtectedRoute><ManageProduct /></ProtectedRoute> },
+      { path: 'dashboard/manage/create', element: <ProtectedRoute><ProductForm /></ProtectedRoute> },
+      
       { path: '*', element: <NotFound /> },
-      { path: 'dashboard', element: <Dashboard /> },
-      { path: 'dashboard/manage', element: <ManageProduct /> },
-      { path: 'dashboard/manage/create', element: <ProductForm /> },
-      { path: 'dashboard/manage_category', element: <ManageCategory /> },
-      { path: 'manage_category/new', element: <CategoryForm /> },
-      { path: "dashboard/manage/edit/:id", element: <ProductForm /> },
-      { path: 'dashboard/manage_category/edit/:id', element: <CategoryForm /> },
+
 
 
     ]
@@ -58,15 +54,15 @@ function App() {
 
   return (
     <QueryClientProvider client={query}>
-
-      <CartContextProvider>
-        <UserContextProvider>
-          <RouterProvider router={routes} />
-          <ReactQueryDevtools />
-          <Toaster />
-        </UserContextProvider>
-      </CartContextProvider>
-
+       {/* Wrap the whole app with AuthProvider */}
+        <CartContextProvider>
+          <UserContextProvider>
+            <RouterProvider router={routes} />
+            <ReactQueryDevtools />
+            <Toaster />
+          </UserContextProvider>
+        </CartContextProvider>
+      
     </QueryClientProvider>
   );
 
