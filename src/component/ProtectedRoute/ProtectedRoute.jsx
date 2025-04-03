@@ -1,13 +1,11 @@
 /* eslint-disable react/prop-types */
-import { Navigate } from "react-router-dom"
-
-
+import { Navigate } from "react-router-dom";
 
 export default function ProtectedRoute({ children }) {
-    if (localStorage.getItem('userToken')) {
-        return children
+  const userToken = localStorage.getItem("userToken");
 
-    } else {
-        return <Navigate to={'/login'} />
-    }
+  console.log("User Token:", userToken);
+  
+
+  return userToken ? children : <Navigate to="/login" />;
 }
