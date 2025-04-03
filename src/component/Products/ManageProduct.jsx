@@ -1,100 +1,105 @@
+"use client"
 
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { Plus, Search, Edit, Trash2, ChevronLeft, ChevronRight, Filter, X } from "lucide-react";
+import { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
+import axios from "axios"
+import toast from "react-hot-toast"
+import { Plus, Search, Edit, Trash2, ChevronLeft, ChevronRight, Filter, X } from "lucide-react"
 
 const ManageProduct = () => {
-    const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
-    const [showFilters, setShowFilters] = useState(false);
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const [categories, setCategories] = useState([]);
-    const [priceRange, setPriceRange] = useState({ min: "", max: "" });
+    const [products, setProducts] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [searchTerm, setSearchTerm] = useState("")
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
+    const [showFilters, setShowFilters] = useState(false)
+    const [selectedCategory, setSelectedCategory] = useState("")
+    const [categories, setCategories] = useState([])
+    const [priceRange, setPriceRange] = useState({ min: "", max: "" })
 
     const fetchProducts = async () => {
-        setLoading(true);
+        setLoading(true)
         try {
-            const params = new URLSearchParams();
-            if (searchTerm) params.append("search", searchTerm);
-            if (selectedCategory) params.append("category", selectedCategory);
-            if (priceRange.min) params.append("minPrice", priceRange.min);
-            if (priceRange.max) params.append("maxPrice", priceRange.max);
-            params.append("page", currentPage.toString());
+            const params = new URLSearchParams()
+            if (searchTerm) params.append("search", searchTerm)
+            if (selectedCategory) params.append("category", selectedCategory)
+            if (priceRange.min) params.append("minPrice", priceRange.min)
+            if (priceRange.max) params.append("maxPrice", priceRange.max)
+            params.append("page", currentPage.toString())
 
-            const response = await axios.get(`https://tala-store.vercel.app/product?${params.toString()}`);
+            const response = await axios.get(`https://tala-store.vercel.app/product?${params.toString()}`)
 
             if (response.data.success) {
-                setProducts(response.data.products || []);
-                setTotalPages(response.data.totalPages || Math.ceil(response.data.totalCount / 10) || 1);
+                setProducts(response.data.products || [])
+                setTotalPages(response.data.totalPages || Math.ceil(response.data.totalCount / 10) || 1)
             } else {
-                toast.error("Failed to fetch products");
+                toast.error("Failed to fetch products")
             }
         } catch (error) {
-            console.error("Error fetching products:", error);
-            toast.error("Error fetching products");
+            console.error("Error fetching products:", error)
+            toast.error("Error fetching products")
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    };
+    }
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get(`https://tala-store.vercel.app/category`);
+            const response = await axios.get(`https://tala-store.vercel.app/category`)
             if (response.data.success) {
-                setCategories(response.data.categories || []);
+                setCategories(response.data.categories || [])
             }
         } catch (error) {
-            console.error("Error fetching categories:", error);
+            console.error("Error fetching categories:", error)
         }
-    };
+    }
 
     useEffect(() => {
-        fetchProducts();
-        fetchCategories();
-    }, [currentPage]);
+        fetchProducts()
+        fetchCategories()
+    }, [currentPage])
 
     const handleSearch = (e) => {
-        e.preventDefault();
-        setCurrentPage(1);
-        fetchProducts();
-    };
+        e.preventDefault()
+        setCurrentPage(1)
+        fetchProducts()
+    }
 
     const handleDelete = async (id) => {
         if (!window.confirm("Are you sure you want to delete this product?")) {
-            return;
+            return
         }
 
         try {
-            const response = await axios.delete(`https://tala-store.vercel.app/product/${id}`);
+            const response = await axios.delete(`https://tala-store.vercel.app/product/${id} `, {
+                headers: {
+                    token: localStorage.getItem("userToken"),
+                },
+            })
             if (response.data.success) {
-                toast.success("Product deleted successfully");
-                fetchProducts();
+                toast.success("Product deleted successfully")
+                fetchProducts()
             } else {
-                toast.error("Failed to delete product");
+                toast.error("Failed to delete product")
             }
         } catch (error) {
-            console.error("Error deleting product:", error);
-            toast.error("Error deleting product");
+            console.error("Error deleting product:", error)
+            toast.error("Error deleting product")
         }
-    };
+    }
 
     const applyFilters = () => {
-        setCurrentPage(1);
-        fetchProducts();
-    };
+        setCurrentPage(1)
+        fetchProducts()
+    }
 
     const clearFilters = () => {
-        setSelectedCategory("");
-        setPriceRange({ min: "", max: "" });
-        setSearchTerm("");
-        setCurrentPage(1);
-        fetchProducts();
-    };
+        setSelectedCategory("")
+        setPriceRange({ min: "", max: "" })
+        setSearchTerm("")
+        setCurrentPage(1)
+        fetchProducts()
+    }
 
     return (
         <div className="space-y-6 mt-24 ">
@@ -246,12 +251,7 @@ const ManageProduct = () => {
                                     >
                                         Stock
                                     </th>
-                                    <th
-                                        scope="col"
-                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                    >
-                                        Sold
-                                    </th>
+                                
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -296,7 +296,7 @@ const ManageProduct = () => {
                                             <div className="text-sm text-gray-900">{product.soldItems}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <Link to={`/products/edit/${product.id}`} className="text-pink-600 hover:text-pink-900 mr-4">
+                                            <Link to={`edit/${product.id}`} className="text-pink-600 hover:text-pink-900 mr-4">
                                                 <Edit className="h-5 w-5" />
                                             </Link>
                                             <button onClick={() => handleDelete(product.id)} className="text-red-600 hover:text-red-900">
@@ -357,6 +357,7 @@ const ManageProduct = () => {
             </div>
         </div>
     )
-};
+}
 
-export default ManageProduct;
+export default ManageProduct
+

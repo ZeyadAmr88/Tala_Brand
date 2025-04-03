@@ -1,32 +1,27 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-
+import { jwtDecode } from "jwt-decode"; 
 export let CartContext = createContext();
 
-// eslint-disable-next-line react/prop-types
 export default function CartContextProvider({ children }) {
-    let headers = {
-        token: localStorage.getItem('userToken')
-    };
+    let token = localStorage.getItem("userToken");
+    console.log("Token being used:", token); 
+    let userData = token ? jwtDecode(token) : null;
+    let isAdmin = userData?.role === "admin" || userData?.isAdmin === true;
+
+    let headers = { token };
 
     const [cartItems, setCartItems] = useState(null);
 
-    async function createCart(token) {
-        if (!token) {
-            console.error("Cannot create cart: Token is missing")
-            return false
-        }
+    async function createCart() {
+        if (!token || isAdmin) return false;
 
         try {
             const response = await axios.post(
                 `https://tala-store.vercel.app/cart/create`,
-                {}, 
-                {
-                    headers: {
-                        token: token, 
-                    },
-                }
+                {},
+                { headers }
             );
             console.log("Cart created successfully", response.data);
             return true;
@@ -36,15 +31,15 @@ export default function CartContextProvider({ children }) {
         }
     }
 
-    // eslint-disable-next-line no-unused-vars
     async function addToCart(productId, quantity) {
+        if (isAdmin) return; // ✅ منع Admin من إضافة منتجات للسلة
+
         try {
             let { data } = await axios.post(
                 `https://tala-store.vercel.app/cart`,
-                { "productId": productId, "quantity": 1 },
+                { productId, quantity },
                 { headers }
             );
-
             toast.success(data.message, { duration: 1000 });
             setCartItems(data.cart || data);
         } catch (error) {
@@ -53,61 +48,61 @@ export default function CartContextProvider({ children }) {
     }
 
     async function updateProductCount(productId, quantity) {
+        if (isAdmin) return; 
+
         try {
             let { data } = await axios.patch(
                 `https://tala-store.vercel.app/cart`,
                 { productId, quantity },
                 { headers }
             );
-
             setCartItems(data.cart || data);
             return data;
         } catch (error) {
             console.error("Error updating product count:", error);
         }
     }
+
     async function deleteProduct(productId) {
+        if (isAdmin) return; 
+
         try {
             let { data } = await axios.patch(
                 `https://tala-store.vercel.app/cart/${productId}`,
                 {},
                 { headers }
             );
-
             return data;
         } catch (error) {
             console.error("Error deleting product:", error);
         }
     }
 
-    // eslint-disable-next-line no-unused-vars
-    async function getCartItems(token) {
-        console.log("token",headers.token)
-        let { data } = await axios.get(
-            `https://tala-store.vercel.app/cart`,
-            
-            {
-                headers: {
-                    token: headers.token, 
-                },
-            }
-        );
-        return data;
+    async function getCartItems() {
+        if (!token || isAdmin) return null; 
 
+        try {
+            let { data } = await axios.get(
+                `https://tala-store.vercel.app/cart`,
+                { headers }
+            );
+            return data;
+        } catch (error) {
+            console.error("Error fetching cart:", error);
+            return null;
+        }
     }
 
-
     useEffect(() => {
-        if (headers.token) {
-            
-            getCartItems(headers.token);
+        if (token && !isAdmin) {
+            getCartItems();
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [headers.token]);
+    }, [token, isAdmin]);
 
     return (
         <CartContext.Provider value={{
-            addToCart, getCartItems, cartItems, setCartItems, updateProductCount, deleteProduct, createCart
+            addToCart, getCartItems, cartItems, setCartItems,
+            updateProductCount, deleteProduct, createCart
         }}>
             {children}
         </CartContext.Provider>

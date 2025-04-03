@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "a51233cc-93a0-4bf3-ba13-14e0f960bb55",
+		"_postman_id": "70dfe95d-6377-4221-b18c-b875a4d56a5e",
 		"name": "TalaStore",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "26559151",
-		"_collection_link": "https://e-commerce-ezzat.postman.co/workspace/New-Team-Workspace~8e78f715-f809-4d5d-976e-d7be9b634979/collection/26559151-a51233cc-93a0-4bf3-ba13-14e0f960bb55?action=share&source=collection_link&creator=26559151"
+		"_collection_link": "https://e-commerce-ezzat.postman.co/workspace/E-commerce-(Ezzat)-Workspace~98f759d4-294a-43aa-8072-60e099d227c8/collection/26559151-70dfe95d-6377-4221-b18c-b875a4d56a5e?action=share&source=collection_link&creator=26559151"
 	},
 	"item": [
 		{
@@ -24,7 +24,16 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/auth/signup"
+						"url": {
+							"raw": "{{baseUrl}}/auth/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
 					},
 					"response": []
 				},
@@ -35,14 +44,23 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"yousef\",\r\n    \"email\":\"yousefsalah1242003@gmail.com\",\r\n    \"password\":\"123\",\r\n    \"confirmPassword\":\"123\"\r\n}",
+							"raw": "{\r\n    \"email\":\"yousefsalah1242003@gmail.com\",\r\n    \"password\":\"123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{baseUrl}}/auth/signup"
+						"url": {
+							"raw": "{{baseUrl}}/auth/signin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"signin"
+							]
+						}
 					},
 					"response": []
 				},
@@ -60,7 +78,16 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/auth/signup"
+						"url": {
+							"raw": "{{baseUrl}}/auth/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
 					},
 					"response": []
 				}
@@ -95,7 +122,15 @@
 								}
 							]
 						},
-						"url": "{{baseUrl}}/category"
+						"url": {
+							"raw": "{{baseUrl}}/category",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category"
+							]
+						}
 					},
 					"response": []
 				},
@@ -125,7 +160,16 @@
 								}
 							]
 						},
-						"url": "{{baseUrl}}/category/67d6de35f3eee66136931d1a"
+						"url": {
+							"raw": "{{baseUrl}}/category/67d6de35f3eee66136931d1a",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"67d6de35f3eee66136931d1a"
+							]
+						}
 					},
 					"response": []
 				},
@@ -155,7 +199,16 @@
 								}
 							]
 						},
-						"url": "{{baseUrl}}/category/67d6de35f3eee66136931d1a"
+						"url": {
+							"raw": "{{baseUrl}}/category/67d6de35f3eee66136931d1a",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"67d6de35f3eee66136931d1a"
+							]
+						}
 					},
 					"response": []
 				},
@@ -164,7 +217,9 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": ""
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				},
@@ -173,7 +228,16 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{baseUrl}}/category/67d6de35f3eee66136931d1a"
+						"url": {
+							"raw": "{{baseUrl}}/category/67d6de35f3eee66136931d1a",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category",
+								"67d6de35f3eee66136931d1a"
+							]
+						}
 					},
 					"response": []
 				},
@@ -212,7 +276,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3ZDY0ZDUwN2FkMzgwZGQ1ZGI3ZGRjZSIsImlhdCI6MTc0MjEzNDcxMn0.ZJ0GUiwLt9odPL_WysckkWF62TpZyfJYqF3zr6g7PSQ",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvaGFteUBnbWFpbC5jb20iLCJpZCI6IjY3ZGE0NGZmNzc1MDBkZjlmOTc1ZDgzOSIsImlhdCI6MTc0Mjg1NTM2NH0.VXJtFYHXBwaezOOpKvPr5urPczRyKlOZUgw84TrJ8Rw",
 								"type": "text"
 							}
 						],
@@ -221,7 +285,7 @@
 							"formdata": [
 								{
 									"key": "name",
-									"value": "Wireless Headphones",
+									"value": "ِahoo ya #m tohamy",
 									"type": "text"
 								},
 								{
@@ -246,7 +310,7 @@
 								},
 								{
 									"key": "category",
-									"value": "67d6e22c977d68d11f76b66b",
+									"value": "67da452577500df9f975d841",
 									"type": "text"
 								},
 								{
@@ -258,25 +322,21 @@
 									"key": "subImages",
 									"type": "file",
 									"src": [
-										"postman-cloud:///1efee862-fc34-4750-b57c-1814eff7442e",
-										"postman-cloud:///1ef92911-38d1-4120-8cfb-69762f4a5586"
+										"postman-cloud:///1ef92911-38d1-4120-8cfb-69762f4a5586",
+										"/C:/Users/youse/Downloads/ramadan-white-background-fozps.jpg"
 									]
-								},
-								{
-									"key": "subcategory",
-									"value": "670f37599855aea5bcc0abc2",
-									"type": "text",
-									"disabled": true
-								},
-								{
-									"key": "brand",
-									"value": "671334f3614145b21803ebf2",
-									"type": "text",
-									"disabled": true
 								}
 							]
 						},
-						"url": "{{host}}/product"
+						"url": {
+							"raw": "{{host}}/product",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"product"
+							]
+						}
 					},
 					"response": []
 				},
@@ -287,7 +347,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3ZDY0ZDUwN2FkMzgwZGQ1ZGI3ZGRjZSIsImlhdCI6MTc0MjEzNDcxMn0.ZJ0GUiwLt9odPL_WysckkWF62TpZyfJYqF3zr6g7PSQ",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRvaGFteUBnbWFpbC5jb20iLCJpZCI6IjY3ZGE0NGZmNzc1MDBkZjlmOTc1ZDgzOSIsImlhdCI6MTc0Mjg1NTM2NH0.VXJtFYHXBwaezOOpKvPr5urPczRyKlOZUgw84TrJ8Rw",
 								"type": "text"
 							}
 						],
@@ -296,38 +356,44 @@
 							"formdata": [
 								{
 									"key": "name",
-									"value": "Wireless Headphones",
+									"value": "ِahoo ya 3m tohamy",
 									"type": "text"
 								},
 								{
 									"key": "description",
 									"value": "High-quality wireless headphones with noise cancellation.",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "avaliableItems",
 									"value": "50",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "soldItems",
 									"value": "10",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "price",
 									"value": "200",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "category",
 									"value": "67d6e22c977d68d11f76b66b",
-									"type": "text"
+									"type": "text",
+									"disabled": true
 								},
 								{
 									"key": "defaultImage",
 									"type": "file",
-									"src": "postman-cloud:///1efe4988-498e-47f0-9f75-fef41d7da583"
+									"src": "postman-cloud:///1efe4988-498e-47f0-9f75-fef41d7da583",
+									"disabled": true
 								},
 								{
 									"key": "subImages",
@@ -335,7 +401,8 @@
 									"src": [
 										"postman-cloud:///1efee862-fc34-4750-b57c-1814eff7442e",
 										"postman-cloud:///1ef92911-38d1-4120-8cfb-69762f4a5586"
-									]
+									],
+									"disabled": true
 								},
 								{
 									"key": "subcategory",
@@ -351,7 +418,16 @@
 								}
 							]
 						},
-						"url": "{{host}}/product"
+						"url": {
+							"raw": "{{host}}/product/67e1ddb3926a54d7217cc7ac",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"product",
+								"67e1ddb3926a54d7217cc7ac"
+							]
+						}
 					},
 					"response": []
 				},
@@ -426,7 +502,16 @@
 								}
 							]
 						},
-						"url": "{{host}}/product/67d6ed39e4dc09c3c0bdcbff"
+						"url": {
+							"raw": "{{host}}/product/67d6ed39e4dc09c3c0bdcbff",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"product",
+								"67d6ed39e4dc09c3c0bdcbff"
+							]
+						}
 					},
 					"response": []
 				},
@@ -435,7 +520,15 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{host}}/product"
+						"url": {
+							"raw": "{{host}}/product",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"product"
+							]
+						}
 					},
 					"response": []
 				},
@@ -444,7 +537,15 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{host}}/product"
+						"url": {
+							"raw": "{{host}}/product",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"product"
+							]
+						}
 					},
 					"response": []
 				},
@@ -453,7 +554,9 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": ""
+						"url": {
+							"raw": ""
+						}
 					},
 					"response": []
 				}
@@ -482,7 +585,15 @@
 								}
 							}
 						},
-						"url": "{{host}}/cart"
+						"url": {
+							"raw": "{{host}}/cart",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cart"
+							]
+						}
 					},
 					"response": []
 				},
@@ -493,20 +604,29 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWthc2FsYWg0QGdtYWlsLmNvbSIsImlkIjoiNjcxZGM0NWVhYzk5MzhkOWNhYmI4OWYyIiwiaWF0IjoxNzMwMDA0MzMxfQ.plzWqWcDuKw_DOxdM1Al_aBley4nPVi4C_TR9RorunM",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3ZGE0NDhhNzc1MDBkZjlmOTc1ZDgyMyIsImlhdCI6MTc0Mjk0MDY4OH0.aNiCOOmclvRew6cpnS6FXHMM66-MITxeUCjQNdazC4k",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"productId\": \"671ce1610a1baf56b9185f09\",\r\n    \"quantity\":2\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{host}}/cart"
+						"url": {
+							"raw": "{{host}}/cart/create",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cart",
+								"create"
+							]
+						}
 					},
 					"response": []
 				},
@@ -517,11 +637,19 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3ZDY0ZDUwN2FkMzgwZGQ1ZGI3ZGRjZSIsImlhdCI6MTc0MjEzNDcxMn0.ZJ0GUiwLt9odPL_WysckkWF62TpZyfJYqF3zr6g7PSQ",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3ZGE0NDhhNzc1MDBkZjlmOTc1ZDgyMyIsImlhdCI6MTc0Mjk0MDY4OH0.aNiCOOmclvRew6cpnS6FXHMM66-MITxeUCjQNdazC4k",
 								"type": "text"
 							}
 						],
-						"url": "{{host}}/cart"
+						"url": {
+							"raw": "{{host}}/cart",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cart"
+							]
+						}
 					},
 					"response": []
 				},
@@ -545,7 +673,15 @@
 								}
 							}
 						},
-						"url": "{{host}}/cart"
+						"url": {
+							"raw": "{{host}}/cart",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cart"
+							]
+						}
 					},
 					"response": []
 				},
@@ -569,7 +705,16 @@
 								}
 							}
 						},
-						"url": "{{host}}/cart/671ce1610a1baf56b9185f09"
+						"url": {
+							"raw": "{{host}}/cart/671ce1610a1baf56b9185f09",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cart",
+								"671ce1610a1baf56b9185f09"
+							]
+						}
 					},
 					"response": []
 				},
@@ -593,7 +738,16 @@
 								}
 							}
 						},
-						"url": "{{host}}/cart/clear"
+						"url": {
+							"raw": "{{host}}/cart/clear",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"cart",
+								"clear"
+							]
+						}
 					},
 					"response": []
 				}

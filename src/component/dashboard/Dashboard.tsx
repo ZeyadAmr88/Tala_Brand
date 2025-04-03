@@ -18,9 +18,13 @@ interface DashboardStats {
 
 const Dashboard = () => {
     const navigate = useNavigate()
-    const handleCreateProduct = () => {
+    const handleManageProduct = () => {
         // Navigate to the create product page
-       navigate ("manage/create")
+        navigate("manage")
+    }
+    const handleManageCategory = () => {
+        // Navigate to the create product page
+        navigate("manage_category")
     }
     const [stats, setStats] = useState<DashboardStats>({
         totalProducts: 0,
@@ -57,14 +61,7 @@ const Dashboard = () => {
             } catch (error) {
                 console.error("Error fetching dashboard data:", error)
                 // Set some mock data in case of error
-                setStats({
-                    totalProducts: 45,
-                    totalCategories: 8,
-                    totalOrders: 25,
-                    totalCustomers: 120,
-                    revenue: 15000,
-                    recentProducts: [],
-                })
+               
             } finally {
                 setLoading(false)
             }
@@ -86,64 +83,13 @@ const Dashboard = () => {
             <div>
                 <h1 className="text-2xl font-semibold text-gray-900 ">Dashboard</h1>
                 <p className="mt-1 text-sm text-gray-500">Welcome to your TalaStore admin dashboard</p>
-                <button onClick={handleCreateProduct}>
-                    Create New Product
+                <button onClick={handleManageProduct} className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded mt-4 m-5">    
+                    Manage Products
                 </button>
-            </div>
-
-            {/* Stats Cards */}
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                <StatsCard
-                    title="Total Products"
-                    value={stats.totalProducts}
-                    icon={Package}
-                    color="bg-blue-500"
-                    link="/products"
-                />
-                <StatsCard
-                    title="Total Categories"
-                    value={stats.totalCategories}
-                    icon={Tag}
-                    color="bg-green-500"
-                    link="/categories"
-                />
-                <StatsCard
-                    title="Total Orders"
-                    value={stats.totalOrders}
-                    icon={ShoppingCart}
-                    color="bg-yellow-500"
-                    link="/orders"
-                />
-                <StatsCard
-                    title="Total Customers"
-                    value={stats.totalCustomers}
-                    icon={Users}
-                    color="bg-purple-500"
-                    link="/customers"
-                />
-            </div>
-
-            {/* Revenue Chart */}
-            <div className="bg-white rounded-lg shadow p-6">
-                <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-medium text-gray-900">Revenue Overview</h2>
-                    <div className="flex items-center space-x-2">
-                        <span className="text-2xl font-bold text-gray-900">${stats.revenue.toLocaleString()}</span>
-                        <span className="flex items-center text-sm font-medium text-green-600">
-                            <TrendingUp className="h-4 w-4 mr-1" />
-                            12%
-                        </span>
-                    </div>
-                </div>
-                <div className="h-64 flex items-center justify-center bg-gray-50 rounded">
-                    <div className="text-center">
-                        <DollarSign className="h-12 w-12 text-gray-400 mx-auto" />
-                        <p className="mt-2 text-sm text-gray-500">Revenue chart will be displayed here</p>
-                    </div>
-                </div>
-            </div>
-
-            {/* Recent Products */}
+                <button onClick={handleManageCategory} className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded mt-4">
+                    Manage Categories
+                </button>
+            </div>    
             <div className="bg-white rounded-lg shadow overflow-hidden">
                 <div className="px-6 py-4 border-b border-gray-200">
                     <h2 className="text-lg font-medium text-gray-900">Recent Products</h2>
@@ -201,34 +147,7 @@ interface StatsCardProps {
     link: string
 }
 
-const StatsCard = ({ title, value, icon: Icon, color, link }: StatsCardProps) => {
-    return (
-        <Link to={link} className="block">
-            <div className="bg-white overflow-hidden shadow rounded-lg">
-                <div className="p-5">
-                    <div className="flex items-center">
-                        <div className={`flex-shrink-0 rounded-md p-3 ${color}`}>
-                            <Icon className="h-6 w-6 text-white" />
-                        </div>
-                        <div className="ml-5 w-0 flex-1">
-                            <dl>
-                                <dt className="text-sm font-medium text-gray-500 truncate">{title}</dt>
-                                <dd>
-                                    <div className="text-lg font-medium text-gray-900">{value.toLocaleString()}</div>
-                                </dd>
-                            </dl>
-                        </div>
-                    </div>
-                </div>
-                <div className="bg-gray-50 px-5 py-3">
-                    <div className="text-sm">
-                        <div className="font-medium text-pink-600 hover:text-pink-500">View all</div>
-                    </div>
-                </div>
-            </div>
-        </Link>
-    )
-}
 
-export default Dashboard
+
+export default Dashboard;
 
