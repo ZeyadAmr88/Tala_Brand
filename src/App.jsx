@@ -23,6 +23,7 @@ import ProductForm from './component/Products/ProductForm'
 import ManageProduct from './component/Products/ManageProduct'
 import ManageCategory from './component/Category/ManageCategory'
 import CategoryForm from './component/Category/CategoryForm'
+import ProtectedAdminRoute from './component/ProtectedRoute/ProtectedAdminRoute'
 
 let query = new QueryClient()
 
@@ -39,14 +40,13 @@ let routes = createBrowserRouter([
       { path: 'register', element: <Register /> },
       { path: 'login', element: <Login /> },
       { path: '*', element: <NotFound /> },
-      { path: 'dashboard', element: <Dashboard /> },
-      { path: 'dashboard/manage', element: <ManageProduct /> },
-      { path: 'dashboard/manage/create', element: <ProductForm /> },
-      { path: 'dashboard/manage_category', element: <ManageCategory /> },
-      { path: 'manage_category/new', element: <CategoryForm /> },
-      { path: "dashboard/manage/edit/:id", element: <ProductForm /> },
-      { path: 'dashboard/manage_category/edit/:id', element: <CategoryForm /> },
-
+      { path: 'dashboard', element: <ProtectedAdminRoute><Dashboard /></ProtectedAdminRoute> },
+      { path: 'dashboard/manage', element: <ProtectedAdminRoute><ManageProduct /></ProtectedAdminRoute> },
+      { path: 'dashboard/manage/create', element: <ProtectedAdminRoute><ProductForm /></ProtectedAdminRoute> },
+      { path: 'dashboard/manage/edit/:id', element: <ProtectedAdminRoute><ProductForm /></ProtectedAdminRoute> },
+      { path: 'dashboard/manage_category', element: <ProtectedAdminRoute><ManageCategory /></ProtectedAdminRoute> },
+      { path: 'manage_category/new', element: <ProtectedAdminRoute><CategoryForm /></ProtectedAdminRoute> },
+      { path: 'dashboard/manage_category/edit/:id', element: <ProtectedAdminRoute><CategoryForm /></ProtectedAdminRoute> },
 
     ]
   }
