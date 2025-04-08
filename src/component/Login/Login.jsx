@@ -21,15 +21,21 @@ export default function Login() {
     try {
       setLoading(true);
       const { data } = await axios.post(`https://tala-store.vercel.app/auth/signin`, values);
+      console.log("🟡 API Response:", data); // أطبع الـ response بالكامل
+      console.log("🟢 data.results:", data.results);
+      
 
       if (data.results.token) {
         localStorage.setItem("userToken", data.results.token);
-        setUserData(data.results.token);
+        localStorage.setItem("userRole", data.role); // ✅ نحفظ الدور في localStorage
+
+        setUserData({
+          token: data.results.token,
+          role: data.role, // ✅ نحدث الـ context بالدور كمان
+        });
 
         try {
-          if (data.results.token) {
-            await createCart(data.results.token);
-          }
+          await createCart(data.results.token);
         } catch (cartError) {
           console.error("Error fetching or creating cart:", cartError);
         }
@@ -37,6 +43,7 @@ export default function Login() {
         setTimeout(() => {
           navigate("/");
         }, 100);
+      
       } else {
         setApiError("Login successful but no token received");
       }
@@ -62,7 +69,7 @@ export default function Login() {
     validationSchema: validationSchema,
     onSubmit: handleLogin,
   })
-
+ 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-md rounded-lg">

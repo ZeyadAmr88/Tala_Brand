@@ -1,21 +1,25 @@
 import axios from "axios";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useContext } from "react";
 import toast from "react-hot-toast";
-import { jwtDecode } from "jwt-decode"; 
+import { UserContext } from "./UserContext"; // استيراد سياق المستخدم
+
 export let CartContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 export default function CartContextProvider({ children }) {
-    let token = localStorage.getItem("userToken");
-    console.log("Token being used:", token); 
-    let userData = token ? jwtDecode(token) : null;
-    let isAdmin = userData?.role === "admin" || userData?.isAdmin === true;
-
-    let headers = { token };
+    const { userData, isAdmin } = useContext(UserContext); // استخدام بيانات المستخدم وصلاحيات الأدمن
+    const token = userData?.token;
+    const headers = token ? { token } : {};
 
     const [cartItems, setCartItems] = useState(null);
 
     async function createCart() {
-        if (!token || isAdmin) return false;
+        if (!token || isAdmin) {
+            if (isAdmin) {
+                console.warn("Admin users don't have a cart.");
+            }
+            return false;
+        }
 
         try {
             const response = await axios.post(
@@ -32,10 +36,13 @@ export default function CartContextProvider({ children }) {
     }
 
     async function addToCart(productId, quantity) {
-        if (isAdmin) return; // ✅ منع Admin من إضافة منتجات للسلة
+        if (isAdmin) {
+            toast.error("Admins are not allowed to add items to cart");
+            return;
+        }
 
         try {
-            let { data } = await axios.post(
+            const { data } = await axios.post(
                 `https://tala-store.vercel.app/cart`,
                 { productId, quantity },
                 { headers }
@@ -48,10 +55,10 @@ export default function CartContextProvider({ children }) {
     }
 
     async function updateProductCount(productId, quantity) {
-        if (isAdmin) return; 
+        if (isAdmin) return;
 
         try {
-            let { data } = await axios.patch(
+            const { data } = await axios.patch(
                 `https://tala-store.vercel.app/cart`,
                 { productId, quantity },
                 { headers }
@@ -64,10 +71,10 @@ export default function CartContextProvider({ children }) {
     }
 
     async function deleteProduct(productId) {
-        if (isAdmin) return; 
+        if (isAdmin) return;
 
         try {
-            let { data } = await axios.patch(
+            const { data } = await axios.patch(
                 `https://tala-store.vercel.app/cart/${productId}`,
                 {},
                 { headers }
@@ -79,10 +86,10 @@ export default function CartContextProvider({ children }) {
     }
 
     async function getCartItems() {
-        if (!token || isAdmin) return null; 
+        if (!token || isAdmin) return null;
 
         try {
-            let { data } = await axios.get(
+            const { data } = await axios.get(
                 `https://tala-store.vercel.app/cart`,
                 { headers }
             );
@@ -95,14 +102,23 @@ export default function CartContextProvider({ children }) {
 
     useEffect(() => {
         if (token && !isAdmin) {
-            getCartItems();
+            getCartItems().then((data) => {
+                if (data) {
+                    setCartItems(data.cart || data);
+                }
+            });
         }
     }, [token, isAdmin]);
 
     return (
         <CartContext.Provider value={{
-            addToCart, getCartItems, cartItems, setCartItems,
-            updateProductCount, deleteProduct, createCart
+            addToCart,
+            getCartItems,
+            cartItems,
+            setCartItems,
+            updateProductCount,
+            deleteProduct,
+            createCart
         }}>
             {children}
         </CartContext.Provider>

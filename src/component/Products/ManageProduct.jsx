@@ -71,7 +71,7 @@ const ManageProduct = () => {
         }
 
         try {
-            const response = await axios.delete(`https://tala-store.vercel.app/product/${id} `, {
+            const response = await axios.delete(`https://tala-store.vercel.app/product/${id}`, {
                 headers: {
                     token: localStorage.getItem("userToken"),
                 },
@@ -102,7 +102,7 @@ const ManageProduct = () => {
     }
 
     return (
-        <div className="space-y-6 mt-24 ">
+        <div className="space-y-6 mt-24 mx-10">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
                 <div>
                     <h1 className="text-2xl font-semibold text-gray-900">Products</h1>
