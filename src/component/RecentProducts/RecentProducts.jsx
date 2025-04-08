@@ -31,11 +31,9 @@ export default function RecentProducts({ product }) {
             </Link>
             <button
                 onClick={() => {
-                    addToCart(product?._id)
-        
+                    addToCart(product?._id, 1)
                 }}
                 className="w-full bg-main text-white rounded-md py-2 mt-2 transition hover:bg-opacity-90"
-
             >
                 ADD TO CART
             </button>
