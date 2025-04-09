@@ -53,6 +53,17 @@ export default function CartContextProvider({ children }) {
             console.error("Error adding to cart:", error);
         }
     }
+    const refreshCart = async () => {
+        try {
+            const { data } = await axios.get(`https://tala-store.vercel.app/cart`, {
+                headers,
+            });
+            setCartItems(data.cart || data);
+        } catch (error) {
+            console.error("Error refreshing cart:", error);
+        }
+    };
+
 
     async function updateProductCount(productId, quantity) {
         if (isAdmin) return;
@@ -87,13 +98,16 @@ export default function CartContextProvider({ children }) {
 
     async function getCartItems() {
         if (!token || isAdmin) return null;
-
+        console.log("Fetching cart with token:", token);
         try {
             const { data } = await axios.get(
                 `https://tala-store.vercel.app/cart`,
                 { headers }
+                
             );
+            console.log("Response =>", data.data);
             return data;
+            
         } catch (error) {
             console.error("Error fetching cart:", error);
             return null;
@@ -118,7 +132,8 @@ export default function CartContextProvider({ children }) {
             setCartItems,
             updateProductCount,
             deleteProduct,
-            createCart
+            createCart,
+            refreshCart
         }}>
             {children}
         </CartContext.Provider>

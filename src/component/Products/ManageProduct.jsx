@@ -15,21 +15,23 @@ const ManageProduct = () => {
     const [showFilters, setShowFilters] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState("")
     const [categories, setCategories] = useState([])
-    const [priceRange, setPriceRange] = useState({ min: "", max: "" })
+    // Add a filter trigger state to force re-fetching
+    const [filterTrigger, setFilterTrigger] = useState(0)
 
     const fetchProducts = async () => {
         setLoading(true)
         try {
             const params = new URLSearchParams()
             if (searchTerm) params.append("search", searchTerm)
-            if (selectedCategory) params.append("category", selectedCategory)
-            if (priceRange.min) params.append("minPrice", priceRange.min)
-            if (priceRange.max) params.append("maxPrice", priceRange.max)
+            if (selectedCategory) params.append("slug", selectedCategory)
             params.append("page", currentPage.toString())
+
+            console.log("Fetching products with params:", params.toString())
 
             const response = await axios.get(`https://tala-store.vercel.app/product?${params.toString()}`)
 
             if (response.data.success) {
+                console.log("Products fetched:", response.data.products?.length || 0)
                 setProducts(response.data.products || [])
                 setTotalPages(response.data.totalPages || Math.ceil(response.data.totalCount / 10) || 1)
             } else {
@@ -54,15 +56,21 @@ const ManageProduct = () => {
         }
     }
 
+    // Only depend on currentPage and filterTrigger
     useEffect(() => {
         fetchProducts()
+        
+    }, [currentPage, filterTrigger])
+
+    useEffect(() => {
         fetchCategories()
-    }, [currentPage])
+    }, [])
 
     const handleSearch = (e) => {
         e.preventDefault()
         setCurrentPage(1)
-        fetchProducts()
+        // Increment filter trigger to force re-fetch
+        setFilterTrigger((prev) => prev + 1)
     }
 
     const handleDelete = async (id) => {
@@ -90,16 +98,25 @@ const ManageProduct = () => {
 
     const applyFilters = () => {
         setCurrentPage(1)
-        fetchProducts()
+        // Increment filter trigger to force re-fetch
+        setFilterTrigger((prev) => prev + 1)
+        toast.success("Filters applied")
     }
 
     const clearFilters = () => {
         setSelectedCategory("")
-        setPriceRange({ min: "", max: "" })
         setSearchTerm("")
         setCurrentPage(1)
-        fetchProducts()
+        // Increment filter trigger to force re-fetch
+        setFilterTrigger((prev) => prev + 1)
+        toast.success("Filters cleared")
     }
+
+    // Get the selected category name for display
+    const selectedCategoryName = selectedCategory
+        ? categories.find((cat) => cat.slug === selectedCategory)?.name || "Selected Category"
+        : "";
+
 
     return (
         <div className="space-y-6 mt-24 mx-10">
@@ -141,9 +158,9 @@ const ManageProduct = () => {
                         >
                             <Filter className="h-4 w-4 mr-2" />
                             Filters
-                            {(selectedCategory || priceRange.min || priceRange.max) && (
+                            {selectedCategory && (
                                 <span className="ml-1 bg-pink-100 text-pink-800 text-xs font-semibold px-2 py-0.5 rounded-full">
-                                    Active
+                                    {selectedCategoryName}
                                 </span>
                             )}
                         </button>
@@ -159,7 +176,7 @@ const ManageProduct = () => {
                                     Clear Filters
                                 </button>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 gap-4">
                                 <div>
                                     <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
                                         Category
@@ -172,37 +189,11 @@ const ManageProduct = () => {
                                     >
                                         <option value="">All Categories</option>
                                         {categories.map((category) => (
-                                            <option key={category.id} value={category.id}>
+                                            <option key={category._id} value={category.slug}>
                                                 {category.name}
                                             </option>
                                         ))}
                                     </select>
-                                </div>
-                                <div>
-                                    <label htmlFor="minPrice" className="block text-sm font-medium text-gray-700 mb-1">
-                                        Min Price
-                                    </label>
-                                    <input
-                                        type="number"
-                                        id="minPrice"
-                                        className="block w-full pl-3 pr-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm rounded-md"
-                                        placeholder="Min Price"
-                                        value={priceRange.min}
-                                        onChange={(e) => setPriceRange({ ...priceRange, min: e.target.value })}
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="maxPrice" className="block text-sm font-medium text-gray-700 mb-1">
-                                        Max Price
-                                    </label>
-                                    <input
-                                        type="number"
-                                        id="maxPrice"
-                                        className="block w-full pl-3 pr-3 py-2 text-base border-gray-300 focus:outline-none focus:ring-pink-500 focus:border-pink-500 sm:text-sm rounded-md"
-                                        placeholder="Max Price"
-                                        value={priceRange.max}
-                                        onChange={(e) => setPriceRange({ ...priceRange, max: e.target.value })}
-                                    />
                                 </div>
                             </div>
                             <div className="mt-4 flex justify-end">
@@ -216,6 +207,20 @@ const ManageProduct = () => {
                         </div>
                     )}
                 </div>
+
+                {/* Current Filter Display */}
+                {selectedCategory && (
+                    <div className="px-4 py-2 bg-pink-50">
+                        <div className="flex items-center">
+                            <span className="text-sm text-pink-800">
+                                Filtered by category: <strong>{selectedCategoryName}</strong>
+                            </span>
+                            <button onClick={clearFilters} className="ml-2 text-pink-600 hover:text-pink-800">
+                                <X className="h-4 w-4" />
+                            </button>
+                        </div>
+                    </div>
+                )}
 
                 {/* Products Table */}
                 <div className="overflow-x-auto">
@@ -251,7 +256,7 @@ const ManageProduct = () => {
                                     >
                                         Stock
                                     </th>
-                                
+
                                     <th
                                         scope="col"
                                         className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -291,9 +296,6 @@ const ManageProduct = () => {
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm text-gray-900">{product.avaliableItems}</div>
-                                        </td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
-                                            <div className="text-sm text-gray-900">{product.soldItems}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <Link to={`edit/${product.id}`} className="text-pink-600 hover:text-pink-900 mr-4">
@@ -360,4 +362,3 @@ const ManageProduct = () => {
 }
 
 export default ManageProduct
-

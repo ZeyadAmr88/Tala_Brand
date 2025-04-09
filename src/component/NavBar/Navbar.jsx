@@ -18,7 +18,7 @@ const NavBar = () => {
   const location = useLocation()
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [searchVisible, setSearchVisible] = useState(false)
+  // const [searchVisible, setSearchVisible] = useState(false)
 
   const { userData, setUserData } = useContext(UserContext)
   const { cartItems } = useContext(CartContext)
@@ -118,6 +118,12 @@ const NavBar = () => {
                   )}
                 </NavLink>
               )}
+              <NavLink
+                to="/profile"
+                className="p-2 rounded-full text-white hover:bg-white/10 transition-colors"
+              >
+                <FaUserCircle className="text-xl" />
+              </NavLink>
 
               <button
                 onClick={logout}
@@ -127,12 +133,24 @@ const NavBar = () => {
               </button>
             </div>
           ) : (
-            <button
-              onClick={() => navigate("/login")}
-              className="text-white border border-white rounded-md px-4 py-1 hover:bg-white/10"
-            >
-              Login
-            </button>
+            <>
+              {location.pathname === "/login" && (
+                <button
+                  onClick={() => navigate("/register")}
+                  className="text-white border border-white rounded-md px-4 py-1 hover:bg-white/10"
+                >
+                  Register
+                </button>
+              )}
+              {location.pathname === "/register" && (
+                <button
+                  onClick={() => navigate("/login")}
+                  className="text-white border border-white rounded-md px-4 py-1 hover:bg-white/10"
+                >
+                  Login
+                </button>
+              )}
+            </>
           )}
 
           <button
@@ -195,7 +213,22 @@ const NavBar = () => {
             </>
           ) : (
             <div className="py-2 text-center text-white/80 text-sm">
-              Please login to see more options
+              {location.pathname === "/login" && (
+                <button
+                  onClick={() => navigate("/register")}
+                  className="w-full text-white border border-white rounded-md px-4 py-1 hover:bg-white/10"
+                >
+                  Register
+                </button>
+              )}
+              {location.pathname === "/register" && (
+                <button
+                  onClick={() => navigate("/login")}
+                  className="w-full text-white border border-white rounded-md px-4 py-1 hover:bg-white/10"
+                >
+                  Login
+                </button>
+              )}
             </div>
           )}
         </div>

@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 
 export default function Cart() {
-  const { cartItems, updateProductCount, deleteProduct } = useContext(CartContext);
+  const { cartItems, updateProductCount, deleteProduct, refreshCart } = useContext(CartContext);
 
   // Update Product Quantity in Cart
   async function handleUpdateQuantity(productId, quantity) {
@@ -14,7 +14,10 @@ export default function Cart() {
       await updateProductCount(productId, quantity);
     } else {
       await handleDeleteProduct(productId);
+      return;
     }
+
+    await refreshCart(); // 👈 نضمن تحديث كل بيانات المنتج
     toast.success("Product Updated Successfully", { duration: 1000 });
   }
 
@@ -28,6 +31,7 @@ export default function Cart() {
       await deleteProduct(productId);
       // The cart state will be updated automatically by the context
       toast.success("Product deleted successfully 🗑️", { duration: 1000 });
+      await refreshCart();
     } catch (error) {
       console.error("Error deleting product:", error);
       toast.error(error.response?.data?.message || "Failed to delete product");
@@ -52,7 +56,7 @@ export default function Cart() {
             <div className="text-center">
               <div className="text-6xl mb-4">🛒</div>
               <h2 className="text-2xl font-semibold text-gray-800 mb-2">Your Cart is Empty</h2>
-              <p className="text-gray-600 mb-6">Looks like you haven't added any items to your cart yet.</p>
+              <p className="text-gray-600 mb-6">Looks like you haven&apos;t added any items to your cart yet.</p>
               <Link 
                 to="/" 
                 className="inline-block bg-main text-white px-6 py-3 rounded-lg font-medium hover:bg-pink-700 transition-colors duration-300"

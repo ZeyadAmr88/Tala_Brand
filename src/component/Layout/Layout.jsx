@@ -1,6 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/Navbar";
-import Footer from "../Footer/Footer";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../Context/UserContext";
 
@@ -24,7 +23,7 @@ export default function Layout() {
       <div>
         <Outlet />
       </div>
-      <Footer />
+      
     </>
   );
 }
