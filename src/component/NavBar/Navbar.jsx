@@ -39,6 +39,22 @@ const NavBar = () => {
   useEffect(() => {
     setIsOpen(false)
   }, [location])
+  
+  // Add animation classes to tailwind config
+  useEffect(() => {
+    const style = document.createElement('style')
+    style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .animate-fadeIn {
+        animation: fadeIn 0.3s ease-out forwards;
+      }
+    `
+    document.head.appendChild(style)
+    return () => document.head.removeChild(style)
+  }, [])
 
   const toggleMenu = () => setIsOpen(!isOpen)
 
@@ -56,30 +72,40 @@ const NavBar = () => {
           : "bg-[#ff42a0]"
       }`}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-20">
-          <NavLink to="/" className="h-full flex items-center group">
+      <div className="container mx-auto px-2 sm:px-4">
+        <div className="flex items-center h-20 relative">
+          <NavLink to="/" className="h-full flex items-center group flex-shrink-0">
             <div className="relative flex items-center">
               <div className="absolute -inset-1 bg-white/30 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative flex items-center p-2 rounded-lg border-2 border-white/30 bg-white/10 hover:bg-white/15 transition-all duration-300 shadow-lg group">
                 <img
                   src="/logo.png"
-                  className="h-14 md:h-16 w-auto object-contain transition-transform duration-500 group-hover:scale-115 drop-shadow-md group-hover:animate-bounce"
+                  className="h-10 sm:h-12 md:h-14 lg:h-16 w-auto object-contain transition-transform duration-500 group-hover:scale-110 drop-shadow-md group-hover:animate-bounce"
                   alt="Tala Brand"
                 />
                 <div className="hidden md:flex flex-col ml-3">
-                  <span className="text-white font-bold text-3xl tracking-wider group-hover:text-pink-300">TALA</span>
-                  <span className="text-pink-300 text-base tracking-widest -mt-1 font-medium group-hover:text-white">BRAND</span>
+                  <span className="text-white font-bold text-xl sm:text-2xl md:text-3xl tracking-wider group-hover:text-pink-300">TALA</span>
+                  <span className="text-pink-300 text-xs sm:text-sm md:text-base tracking-widest -mt-1 font-medium group-hover:text-white">BRAND</span>
                 </div>
               </div>
             </div>
           </NavLink>
 
-          <div className="hidden md:block">
-            <SearchBar />
-          </div>
+          {userData && location.pathname !== "/login" && location.pathname !== "/register" && (
+            <div className="hidden md:block w-full max-w-md mx-4">
+              <SearchBar />
+            </div>
+          )}
+          
+          <button
+            onClick={toggleMenu}
+            className="md:hidden ml-auto p-2 text-white hover:bg-white/10 rounded-lg transition-all duration-200"
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          </button>
 
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="hidden md:flex items-center space-x-1 lg:space-x-2 ml-auto">
             {userData && (
               <>
                 <NavLink
@@ -291,43 +317,133 @@ const NavBar = () => {
                 <FaSignOutAlt className="mr-3 text-lg" /> Sign Out
               </button>
             </>
-          ) : (
-            <div className="py-3 space-y-3">
-              <div className="w-full mb-3">
-                <SearchBar />
+          ) : null}
+          
+          {/* Mobile Menu */}
+          {isOpen && (
+            <div className="absolute top-full left-0 right-0 bg-[#ff42a0] shadow-lg p-4 md:hidden z-50 animate-fadeIn">
+              <div className="py-3 space-y-4">
+                {userData ? (
+                  <>
+                    <NavLink
+                      to="/"
+                      end
+                      className={({ isActive }) =>
+                        `flex items-center px-3 py-3 rounded-md text-white font-medium ${isActive ? "bg-white/20 shadow-inner" : "hover:bg-white/15 hover:shadow-inner"}`
+                      }
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <FaHome className="mr-3 text-lg" /> Home
+                    </NavLink>
+                    <NavLink
+                      to="/products"
+                      className={({ isActive }) =>
+                        `flex items-center px-3 py-3 rounded-md text-white font-medium ${isActive ? "bg-white/20 shadow-inner" : "hover:bg-white/15 hover:shadow-inner"}`
+                      }
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <FaBoxOpen className="mr-3 text-lg" /> Products
+                    </NavLink>
+                    {userData.role !== "admin" && (
+                      <>
+                        <NavLink
+                          to="/favorites"
+                          className={({ isActive }) =>
+                            `flex items-center px-3 py-3 rounded-md text-white font-medium ${isActive ? "bg-white/20 shadow-inner" : "hover:bg-white/15 hover:shadow-inner"}`
+                          }
+                          onClick={() => setIsOpen(false)}
+                        >
+                          <FaHeart className="mr-3 text-lg" /> Favorites
+                        </NavLink>
+                        <NavLink
+                          to="/cart"
+                          className={({ isActive }) =>
+                            `flex items-center px-3 py-3 rounded-md text-white font-medium ${isActive ? "bg-white/20 shadow-inner" : "hover:bg-white/15 hover:shadow-inner"}`
+                          }
+                          onClick={() => setIsOpen(false)}
+                        >
+                          <FaShoppingCart className="mr-3 text-lg" /> Cart
+                          {cartItems?.products?.length > 0 && (
+                            <span className="ml-2 bg-white text-[#ff42a0] text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                              {cartItems.products.length}
+                            </span>
+                          )}
+                        </NavLink>
+                      </>
+                    )}
+                    <NavLink
+                      to="/profile"
+                      className={({ isActive }) =>
+                        `flex items-center px-3 py-3 rounded-md text-white font-medium ${isActive ? "bg-white/20 shadow-inner" : "hover:bg-white/15 hover:shadow-inner"}`
+                      }
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <FaUserCircle className="mr-3 text-lg" /> Profile
+                    </NavLink>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsOpen(false);
+                      }}
+                      className="w-full flex items-center px-3 py-3 rounded-md text-white font-medium hover:bg-white/15 hover:shadow-inner text-left"
+                    >
+                      <FaSignOutAlt className="mr-3 text-lg" /> Sign Out
+                    </button>
+                    {userData && location.pathname !== "/login" && location.pathname !== "/register" && (
+                      <div className="w-full mt-3">
+                        <SearchBar />
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {location.pathname === "/login" && (
+                      <button
+                        onClick={() => {
+                          navigate("/register");
+                          setIsOpen(false);
+                        }}
+                        className="w-full text-white border-2 border-white/80 rounded-md px-4 py-2 hover:bg-white/15 transition-all duration-200 font-medium flex items-center justify-center"
+                      >
+                        <span>Create an Account</span> <span className="ml-1 text-xs">→</span>
+                      </button>
+                    )}
+                    {location.pathname === "/register" && (
+                      <button
+                        onClick={() => {
+                          navigate("/login");
+                          setIsOpen(false);
+                        }}
+                        className="w-full text-white border-2 border-white/80 rounded-md px-4 py-2 hover:bg-white/15 transition-all duration-200 font-medium flex items-center justify-center"
+                      >
+                        <span>Sign In</span> <span className="ml-1 text-xs">→</span>
+                      </button>
+                    )}
+                    {location.pathname !== "/login" && location.pathname !== "/register" && (
+                      <div className="space-y-3">
+                        <button
+                          onClick={() => {
+                            navigate("/login");
+                            setIsOpen(false);
+                          }}
+                          className="w-full text-white border-2 border-white/80 rounded-md px-4 py-2 hover:bg-white/15 transition-all duration-200 font-medium"
+                        >
+                          Sign In
+                        </button>
+                        <button
+                          onClick={() => {
+                            navigate("/register");
+                            setIsOpen(false);
+                          }}
+                          className="w-full bg-white text-pink-600 rounded-md px-4 py-2 hover:bg-white/90 transition-all duration-200 font-medium"
+                        >
+                          Create an Account
+                        </button>
+                      </div>
+                    )}
+                  </>
+                )}
               </div>
-              {location.pathname === "/login" && (
-                <button
-                  onClick={() => navigate("/register")}
-                  className="w-full text-white border-2 border-white/80 rounded-md px-4 py-2 hover:bg-white/15 transition-all duration-200 font-medium flex items-center justify-center"
-                >
-                  <span>Create an Account</span> <span className="ml-1 text-xs">→</span>
-                </button>
-              )}
-              {location.pathname === "/register" && (
-                <button
-                  onClick={() => navigate("/login")}
-                  className="w-full text-white border-2 border-white/80 rounded-md px-4 py-2 hover:bg-white/15 transition-all duration-200 font-medium flex items-center justify-center"
-                >
-                  <span>Sign In</span> <span className="ml-1 text-xs">→</span>
-                </button>
-              )}
-              {location.pathname !== "/login" && location.pathname !== "/register" && (
-                <div className="space-y-2">
-                  <button
-                    onClick={() => navigate("/login")}
-                    className="w-full text-white border-2 border-white/80 rounded-md px-4 py-2 hover:bg-white/15 transition-all duration-200 font-medium"
-                  >
-                    Sign In
-                  </button>
-                  <button
-                    onClick={() => navigate("/register")}
-                    className="w-full bg-white text-pink-600 rounded-md px-4 py-2 hover:bg-white/90 transition-all duration-200 font-medium"
-                  >
-                    Create an Account
-                  </button>
-                </div>
-              )}
             </div>
           )}
         </div>

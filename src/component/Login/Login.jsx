@@ -73,11 +73,11 @@ export default function Login() {
   })
  
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 bg-gray-50">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-xl rounded-xl border border-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen px-3 sm:px-6 lg:px-8 bg-gray-50 py-8 sm:py-12">
+      <div className="w-full max-w-md p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 bg-white shadow-xl rounded-xl border border-gray-100">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Welcome Back</h2>
-          <p className="text-gray-600 mb-6">Sign in to your Tala Brand account to access your profile and orders</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-2">Welcome Back</h2>
+          <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">Sign in to your Tala Brand account to access your profile and orders</p>
         </div>
 
         {apiError && (
@@ -166,12 +166,12 @@ export default function Login() {
             </p>
           </div>
           
-          <div className="bg-pink-50 p-4 rounded-lg border-l-4 border-pink-500 mt-4">
-            <h3 className="text-pink-800 font-medium text-sm mb-1">Secure Login</h3>
-            <p className="text-xs text-pink-700 mb-2">Your security is important to us. Please ensure:</p>
-            <ul className="text-xs text-pink-700 list-disc pl-4 space-y-1">
+          <div className="bg-pink-50 p-3 sm:p-4 rounded-lg border-l-4 border-pink-500 mt-4">
+            <h3 className="text-pink-800 font-medium text-xs sm:text-sm mb-1">Secure Login</h3>
+            <p className="text-xs text-pink-700 mb-1 sm:mb-2">Your security is important to us. Please ensure:</p>
+            <ul className="text-xs text-pink-700 list-disc pl-4 space-y-0.5 sm:space-y-1">
               <li>You're on the official Tala Brand website</li>
-              <li>Your password contains at least 8 characters with uppercase, lowercase, and numbers</li>
+              <li>Your password contains at least 6 characters with one uppercase letter</li>
               <li>You don't share your login credentials with others</li>
               <li>You log out when using shared devices</li>
             </ul>

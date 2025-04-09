@@ -124,26 +124,30 @@ export default function Register() {
     };
 
     return (
-      <div className="mt-2">
+      <div className="mt-1 sm:mt-2">
         <div className="flex space-x-1 mb-1">
           {[1, 2, 3, 4, 5].map((level) => (
             <div 
               key={level}
-              className={`h-1.5 w-1/5 rounded-full ${getColor(level)}`}
+              className={`h-1.5 sm:h-2 w-full rounded-sm ${getColor(level)}`}
             ></div>
           ))}
         </div>
-        <p className={`text-xs ${getStrengthTextColor()}`}>{getStrengthText()}</p>
+        {strength > 0 && (
+          <div className={`text-xs font-medium ${getStrengthTextColor()}`}>
+            {getStrengthText()}
+          </div>
+        )}
       </div>
     );
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 bg-gray-50">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white shadow-xl rounded-xl border border-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen px-3 sm:px-6 lg:px-8 bg-gray-50 py-8 sm:py-12">
+      <div className="w-full max-w-md p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 bg-white shadow-xl rounded-xl border border-gray-100">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h2>
-          <p className="text-gray-600 mb-6">Join Tala Brand's community today and enjoy exclusive offers</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-2">Create an Account</h2>
+          <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">Join Tala Brand to explore our exclusive collections</p>
         </div>
 
         {apiError && (
@@ -225,11 +229,6 @@ export default function Register() {
               >
                 <i className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'}`}></i>
               </button>
-              {formik.values.password && !formik.errors.password && (
-                <span className="absolute right-10 top-3 text-green-500">
-                  <i className="fas fa-check-circle"></i>
-                </span>
-              )}
             </div>
             {formik.errors.password && formik.touched.password && (
               <p className="mt-1 text-sm text-red-600">
@@ -242,23 +241,12 @@ export default function Register() {
             </p>
             <PasswordStrengthIndicator strength={passwordStrength} />
             {formik.values.password && !formik.errors.password && (
-              <div className="mt-2 text-xs text-gray-600">
-                <p className="flex items-center">
-                  <i className={`fas fa-check mr-1 ${/[A-Z]/.test(formik.values.password) ? 'text-green-500' : 'text-gray-400'}`}></i>
-                  <span>One uppercase letter</span>
-                </p>
-                <p className="flex items-center">
-                  <i className={`fas fa-check mr-1 ${/[a-z]/.test(formik.values.password) ? 'text-green-500' : 'text-gray-400'}`}></i>
-                  <span>One lowercase letter</span>
-                </p>
-                <p className="flex items-center">
-                  <i className={`fas fa-check mr-1 ${/\d/.test(formik.values.password) ? 'text-green-500' : 'text-gray-400'}`}></i>
-                  <span>One number</span>
-                </p>
-                <p className="flex items-center">
-                  <i className={`fas fa-check mr-1 ${formik.values.password.length >= 8 ? 'text-green-500' : 'text-gray-400'}`}></i>
-                  <span>At least 8 characters</span>
-                </p>
+              <div className="text-xs sm:text-sm text-gray-500 mt-1 mb-2">
+                <p>Password must contain:</p>
+                <ul className="list-disc pl-4 sm:pl-5 text-xs space-y-0.5">
+                  <li className={formik.values.password.length >= 6 ? 'text-green-500' : ''}>At least 6 characters</li>
+                  <li className={/[A-Z]/.test(formik.values.password) ? 'text-green-500' : ''}>At least one uppercase letter</li>
+                </ul>
               </div>
             )}
           </div>
@@ -309,14 +297,14 @@ export default function Register() {
             </label>
           </div>
           
-          <div className="bg-blue-50 p-4 rounded-lg border-l-4 border-blue-500 mt-4">
-            <h3 className="text-blue-800 font-medium text-sm mb-1">Why create an account?</h3>
-            <ul className="text-xs text-blue-700 list-disc pl-4 space-y-1">
+          <div className="bg-blue-50 p-3 sm:p-4 rounded-lg border-l-4 border-blue-500 mt-4">
+            <h3 className="text-blue-800 font-medium text-xs sm:text-sm mb-1">Why create an account?</h3>
+            <ul className="text-xs text-blue-700 list-disc pl-4 space-y-0.5 sm:space-y-1">
               <li>Access exclusive Tala Brand products and collections</li>
               <li>Save your favorite items for later</li>
               <li>Track your orders and delivery status</li>
-              <li>Receive personalized recommendations based on your preferences</li>
-              <li>Get early access to sales and special promotions</li>
+              <li>Receive personalized recommendations</li>
+              <li>Get early access to sales and promotions</li>
             </ul>
           </div>
 
