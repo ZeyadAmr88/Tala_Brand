@@ -310,15 +310,50 @@ const ManageProduct = () => {
                             </tbody>
                         </table>
                     ) : (
-                        <div className="text-center py-12">
-                            <div className="text-gray-500">No products found</div>
-                            <Link
-                                to="/products/new"
-                                className="mt-4 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
-                            >
-                                <Plus className="h-4 w-4 mr-2" />
-                                Add Product
-                            </Link>
+                        <div className="text-center py-8 sm:py-12 px-4">
+                            <div className="bg-white rounded-xl shadow-lg p-6 sm:p-8 max-w-md mx-auto border border-gray-100">
+                                <div className="relative mb-6 mx-auto">
+                                    <div className="absolute inset-0 bg-blue-100 rounded-full opacity-30 animate-pulse"></div>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-16 w-16 sm:h-20 sm:w-20 text-blue-500 mx-auto relative z-10"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+                                        />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3">No Products Found</h3>
+                                <p className="text-gray-600 mb-6 text-sm sm:text-base">
+                                    There are no products in your inventory yet. Get started by adding your first product.                                
+                                </p>
+                                <div className="space-y-3">
+                                    <Link
+                                        to="/dashboard/manage/create"
+                                        className="w-full inline-flex items-center justify-center px-5 py-3 border border-transparent rounded-lg shadow-sm text-sm sm:text-base font-medium text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition-all duration-300"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                        </svg>
+                                        Add Your First Product
+                                    </Link>
+                                    <Link
+                                        to="/dashboard"
+                                        className="w-full inline-flex items-center justify-center px-5 py-3 border border-gray-300 rounded-lg shadow-sm text-sm sm:text-base font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500 transition-all duration-300"
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                        </svg>
+                                        Return to Dashboard
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     )}
                 </div>

@@ -118,7 +118,40 @@ const Dashboard = () => {
                             </div>
                         ))
                     ) : (
-                        <div className="px-6 py-4 text-center text-sm text-gray-500">No products found</div>
+                        <div className="px-6 py-8 text-center">
+                            <div className="bg-white rounded-lg p-6 max-w-sm mx-auto border border-gray-100 shadow-sm">
+                                <div className="relative mb-4 mx-auto w-16 h-16">
+                                    <div className="absolute inset-0 bg-blue-100 rounded-full opacity-30 animate-pulse"></div>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        className="h-16 w-16 text-blue-500 mx-auto relative z-10"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                                        />
+                                    </svg>
+                                </div>
+                                <h3 className="text-lg font-bold text-gray-800 mb-2">No Products Available</h3>
+                                <p className="text-gray-600 mb-4 text-sm">
+                                    Add products to your inventory to see them displayed here.                                
+                                </p>
+                                <Link
+                                    to="/dashboard/manage/create"
+                                    className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                                    </svg>
+                                    Add Product
+                                </Link>
+                            </div>
+                        </div>
                     )}
                 </div>
                 <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">

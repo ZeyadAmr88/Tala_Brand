@@ -1,11 +1,15 @@
 "use client"
 
-import { useMemo, useState, useEffect, useRef } from "react"
+import { useMemo, useState, useEffect, useRef, useContext } from "react"
 import { useLocation, useSearchParams, useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import Loader from "../Loader/Loader"
 import RecentProducts from "../RecentProducts/RecentProducts"
+import NoProductsFound from "../common/NoProductsFound"
 import useProducts from "../../Hooks/useProducts"
+import { CartContext } from "../Context/CartContext.jsx"
+import { toast } from "react-toastify"
+import axios from "axios"
 
 export default function Products() {
   const { data, isLoading, error } = useProducts()
@@ -612,36 +616,21 @@ export default function Products() {
                   ))}
                 </div>
               ) : (
-                <div className="bg-white rounded-lg shadow-md p-8 text-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-16 w-16 text-gray-400 mx-auto mb-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                  <h3 className="text-xl font-medium text-gray-800 mb-2">No Products Found</h3>
-                  <p className="text-gray-600 mb-6">
-                    {searchQuery
-                      ? `No products found matching "${searchQuery}"`
-                      : selectedCategory !== "All categories"
-                        ? `No products found in the "${selectedCategory}" category`
-                        : "No products match your current filters"}
-                  </p>
-                  <a
-                    href="/products"
-                    className="px-4 py-2 bg-pink-500 text-white rounded-md hover:bg-pink-600 transition-colors inline-block"
-                  >
-                    Reset Filters
-                  </a>
-                </div>
+                <NoProductsFound 
+                  message={searchQuery
+                    ? `No products found matching ${searchQuery}`
+                    : selectedCategory !== "All categories"
+                      ? `No products found in the ${selectedCategory} category`
+                      : "No products match your current filters"
+                  }
+                  highlightedText={searchQuery || (selectedCategory !== "All categories" ? selectedCategory : "")}
+                  primaryButtonText="Reset Filters"
+                  primaryButtonLink="/products"
+                  secondaryButtonText="Browse Categories"
+                  secondaryButtonLink="/categories"
+                  iconType="smile"
+                  accentColor="pink"
+                />
               )}
 
               {/* Pagination */}

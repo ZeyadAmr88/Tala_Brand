@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import axios from 'axios';
+import NoProductsFound from '../common/NoProductsFound';
 
 export default function Category() {
   const { slug } = useParams();
@@ -62,8 +63,17 @@ export default function Category() {
       </div>
 
       {products.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-xl">No products found in this category.</p>
+        <div className="text-center py-8 sm:py-12 px-4">
+          <NoProductsFound 
+            message={`No products are currently available in the ${category.name} category.`}
+            highlightedText={category.name}
+            primaryButtonText="Browse Other Categories"
+            primaryButtonLink="/categories"
+            secondaryButtonText="Return to Home"
+            secondaryButtonLink="/"
+            iconType="category"
+            accentColor="pink"
+          />
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
