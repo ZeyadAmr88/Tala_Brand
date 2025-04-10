@@ -1,15 +1,12 @@
 "use client"
 
-import { useMemo, useState, useEffect, useRef, useContext } from "react"
+import { useMemo, useState, useEffect, useRef } from "react"
 import { useLocation, useSearchParams, useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
 import Loader from "../Loader/Loader"
 import RecentProducts from "../RecentProducts/RecentProducts"
 import NoProductsFound from "../common/NoProductsFound"
 import useProducts from "../../Hooks/useProducts"
-import { CartContext } from "../Context/CartContext.jsx"
-import { toast } from "react-toastify"
-import axios from "axios"
 
 export default function Products() {
   const { data, isLoading, error } = useProducts()
@@ -345,21 +342,7 @@ export default function Products() {
                     <h3 className="text-lg font-semibold mb-3 text-gray-800">Categories</h3>
                     <div className="space-y-2">
                       <div className="flex items-center">
-                        {/* <input
-                          type="radio"
-                          id="all-categories"
-                          name="category"
-                          checked={selectedCategory === "All categories"}
-                          onChange={(e) => {
-                            e.stopPropagation()
-                            setSelectedCategory("All categories")
-                            navigate("/products", { replace: true })
-                          }}
-                          className="h-4 w-4 text-pink-600 focus:ring-pink-500"
-                        />
-                        <label htmlFor="all-categories" className="ml-2 text-gray-700">
-                          All Categories
-                        </label> */}
+                    
                       </div>
                       {categories.map((category) => (
                         <div key={category} className="flex items-center">
@@ -538,7 +521,7 @@ export default function Products() {
                     )}
                     {(priceRange[0] > 0 || priceRange[1] < maxPrice) && (
                       <div className="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-sm flex items-center">
-                        Price: ${priceRange[0]} - ${priceRange[1]}
+                        Price: {priceRange[0]} - {priceRange[1]}
                         <button
                           onClick={() => setPriceRange([0, maxPrice])}
                           className="ml-2 focus:outline-none"
