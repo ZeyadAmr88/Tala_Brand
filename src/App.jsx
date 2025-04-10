@@ -1,4 +1,3 @@
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
 import Layout from './component/Layout/Layout'
@@ -24,6 +23,8 @@ import ManageProduct from './component/Products/ManageProduct'
 import ManageCategory from './component/Category/ManageCategory'
 import CategoryForm from './component/Category/CategoryForm'
 import ProtectedAdminRoute from './component/ProtectedRoute/ProtectedAdminRoute'
+import { FavoritesProvider } from './component/Context/FavoritesContext'
+import Favorites from './component/Favorites/Favorites'
 
 let query = new QueryClient()
 
@@ -32,6 +33,7 @@ let routes = createBrowserRouter([
     path: '', element: <Layout />, children: [
       { index: true, element: <ProtectedRoute> <Home /></ProtectedRoute> },
       { path: 'cart', element: <ProtectedRoute> <Cart /></ProtectedRoute> },
+      { path: 'favorites', element: <ProtectedRoute><Favorites /></ProtectedRoute> },
       { path: 'categories', element: <ProtectedRoute><Category /></ProtectedRoute> },
       { path: 'products', element: <ProtectedRoute><Products /></ProtectedRoute> },
       { path: 'productdetails/:id', element: <ProtectedRoute><ProductDetails /></ProtectedRoute> },
@@ -47,7 +49,6 @@ let routes = createBrowserRouter([
       { path: 'dashboard/manage_category', element: <ProtectedAdminRoute><ManageCategory /></ProtectedAdminRoute> },
       { path: 'manage_category/new', element: <ProtectedAdminRoute><CategoryForm /></ProtectedAdminRoute> },
       { path: 'dashboard/manage_category/edit/:id', element: <ProtectedAdminRoute><CategoryForm /></ProtectedAdminRoute> },
-
     ]
   }
 ])
@@ -60,9 +61,11 @@ function App() {
       
         <UserContextProvider>
         <CartContextProvider>
-          <RouterProvider router={routes} />
-          <ReactQueryDevtools />
-          <Toaster />
+          <FavoritesProvider>
+            <RouterProvider router={routes} />
+            <ReactQueryDevtools />
+            <Toaster />
+          </FavoritesProvider>
       </CartContextProvider>
         </UserContextProvider>
 

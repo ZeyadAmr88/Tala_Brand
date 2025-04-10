@@ -5,14 +5,26 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { CartContext } from "../Context/CartContext";
+import { useFavorites } from "../Context/FavoritesContext";
 import Loader from "../Loader/Loader";
 
 export default function ProductDetails() {
     let { addToCart } = useContext(CartContext);
+    const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
     let { id } = useParams();
     const [details, setDetails] = useState(null);
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const handleFavoriteClick = () => {
+        if (details) {
+            if (isFavorite(details._id)) {
+                removeFromFavorites(details._id);
+            } else {
+                addToFavorites(details);
+            }
+        }
+    };
 
     var settings = {
         dots: true,
@@ -160,12 +172,34 @@ export default function ProductDetails() {
                                             {details.description}
                                         </p>
 
-                                        <button
-                                            onClick={() => addToCart(details?._id, 1)}
-                                            className="w-full bg-main text-white py-3 px-6 rounded-lg font-medium transition-all duration-300 hover:bg-pink-700 hover:shadow-lg transform hover:-translate-y-1"
-                                        >
-                                            Add to Cart
-                                        </button>
+                                        <div className="flex gap-4">
+                                            <button
+                                                onClick={() => addToCart(details?._id, 1)}
+                                                className="flex-1 bg-main text-white py-3 px-6 rounded-lg font-medium transition-all duration-300 hover:bg-pink-700 hover:shadow-lg transform hover:-translate-y-1"
+                                            >
+                                                Add to Cart
+                                            </button>
+                                            <button
+                                                onClick={handleFavoriteClick}
+                                                className="p-3 rounded-lg border-2 border-main transition-all duration-300 hover:bg-main hover:text-white transform hover:-translate-y-1"
+                                            >
+                                                <svg
+                                                    className={`w-6 h-6 ${
+                                                        isFavorite(details._id) ? "text-red-500 fill-current" : "text-main"
+                                                    }`}
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 24 24"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                                                    />
+                                                </svg>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
