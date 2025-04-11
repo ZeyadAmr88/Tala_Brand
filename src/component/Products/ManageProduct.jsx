@@ -59,7 +59,7 @@ const ManageProduct = () => {
     // Only depend on currentPage and filterTrigger
     useEffect(() => {
         fetchProducts()
-        
+
     }, [currentPage, filterTrigger])
 
     useEffect(() => {
@@ -331,7 +331,7 @@ const ManageProduct = () => {
                                 </div>
                                 <h3 className="text-xl sm:text-2xl font-bold text-gray-800 mb-2 sm:mb-3">No Products Found</h3>
                                 <p className="text-gray-600 mb-6 text-sm sm:text-base">
-                                    There are no products in your inventory yet. Get started by adding your first product.                                
+                                    There are no products in your inventory yet. Get started by adding your first product.
                                 </p>
                                 <div className="space-y-3">
                                     <Link
