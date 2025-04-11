@@ -31,16 +31,16 @@ let query = new QueryClient()
 let routes = createBrowserRouter([
   {
     path: '', element: <Layout />, children: [
-      { index: true, element: <ProtectedRoute> <Home /></ProtectedRoute> },
-      { path: 'cart', element: <ProtectedRoute> <Cart /></ProtectedRoute> },
+      { index: true, element: <ProtectedRoute><Home /></ProtectedRoute> },
+      { path: 'cart', element: <ProtectedRoute><Cart /></ProtectedRoute> },
       { path: 'categories', element: <ProtectedRoute><Category /></ProtectedRoute> },
       { path: 'products', element: <ProtectedRoute><Products /></ProtectedRoute> },
       { path: 'productdetails/:id', element: <ProtectedRoute><ProductDetails /></ProtectedRoute> },
       { path: 'checkout', element: <ProtectedRoute><CheckOut /></ProtectedRoute> },
       { path: 'allorders', element: <ProtectedRoute><AllOrders /></ProtectedRoute> },
       { path: 'favorites', element: <ProtectedRoute><Favorites /></ProtectedRoute> },
-      { path: 'register', element: <Register /> },
-      { path: 'login', element: <Login /> },
+      { path: 'register', element:  <Register /> },
+      { path: '/login', element: <Login /> },
       { path: '*', element: <NotFound /> },
       { path: 'dashboard', element: <ProtectedAdminRoute><Dashboard /></ProtectedAdminRoute> },
       { path: 'dashboard/manage', element: <ProtectedAdminRoute><ManageProduct /></ProtectedAdminRoute> },
@@ -49,18 +49,13 @@ let routes = createBrowserRouter([
       { path: 'dashboard/manage_category', element: <ProtectedAdminRoute><ManageCategory /></ProtectedAdminRoute> },
       { path: 'manage_category/new', element: <ProtectedAdminRoute><CategoryForm /></ProtectedAdminRoute> },
       { path: 'dashboard/manage_category/edit/:id', element: <ProtectedAdminRoute><CategoryForm /></ProtectedAdminRoute> },
-
     ]
   }
 ])
 function App() {
-
-
   return (
     <QueryClientProvider client={query}>
-
-      
-        <UserContextProvider>
+      <UserContextProvider>
         <CartContextProvider>
           <FavoritesProvider>
             <RouterProvider router={routes} />
@@ -71,8 +66,7 @@ function App() {
         </UserContextProvider>
 
     </QueryClientProvider>
-  );
-
+  )
 }
 
 export default App

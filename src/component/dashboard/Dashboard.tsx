@@ -21,6 +21,10 @@ const Dashboard = () => {
     const handleManageCategory = () => {
         navigate("manage_category")
     }
+    const handleManageOrder = () => {
+        navigate("manage_category")
+    }
+
 
     const [stats, setStats] = useState<DashboardStats>({
         totalProducts: 0,
@@ -87,6 +91,9 @@ const Dashboard = () => {
                 </button>
                 <button onClick={handleManageCategory} className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded mt-4">
                     Manage Categories
+                </button>
+                <button onClick={handleManageOrder} className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded mt-4 m-5">
+                    Manage Orders
                 </button>
             </div>
 
