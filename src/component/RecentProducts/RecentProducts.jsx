@@ -54,7 +54,7 @@ export default function RecentProducts({ product }) {
             <Link to={`/productdetails/${product?._id}`} className="block">
                 <div className="flex justify-center mb-3">
                     <img
-                        src={product?.images?.[0]?.url || product?.defaultImage?.url}
+                        src={ product?.defaultImage?.url}
                         alt={product?.name || "No Name"}
                         className="object-contain h-[15rem] w-full rounded-lg"
                     />

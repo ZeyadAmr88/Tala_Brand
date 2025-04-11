@@ -93,22 +93,23 @@ export default function ProductDetails() {
                                             <Slider {...settings}>
                                                 {details.images.map((image, index) => (
                                                     <div key={index} className="relative aspect-square">
-                                                        <img 
-                                                            src={image.url} 
+                                                        <img
+                                                            src={image.url}
                                                             alt={`Product view ${index + 1}`}
-                                                            className="w-full h-full object-contain"
+                                                            className="w-full h-96 object-contain mx-auto"
                                                         />
                                                     </div>
                                                 ))}
                                             </Slider>
                                         ) : (
-                                            <img 
-                                                src={details.defaultImage?.url || details.imageCover} 
+                                            <img
+                                                src={details.defaultImage?.url}
                                                 alt={details.name}
-                                                className="w-full h-full object-contain"
+                                                className="w-full h-96 object-contain mx-auto"
                                             />
                                         )}
                                     </div>
+
                                     {/* Thumbnails */}
                                     {details.images && details.images.length > 1 && (
                                         <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
@@ -116,12 +117,11 @@ export default function ProductDetails() {
                                                 <button
                                                     key={index}
                                                     onClick={() => setCurrentImageIndex(index)}
-                                                    className={`w-16 h-16 flex-shrink-0 border-2 rounded-md overflow-hidden ${
-                                                        currentImageIndex === index ? 'border-main' : 'border-transparent'
-                                                    }`}
+                                                    className={`w-16 h-16 flex-shrink-0 border-2 rounded-md overflow-hidden ${currentImageIndex === index ? 'border-main' : 'border-transparent'
+                                                        }`}
                                                 >
-                                                    <img 
-                                                        src={image.url} 
+                                                    <img
+                                                        src={image.url}
                                                         alt={`Thumbnail ${index + 1}`}
                                                         className="w-full h-full object-cover"
                                                     />
@@ -141,11 +141,10 @@ export default function ProductDetails() {
                                                     {[...Array(5)].map((_, i) => (
                                                         <svg
                                                             key={i}
-                                                            className={`w-5 h-5 ${
-                                                                i < Math.floor(details.ratingsAverage || 0)
+                                                            className={`w-5 h-5 ${i < Math.floor(details.ratingsAverage || 0)
                                                                     ? 'text-yellow-400'
                                                                     : 'text-gray-300'
-                                                            }`}
+                                                                }`}
                                                             fill="currentColor"
                                                             viewBox="0 0 20 20"
                                                         >
@@ -210,8 +209,8 @@ export default function ProductDetails() {
                             <h2 className="text-2xl font-bold text-gray-900 mb-8">Related Products</h2>
                             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                                 {relatedProducts.map((product) => (
-                                    <Link 
-                                        to={`/productdetails/${product.id}`} 
+                                    <Link
+                                        to={`/productdetails/${product.id}`}
                                         key={product.id}
                                         className="group"
                                     >

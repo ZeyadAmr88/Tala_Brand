@@ -159,7 +159,7 @@ export default function Login() {
 
           <div className="text-center mt-4">
             <p className="text-sm text-gray-600">
-              Don't have an account?{" "}
+              Don&apos;t have an account?{" "}
               <Link to="/register" className="font-medium text-pink-600 hover:text-pink-500">
                 Sign up now
               </Link>
@@ -170,9 +170,9 @@ export default function Login() {
             <h3 className="text-pink-800 font-medium text-xs sm:text-sm mb-1">Secure Login</h3>
             <p className="text-xs text-pink-700 mb-1 sm:mb-2">Your security is important to us. Please ensure:</p>
             <ul className="text-xs text-pink-700 list-disc pl-4 space-y-0.5 sm:space-y-1">
-              <li>You're on the official Tala Brand website</li>
+              <li>You&apos;re on the official Tala Brand website</li>
               <li>Your password contains at least 6 characters with one uppercase letter</li>
-              <li>You don't share your login credentials with others</li>
+              <li>You don&apos;t share your login credentials with others</li>
               <li>You log out when using shared devices</li>
             </ul>
           </div>
