@@ -13,10 +13,11 @@ import {
   FaBoxOpen,
   FaTachometerAlt
 } from "react-icons/fa"
-import { NavLink, useNavigate, useLocation } from "react-router-dom"
+import { NavLink, useNavigate, useLocation, Link } from "react-router-dom"
 import { UserContext } from "../Context/UserContext"
 import { CartContext } from "../Context/CartContext"
 import SearchBar from "../searchBar/SearchBar"
+import { useFavorites } from "../Context/FavoritesContext"
 
 const NavBar = () => {
   const navigate = useNavigate()
@@ -27,6 +28,7 @@ const NavBar = () => {
 
   const { userData, setUserData } = useContext(UserContext)
   const { cartItems } = useContext(CartContext)
+  const { favorites } = useFavorites()
 
   useEffect(() => {
     const handleScroll = () => {

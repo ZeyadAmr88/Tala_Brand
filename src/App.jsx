@@ -1,4 +1,3 @@
-
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './App.css'
 import Layout from './component/Layout/Layout'
@@ -24,6 +23,8 @@ import ManageProduct from './component/Products/ManageProduct'
 import ManageCategory from './component/Category/ManageCategory'
 import CategoryForm from './component/Category/CategoryForm'
 import ProtectedAdminRoute from './component/ProtectedRoute/ProtectedAdminRoute'
+import { FavoritesProvider } from './component/Context/FavoritesContext'
+import Favorites from './component/Favorites/Favorites'
 
 let query = new QueryClient()
 
@@ -37,8 +38,9 @@ let routes = createBrowserRouter([
       { path: 'productdetails/:id', element: <ProtectedRoute><ProductDetails /></ProtectedRoute> },
       { path: 'checkout', element: <ProtectedRoute><CheckOut /></ProtectedRoute> },
       { path: 'allorders', element: <ProtectedRoute><AllOrders /></ProtectedRoute> },
-      { path: 'register', element:  <Register /> },
-      { path: '/login', element: <Login /> },
+      { path: 'favorites', element: <ProtectedRoute><Favorites /></ProtectedRoute> },
+      { path: 'register', element: <Register /> },
+      { path: 'login', element: <Login /> },
       { path: '*', element: <NotFound /> },
       { path: 'dashboard', element: <ProtectedAdminRoute><Dashboard /></ProtectedAdminRoute> },
       { path: 'dashboard/manage', element: <ProtectedAdminRoute><ManageProduct /></ProtectedAdminRoute> },
@@ -60,9 +62,11 @@ function App() {
       
         <UserContextProvider>
         <CartContextProvider>
-          <RouterProvider router={routes} />
-          <ReactQueryDevtools />
-          <Toaster />
+          <FavoritesProvider>
+            <RouterProvider router={routes} />
+            <ReactQueryDevtools />
+            <Toaster />
+          </FavoritesProvider>
       </CartContextProvider>
         </UserContextProvider>
 
