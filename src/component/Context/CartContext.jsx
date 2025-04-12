@@ -5,6 +5,15 @@ import { UserContext } from "./UserContext"; // استيراد سياق المس
 
 export let CartContext = createContext();
 
+// Custom hook to use cart context
+export function useCart() {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error('useCart must be used within a CartContextProvider');
+  }
+  return context;
+}
+
 // eslint-disable-next-line react/prop-types
 export default function CartContextProvider({ children }) {
     const { userData, isAdmin } = useContext(UserContext); // استخدام بيانات المستخدم وصلاحيات الأدمن
@@ -114,6 +123,20 @@ export default function CartContextProvider({ children }) {
         }
     }
 
+    async function clearCart() {
+        if (isAdmin) return;
+        try {
+            await axios.delete(`https://tala-store.vercel.app/cart`, {
+                headers,
+            });
+            setCartItems(null);
+            toast.success("Cart cleared successfully");
+        } catch (error) {
+            console.error("Error clearing cart:", error);
+            toast.error("Failed to clear cart");
+        }
+    }
+
     useEffect(() => {
         if (token && !isAdmin) {
             getCartItems().then((data) => {
@@ -133,7 +156,8 @@ export default function CartContextProvider({ children }) {
             updateProductCount,
             deleteProduct,
             createCart,
-            refreshCart
+            refreshCart,
+            clearCart
         }}>
             {children}
         </CartContext.Provider>

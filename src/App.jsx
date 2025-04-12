@@ -25,6 +25,7 @@ import CategoryForm from './component/Category/CategoryForm'
 import ProtectedAdminRoute from './component/ProtectedRoute/ProtectedAdminRoute'
 import { FavoritesProvider } from './component/Context/FavoritesContext'
 import Favorites from './component/Favorites/Favorites'
+import ScrollToTop from './component/common/ScrollToTop'
 
 let query = new QueryClient()
 
@@ -52,19 +53,21 @@ let routes = createBrowserRouter([
     ]
   }
 ])
+
 function App() {
   return (
     <QueryClientProvider client={query}>
       <UserContextProvider>
         <CartContextProvider>
           <FavoritesProvider>
-            <RouterProvider router={routes} />
-            <ReactQueryDevtools />
-            <Toaster />
+            <RouterProvider router={routes}>
+              <ScrollToTop />
+              <ReactQueryDevtools />
+              <Toaster />
+            </RouterProvider>
           </FavoritesProvider>
-      </CartContextProvider>
-        </UserContextProvider>
-
+        </CartContextProvider>
+      </UserContextProvider>
     </QueryClientProvider>
   )
 }

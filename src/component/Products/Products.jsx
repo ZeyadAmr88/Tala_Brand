@@ -7,6 +7,7 @@ import Loader from "../Loader/Loader"
 import RecentProducts from "../RecentProducts/RecentProducts"
 import NoProductsFound from "../common/NoProductsFound"
 import useProducts from "../../Hooks/useProducts"
+import { FaTimes, FaFilter, FaCheck } from "react-icons/fa"
 
 export default function Products() {
   const { data, isLoading, error } = useProducts()
@@ -20,7 +21,7 @@ export default function Products() {
   const [maxPrice, setMaxPrice] = useState(1000)
   const [showFilters, setShowFilters] = useState(false)
   const [selectedAvailability, setSelectedAvailability] = useState("all") // all, inStock, outOfStock
-  const productsPerPage = 20
+  const productsPerPage = 12
   // eslint-disable-next-line no-unused-vars
   const [availableCategories, setAvailableCategories] = useState([])
 
@@ -290,16 +291,26 @@ export default function Products() {
   return (
     <>
       {!isLoading ? (
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="flex flex-col md:flex-row gap-8">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 ">
+          <div className="flex flex-col md:flex-row gap-8 ">
             {/* Mobile filter toggle */}
             <div className="md:hidden flex justify-between items-center mb-4">
               <h1 className="text-2xl font-bold text-pink-600">Products</h1>
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="px-4 py-2 bg-pink-100 text-pink-600 rounded-md hover:bg-pink-200 transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-pink-100 text-pink-600 rounded-md hover:bg-pink-200 transition-colors"
               >
-                {showFilters ? "Hide Filters" : "Show Filters"}
+                {showFilters ? (
+                  <>
+                    <FaTimes className="w-4 h-4" />
+                    <span>Hide Filters</span>
+                  </>
+                ) : (
+                  <>
+                    <FaFilter className="w-4 h-4" />
+                    <span>Show Filters</span>
+                  </>
+                )}
               </button>
             </div>
 
@@ -312,23 +323,18 @@ export default function Products() {
                   animate={{ x: 0, opacity: 1 }}
                   exit={{ x: -300, opacity: 0 }}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  className={`w-full md:w-64 bg-white p-4 rounded-lg shadow-md ${
+                  className={`w-full md:w-72 bg-white p-4 rounded-lg shadow-md ${
                     window.innerWidth < 768 ? "fixed top-0 left-0 h-full z-50 overflow-y-auto" : ""
                   }`}
                 >
                   {window.innerWidth < 768 && (
-                    <div className="flex justify-between items-center mb-4">
+                    <div className="flex justify-between items-center mb-4 sticky top-0 bg-white py-2">
                       <h2 className="text-xl font-bold text-pink-600">Filters</h2>
-                      <button onClick={() => setShowFilters(false)} className="p-2 text-gray-500 hover:text-gray-700">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-6 w-6"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                      <button 
+                        onClick={() => setShowFilters(false)} 
+                        className="p-2 text-gray-500 hover:text-gray-700 rounded-full hover:bg-gray-100"
+                      >
+                        <FaTimes className="w-5 h-5" />
                       </button>
                     </div>
                   )}
@@ -342,7 +348,17 @@ export default function Products() {
                     <h3 className="text-lg font-semibold mb-3 text-gray-800">Categories</h3>
                     <div className="space-y-2">
                       <div className="flex items-center">
-                    
+                        <input
+                          type="radio"
+                          id="all-categories"
+                          name="category"
+                          checked={selectedCategory === "All categories"}
+                          onChange={() => setSelectedCategory("All categories")}
+                          className="h-4 w-4 text-pink-600 focus:ring-pink-500"
+                        />
+                        <label htmlFor="all-categories" className="ml-2 text-gray-700">
+                          All categories
+                        </label>
                       </div>
                       {categories.map((category) => (
                         <div key={category} className="flex items-center">
@@ -365,63 +381,68 @@ export default function Products() {
                   {/* Price Range */}
                   <div className="mb-6">
                     <h3 className="text-lg font-semibold mb-3 text-gray-800">Price Range</h3>
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="w-[45%]">
-                        <label htmlFor="min-price" className="block text-sm text-gray-600 mb-1">
-                          Min
-                        </label>
-                        <input
-                          type="number"
-                          id="min-price"
-                          min="0"
-                          max={priceRange[1]}
-                          value={priceRange[0]}
-                          onChange={handlePriceChange}
-                          className="w-full p-2 border rounded-md focus:ring-pink-500 focus:border-pink-500"
-                        />
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between gap-4">
+                        <div className="flex-1">
+                          <label htmlFor="min-price" className="block text-sm text-gray-600 mb-1">
+                            Min
+                          </label>
+                          <input
+                            type="number"
+                            id="min-price"
+                            min="0"
+                            max={maxPrice}
+                            value={priceRange[0]}
+                            onChange={handlePriceChange}
+                            className="w-full px-3 py-2 border rounded-md focus:ring-pink-500 focus:border-pink-500"
+                          />
+                        </div>
+                        <div className="flex-1">
+                          <label htmlFor="max-price" className="block text-sm text-gray-600 mb-1">
+                            Max
+                          </label>
+                          <input
+                            type="number"
+                            id="max-price"
+                            min="0"
+                            max={maxPrice}
+                            value={priceRange[1]}
+                            onChange={handlePriceChange}
+                            className="w-full px-3 py-2 border rounded-md focus:ring-pink-500 focus:border-pink-500"
+                          />
+                        </div>
                       </div>
-                      <div className="text-gray-500">-</div>
-                      <div className="w-[45%]">
-                        <label htmlFor="max-price" className="block text-sm text-gray-600 mb-1">
-                          Max
-                        </label>
+                      <div className="px-2">
                         <input
-                          type="number"
-                          id="max-price"
-                          min={priceRange[0]}
+                          type="range"
+                          min="0"
                           max={maxPrice}
                           value={priceRange[1]}
-                          onChange={handlePriceChange}
-                          className="w-full p-2 border rounded-md focus:ring-pink-500 focus:border-pink-500"
+                          onChange={(e) => setPriceRange([priceRange[0], Number.parseInt(e.target.value)])}
+                          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-pink-500"
                         />
+                        <div className="flex justify-between text-xs text-gray-500 mt-1">
+                          <span>${priceRange[0]}</span>
+                          <span>${priceRange[1]}</span>
+                        </div>
                       </div>
-                    </div>
-                    <input
-                      type="range"
-                      min="0"
-                      max={maxPrice}
-                      value={priceRange[1]}
-                      onChange={(e) => setPriceRange([priceRange[0], Number.parseInt(e.target.value)])}
-                      className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-pink-500"
-                    />
-                    <div className="flex justify-between text-xs text-gray-500 mt-1">
-                      <span>$0</span>
-                      <span>${maxPrice}</span>
                     </div>
                   </div>
 
                   {/* Filter Actions */}
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-2 sticky bottom-0 bg-white py-4">
                     <button
                       onClick={clearAllFilters}
-                      className="w-full py-2 px-4 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
+                      className="w-full py-2 px-4 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors flex items-center justify-center gap-2"
                     >
+                      <FaTimes className="w-4 h-4" />
                       Clear Filters
                     </button>
                     <button
                       onClick={() => setShowFilters(false)}
-                      className="md:hidden w-full py-2 px-4 bg-pink-500 text-white rounded-md hover:bg-pink-600 transition-colors"
+                      className="md:hidden w-full py-2 px-4 bg-pink-500 text-white rounded-md hover:bg-pink-600 transition-colors flex items-center justify-center gap-2"
                     >
+                      <FaCheck className="w-4 h-4" />
                       Apply Filters
                     </button>
                   </div>
