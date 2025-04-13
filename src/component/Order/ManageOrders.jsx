@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const ManageOrders = () => {
 
@@ -113,7 +114,12 @@ const ManageOrders = () => {
                         {orders.map((order) => (
                             <tr key={order._id} className="hover:bg-gray-50">
                                 <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
-                                    {order._id.slice(-6)}
+                                    <Link
+                                        to={`/dashboard/order/${order._id}`}
+                                        className="text-indigo-600 hover:text-indigo-900 font-medium"
+                                    >
+                                        {order._id.slice(-6)}
+                                    </Link>
                                 </td>
                                 <td className="px-4 py-3 text-sm">
                                     <div>

@@ -26,6 +26,7 @@ import ProtectedAdminRoute from './component/ProtectedRoute/ProtectedAdminRoute'
 import { FavoritesProvider } from './component/Context/FavoritesContext'
 import Favorites from './component/Favorites/Favorites'
 import ManageOrders from './component/Order/ManageOrders'
+import OrderDetails from './component/Order/OrderDetails'
 
 let query = new QueryClient()
 
@@ -51,6 +52,8 @@ let routes = createBrowserRouter([
       { path: 'manage_category/new', element: <ProtectedAdminRoute><CategoryForm /></ProtectedAdminRoute> },
       { path: 'dashboard/manage_category/edit/:id', element: <ProtectedAdminRoute><CategoryForm /></ProtectedAdminRoute> },
       { path: 'dashboard/manage_orders', element: <ProtectedAdminRoute><ManageOrders /></ProtectedAdminRoute> },
+      { path: 'dashboard/orders', element: <ProtectedAdminRoute><ManageOrders /></ProtectedAdminRoute> },
+      { path: 'dashboard/order/:id', element: <ProtectedAdminRoute><OrderDetails /></ProtectedAdminRoute> },
     ]
   }
 ])
