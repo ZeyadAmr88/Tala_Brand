@@ -80,85 +80,89 @@ const ManageOrders = () => {
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <h1 className="text-3xl font-bold mb-8">Manage Orders</h1>
+            <h1 className="text-2xl md:text-3xl font-bold mb-8">Manage Orders</h1>
 
-            <div className="overflow-x-auto">
-                <table className="min-w-full bg-white border border-gray-200">
-                    <thead>
-                        <tr className="bg-gray-50">
-                            <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <div className="overflow-x-auto rounded-lg shadow">
+                <table className="min-w-full bg-white">
+                    <thead className="bg-gray-50">
+                        <tr>
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                                 Order ID
                             </th>
-                            <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                                 Customer
                             </th>
-                            <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
                                 Products
                             </th>
-                            <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Total Price
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
+                                Total
                             </th>
-                            <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                                 Status
                             </th>
-                            <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                Payment Image
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
+                                Payment
                             </th>
-                            <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">
                                 Actions
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="divide-y divide-gray-200">
                         {orders.map((order) => (
                             <tr key={order._id} className="hover:bg-gray-50">
-                                <td className="px-6 py-4 border-b">{order._id}</td>
-                                <td className="px-6 py-4 border-b">
+                                <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
+                                    {order._id.slice(-6)}
+                                </td>
+                                <td className="px-4 py-3 text-sm">
                                     <div>
                                         <p className="font-medium">{order.name}</p>
-                                        <p className="text-sm text-gray-500">{order.phone}</p>
-                                        <p className="text-sm text-gray-500">{order.address}</p>
+                                        <p className="text-gray-500 text-xs">{order.phone}</p>
+                                        <p className="text-gray-500 text-xs hidden md:block">{order.address}</p>
                                     </div>
                                 </td>
-                                <td className="px-6 py-4 border-b">
+                                <td className="px-4 py-3 text-sm hidden md:table-cell">
                                     {order.products.map((item) => (
                                         <div key={item._id} className="flex items-center space-x-2 mb-2">
                                             {item.product?.images?.[0]?.url && (
                                                 <img
                                                     src={item.product.images[0].url}
                                                     alt={item.product.name}
-                                                    className="w-10 h-10 object-cover rounded"
+                                                    className="w-8 h-8 object-cover rounded"
                                                 />
                                             )}
                                             <div>
-                                                <p className="font-medium">{item.product?.name}</p>
-                                                <p className="text-sm text-gray-500">
+                                                <p className="font-medium text-xs">{item.product?.name}</p>
+                                                <p className="text-gray-500 text-xs">
                                                     {item.quantity} x ${item.product?.price}
                                                 </p>
                                             </div>
                                         </div>
                                     ))}
                                 </td>
-                                <td className="px-6 py-4 border-b">${order.totalPrice}</td>
-                                <td className="px-6 py-4 border-b">
+                                <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
+                                    ${order.totalPrice}
+                                </td>
+                                <td className="px-4 py-3 text-sm">
                                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(order.status)}`}>
                                         {order.status}
                                     </span>
                                 </td>
-                                <td className="px-6 py-4 border-b">
+                                <td className="px-4 py-3 text-sm hidden md:table-cell">
                                     {order.paymentImage && (
                                         <img
                                             src={order.paymentImage.url}
                                             alt="Payment"
-                                            className="w-20 h-20 object-cover rounded"
+                                            className="w-16 h-16 object-cover rounded"
                                         />
                                     )}
                                 </td>
-                                <td className="px-6 py-4 border-b">
+                                <td className="px-4 py-3 text-sm">
                                     <select
                                         value={order.status}
                                         onChange={(e) => handleStatusChange(order._id, e.target.value)}
-                                        className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                        className="block w-full px-2 py-1 text-xs border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                                     >
                                         <option value="pending">Pending</option>
                                         <option value="confirmed">Confirmed</option>
@@ -177,17 +181,17 @@ const ManageOrders = () => {
                     <button
                         onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                         disabled={currentPage === 1}
-                        className="px-3 py-1 rounded border disabled:opacity-50"
+                        className="px-3 py-1 text-sm rounded border disabled:opacity-50 hover:bg-gray-50"
                     >
                         Previous
                     </button>
-                    <span className="px-3 py-1">
+                    <span className="px-3 py-1 text-sm">
                         Page {currentPage} of {totalPages}
                     </span>
                     <button
                         onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
                         disabled={currentPage === totalPages}
-                        className="px-3 py-1 rounded border disabled:opacity-50"
+                        className="px-3 py-1 text-sm rounded border disabled:opacity-50 hover:bg-gray-50"
                     >
                         Next
                     </button>
