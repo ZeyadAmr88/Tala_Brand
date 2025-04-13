@@ -25,6 +25,7 @@ import CategoryForm from './component/Category/CategoryForm'
 import ProtectedAdminRoute from './component/ProtectedRoute/ProtectedAdminRoute'
 import { FavoritesProvider } from './component/Context/FavoritesContext'
 import Favorites from './component/Favorites/Favorites'
+import ManageOrders from './component/Order/ManageOrders'
 
 let query = new QueryClient()
 
@@ -39,7 +40,7 @@ let routes = createBrowserRouter([
       { path: 'checkout', element: <ProtectedRoute><CheckOut /></ProtectedRoute> },
       { path: 'allorders', element: <ProtectedRoute><AllOrders /></ProtectedRoute> },
       { path: 'favorites', element: <ProtectedRoute><Favorites /></ProtectedRoute> },
-      { path: 'register', element:  <Register /> },
+      { path: 'register', element: <Register /> },
       { path: '/login', element: <Login /> },
       { path: '*', element: <NotFound /> },
       { path: 'dashboard', element: <ProtectedAdminRoute><Dashboard /></ProtectedAdminRoute> },
@@ -49,6 +50,7 @@ let routes = createBrowserRouter([
       { path: 'dashboard/manage_category', element: <ProtectedAdminRoute><ManageCategory /></ProtectedAdminRoute> },
       { path: 'manage_category/new', element: <ProtectedAdminRoute><CategoryForm /></ProtectedAdminRoute> },
       { path: 'dashboard/manage_category/edit/:id', element: <ProtectedAdminRoute><CategoryForm /></ProtectedAdminRoute> },
+      { path: 'dashboard/manage_orders', element: <ProtectedAdminRoute><ManageOrders /></ProtectedAdminRoute> },
     ]
   }
 ])
@@ -62,8 +64,8 @@ function App() {
             <ReactQueryDevtools />
             <Toaster />
           </FavoritesProvider>
-      </CartContextProvider>
-        </UserContextProvider>
+        </CartContextProvider>
+      </UserContextProvider>
 
     </QueryClientProvider>
   )

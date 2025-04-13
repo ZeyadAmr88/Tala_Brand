@@ -1,4 +1,3 @@
-"use client"
 
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
@@ -15,7 +14,6 @@ const ManageProduct = () => {
     const [showFilters, setShowFilters] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState("")
     const [categories, setCategories] = useState([])
-    // Add a filter trigger state to force re-fetching
     const [filterTrigger, setFilterTrigger] = useState(0)
 
     const fetchProducts = async () => {
