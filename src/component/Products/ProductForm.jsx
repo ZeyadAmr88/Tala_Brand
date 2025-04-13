@@ -181,7 +181,7 @@ const ProductForm = () => {
     }
 
     return (
-        <div className="space-y-6 mt-24">
+        <div className="space-y-6 mt-28 mx-5 shadow-md">
             <div className="flex items-center">
                 <button
                     onClick={() => navigate("/products")}
@@ -209,7 +209,7 @@ const ProductForm = () => {
                                     required
                                     value={formData.name}
                                     onChange={handleInputChange}
-                                    className="shadow-sm focus:ring-pink-500 focus:border-pink-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    className="shadow-sm h-10  pl-3 border border-slate-800 focus:ring-pink-500 focus:border-pink-500 block w-full sm:text-sm  rounded-md"
                                 />
                             </div>
                         </div>
@@ -220,7 +220,7 @@ const ProductForm = () => {
                                 Price *
                             </label>
                             <div className="mt-1 relative rounded-md shadow-sm">
-                                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <div className="absolute inset-y-0 right-5 pl-3 flex items-center pointer-events-none">
                                     <span className="text-gray-500 sm:text-sm">EGP</span>
                                 </div>
                                 <input
@@ -232,7 +232,7 @@ const ProductForm = () => {
                                     step="0.01"
                                     value={formData.price}
                                     onChange={handleInputChange}
-                                    className="focus:ring-pink-500 focus:border-pink-500 block w-full pl-7 sm:text-sm border-gray-300 rounded-md"
+                                    className="focus:ring-pink-500  border border-slate-700 focus:border-pink-500 block w-full h-10 pl-7 sm:text-sm  rounded-md"
                                 />
                             </div>
                         </div>
@@ -242,14 +242,14 @@ const ProductForm = () => {
                             <label htmlFor="description" className="block text-sm font-medium text-gray-700">
                                 Description
                             </label>
-                            <div className="mt-1">
+                            <div className="mt-1 ">
                                 <textarea
                                     id="description"
                                     name="description"
                                     rows={3}
                                     value={formData.description}
                                     onChange={handleInputChange}
-                                    className="shadow-sm focus:ring-pink-500 focus:border-pink-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    className="shadow-sm  pt-3 pl-3  border border-slate-700 focus:ring-pink-500 focus:border-pink-500 block w-full sm:text-sm  rounded-md"
                                 />
                             </div>
                         </div>
@@ -266,7 +266,7 @@ const ProductForm = () => {
                                     required
                                     value={formData.category}
                                     onChange={handleInputChange}
-                                    className="shadow-sm focus:ring-pink-500 focus:border-pink-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    className="shadow-sm h-10   border   block w-full sm:text-sm border-gray-500 rounded-md"
                                 >
                                     <option value="">Select a category</option>
                                     {categories.map((category) => (
@@ -292,7 +292,7 @@ const ProductForm = () => {
                                     min="0"
                                     value={formData.avaliableItems}
                                     onChange={handleInputChange}
-                                    className="shadow-sm focus:ring-pink-500 focus:border-pink-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                                    className="shadow-sm h-10  pl-3  border border-slate-500  block w-full sm:text-sm  rounded-md"
                                 />
                             </div>
                         </div>

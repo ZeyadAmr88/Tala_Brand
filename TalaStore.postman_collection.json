@@ -218,7 +218,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": ""
+							"raw": "{{baseUrl}}/category",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"category"
+							]
 						}
 					},
 					"response": []
@@ -538,12 +544,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}/product",
+							"raw": "{{host}}/product/67f7066c62adc0398f0996e5",
 							"host": [
 								"{{host}}"
 							],
 							"path": [
-								"product"
+								"product",
+								"67f7066c62adc0398f0996e5"
 							]
 						}
 					},
@@ -556,6 +563,40 @@
 						"header": [],
 						"url": {
 							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "rating",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFhYUBnbWFpbC5jb20iLCJpZCI6IjY3ZjVjN2M2ODI2MDk4ZDZkYzVjMjJmMCIsImlhdCI6MTc0NDQxNDkxNn0.SI3CXlucsMp4yYJcUQKpo5twvpQWt10lPoyW22X3wkM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rating\":3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/product/67e1ddb3926a54d7217cc7ac/rate",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"product",
+								"67e1ddb3926a54d7217cc7ac",
+								"rate"
+							]
 						}
 					},
 					"response": []
@@ -572,13 +613,13 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNoaWthc2FsYWg0QGdtYWlsLmNvbSIsImlkIjoiNjcxZGM0NWVhYzk5MzhkOWNhYmI4OWYyIiwiaWF0IjoxNzMwMDA0MzMxfQ.plzWqWcDuKw_DOxdM1Al_aBley4nPVi4C_TR9RorunM",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3ZGE0NDhhNzc1MDBkZjlmOTc1ZDgyMyIsImlhdCI6MTc0NDE1ODY1N30.G7KITL4ZCQ_GN3Dfkr-2oLDILqonvnl8MStR_FkbXqU",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"productId\": \"671ce1610a1baf56b9185f09\",\r\n    \"quantity\":2\r\n}",
+							"raw": "{\r\n    \"productId\": \"67da52f4eda551cafb6f4f5b\",\r\n    \"quantity\":2\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -637,7 +678,7 @@
 						"header": [
 							{
 								"key": "token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3ZGE0NDhhNzc1MDBkZjlmOTc1ZDgyMyIsImlhdCI6MTc0Mjk0MDY4OH0.aNiCOOmclvRew6cpnS6FXHMM66-MITxeUCjQNdazC4k",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwM0BnbWFpbC5jb20iLCJpZCI6IjY3ZGE0NDhhNzc1MDBkZjlmOTc1ZDgyMyIsImlhdCI6MTc0NDE1ODY1N30.G7KITL4ZCQ_GN3Dfkr-2oLDILqonvnl8MStR_FkbXqU",
 								"type": "text"
 							}
 						],
@@ -746,6 +787,289 @@
 							"path": [
 								"cart",
 								"clear"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "create order",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFhYUBnbWFpbC5jb20iLCJpZCI6IjY3ZjVjN2M2ODI2MDk4ZDZkYzVjMjJmMCIsImlhdCI6MTc0NDQxNTY2N30.t3qbeEGcu_tpjgKIi3yfLfHX16DvZQesTutOK5T-TYY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cartId",
+									"value": "67f9b46a1da115279373233b",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "yousef",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "01201501922",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "9 st mohamed ali",
+									"type": "text"
+								},
+								{
+									"key": "paymentType",
+									"value": "instapay",
+									"type": "text"
+								},
+								{
+									"key": "paymentImage",
+									"type": "file",
+									"src": "postman-cloud:///1ef92911-38d1-4120-8cfb-69762f4a5586"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/order",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwMzExQGdtYWlsLmNvbSIsImlkIjoiNjdmODJmMzUxNjI4M2ZhZTBiN2UxNzk4IiwiaWF0IjoxNzQ0NDE4NzIyfQ.GL5qDntLM3iLkniBBn6-H6ODiUHn1MooRtjYG8Lctr8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cartId",
+									"value": "67f5c7e5826098d6dc5c22ff",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "yousef",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "01201501922",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "9 st mohamed ali",
+									"type": "text"
+								},
+								{
+									"key": "paymentType",
+									"value": "instapay",
+									"type": "text"
+								},
+								{
+									"key": "paymentImage",
+									"type": "file",
+									"src": "postman-cloud:///1ef92911-38d1-4120-8cfb-69762f4a5586"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/order",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get user order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFhYUBnbWFpbC5jb20iLCJpZCI6IjY3ZjVjN2M2ODI2MDk4ZDZkYzVjMjJmMCIsImlhdCI6MTc0NDQxOTEyM30.mmTxDcRTIvzxDSMB-t54pQhZk93htiOqm9WW85m7Qww",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cartId",
+									"value": "67f5c7e5826098d6dc5c22ff",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "yousef",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "01201501922",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "9 st mohamed ali",
+									"type": "text"
+								},
+								{
+									"key": "paymentType",
+									"value": "instapay",
+									"type": "text"
+								},
+								{
+									"key": "paymentImage",
+									"type": "file",
+									"src": "postman-cloud:///1ef92911-38d1-4120-8cfb-69762f4a5586"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/order/user/orders",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"order",
+								"user",
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get one order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwMzExQGdtYWlsLmNvbSIsImlkIjoiNjdmODJmMzUxNjI4M2ZhZTBiN2UxNzk4IiwiaWF0IjoxNzQ0NDE4NzIyfQ.GL5qDntLM3iLkniBBn6-H6ODiUHn1MooRtjYG8Lctr8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cartId",
+									"value": "67f5c7e5826098d6dc5c22ff",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "yousef",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "01201501922",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "9 st mohamed ali",
+									"type": "text"
+								},
+								{
+									"key": "paymentType",
+									"value": "instapay",
+									"type": "text"
+								},
+								{
+									"key": "paymentImage",
+									"type": "file",
+									"src": "postman-cloud:///1ef92911-38d1-4120-8cfb-69762f4a5586"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{host}}/order/67f9b75b1c65157c2f87f701",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"order",
+								"67f9b75b1c65157c2f87f701"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update order status",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InlvdXNlZnNhbGFoMTI0MjAwMzExQGdtYWlsLmNvbSIsImlkIjoiNjdmODJmMzUxNjI4M2ZhZTBiN2UxNzk4IiwiaWF0IjoxNzQ0NDE4NzIyfQ.GL5qDntLM3iLkniBBn6-H6ODiUHn1MooRtjYG8Lctr8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\":\"cancelled\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/order/67f9bfd4fff419d01f62baba/status",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"order",
+								"67f9bfd4fff419d01f62baba",
+								"status"
 							]
 						}
 					},

@@ -22,7 +22,7 @@ const Dashboard = () => {
         navigate("manage_category")
     }
     const handleManageOrder = () => {
-        navigate("manage_category")
+        navigate("manage_orders")
     }
 
 

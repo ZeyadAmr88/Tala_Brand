@@ -11,6 +11,7 @@ export default function Register() {
   const { setUserData } = useContext(UserContext)
   const [apiError, setApiError] = useState("")
   const [loading, setLoading] = useState(false)
+  // eslint-disable-next-line no-unused-vars
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
   const navigate = useNavigate()
 
@@ -71,21 +72,23 @@ export default function Register() {
   })
 
   return (
-    <div className="pt-8 w-auto">
-      <h2 className="text-3xl font-semibold text-center py-4 mt-20">Register Now...</h2>
+    <div className="pt-8 w-full px-4 mt-20">
 
-      <form onSubmit={formik.handleSubmit} className="max-w-xl mx-auto">
+      <form onSubmit={formik.handleSubmit} className="bg-white shadow-xl rounded-2xl max-w-xl mx-auto p-8 space-y-6 ">
+        <h2 className="text-4xl font-bold text-center text-gray-800 mb-10">Register Now</h2>
+        <p className="text-center">Sign up to your Tala Brand account to access your profile and orders</p>
         {apiError && (
           <div
-            className="p-2 mb-4 mx-auto text-sm text-center w-fit text-red-800 rounded-lg bg-red-50 dark:text-red-400"
+            className="p-3 text-sm text-center text-red-800 bg-red-100 border border-red-300 rounded-lg"
             role="alert"
           >
             {apiError}
           </div>
         )}
 
-        <div className="mb-5">
-          <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+        {/* Name */}
+        <div>
+          <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-700">
             User Name
           </label>
           <input
@@ -94,15 +97,16 @@ export default function Register() {
             value={formik.values.name}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 mb-4"
+            className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300"
           />
           {formik.errors.name && formik.touched.name && (
-            <div className="p-2 mb-4 text-sm text-red-800 rounded-lg bg-red-50">{formik.errors.name}</div>
+            <div className="mt-2 text-sm text-red-600">{formik.errors.name}</div>
           )}
         </div>
 
-        <div className="mb-5">
-          <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+        {/* Email */}
+        <div className="">
+          <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-700">
             Your Email
           </label>
           <input
@@ -111,15 +115,16 @@ export default function Register() {
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+            className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300"
           />
           {formik.errors.email && formik.touched.email && (
-            <div className="p-2 mb-4 text-sm text-red-800 rounded-lg bg-red-50">{formik.errors.email}</div>
+            <div className="mt-2 text-sm text-red-600">{formik.errors.email}</div>
           )}
         </div>
 
-        <div className="mb-5">
-          <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+        {/* Password */}
+        <div>
+          <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-700">
             Your Password
           </label>
           <input
@@ -128,15 +133,16 @@ export default function Register() {
             value={formik.values.password}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+            className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300"
           />
           {formik.errors.password && formik.touched.password && (
-            <div className="p-2 mb-4 text-sm text-red-800 rounded-lg bg-red-50">{formik.errors.password}</div>
+            <div className="mt-2 text-sm text-red-600">{formik.errors.password}</div>
           )}
         </div>
 
-        <div className="mb-5">
-          <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+        {/* Confirm Password */}
+        <div>
+          <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-gray-700">
             Repeat Password
           </label>
           <input
@@ -145,29 +151,33 @@ export default function Register() {
             value={formik.values.confirmPassword}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+            className="w-full px-4 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-300"
           />
           {formik.errors.confirmPassword && formik.touched.confirmPassword && (
-            <div className="p-2 mb-4 text-sm text-red-800 rounded-lg bg-red-50">{formik.errors.confirmPassword}</div>
+            <div className="mt-2 text-sm text-red-600">{formik.errors.confirmPassword}</div>
           )}
         </div>
 
-        {loading ? (
-          <button
-            type="button"
-            className="text-white bg-[#ff42a0] hover:bg-pink-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-          >
-            <i className="fas fa-spinner fa-spin-pulse"></i>
-          </button>
-        ) : (
-          <button
-            type="submit"
-            className="text-white bg-[#ff42a0] hover:bg-pink-600 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-          >
-            Submit
-          </button>
-        )}
+        {/* Submit Button */}
+        <div className="text-center">
+          {loading ? (
+            <button
+              type="button"
+              className="inline-flex items-center justify-center px-6 py-2.5 text-white bg-pink-500 rounded-lg text-sm font-medium hover:bg-pink-600 focus:ring-4 focus:ring-pink-300"
+            >
+              <i className="fas fa-spinner fa-spin-pulse mr-2"></i> Loading...
+            </button>
+          ) : (
+            <button
+              type="submit"
+              className="inline-block w-full px-6 py-2.5 text-white bg-pink-500 rounded-lg text-sm font-medium hover:bg-pink-600 focus:ring-4 focus:ring-pink-300"
+            >
+              Submit
+            </button>
+          )}
+        </div>
       </form>
     </div>
-  )
+  );
+
 }
