@@ -188,10 +188,8 @@ const OrderDetails = () => {
                                 />
                             </div>
                         )}
-                      
                     </div>
                 </div>
-              
             </div>
             <div className='flex justify-center mt-5'>
                 <button
@@ -201,7 +199,7 @@ const OrderDetails = () => {
                     Back to Orders
                 </button>
             </div>
-           
+
         </div>
     );
 };
