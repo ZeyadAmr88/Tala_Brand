@@ -28,11 +28,13 @@ export default function Login() {
 
       if (data.results.token) {
         localStorage.setItem("userToken", data.results.token);
-        localStorage.setItem("userRole", data.role); // ✅ نحفظ الدور في localStorage
+        localStorage.setItem("userRole", data.role);
+        localStorage.setItem("username", data.username); 
 
         setUserData({
           token: data.results.token,
           role: data.role, // ✅ نحدث الـ context بالدور كمان
+          username: data.username, // ✅ نحدث الـ context بالدور كمان
         });
 
         try {
