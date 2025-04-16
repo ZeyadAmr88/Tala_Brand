@@ -8,6 +8,8 @@ const OrderDetails = () => {
     const navigate = useNavigate();
     const [order, setOrder] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [showImageModal, setShowImageModal] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
 
     useEffect(() => {
         fetchOrderDetails();
@@ -88,6 +90,30 @@ const OrderDetails = () => {
         }
     };
 
+    const handleImageClick = (imageUrl) => {
+        setSelectedImage(imageUrl);
+        setShowImageModal(true);
+    };
+
+    const handleDownload = async (imageUrl) => {
+        try {
+            const response = await fetch(imageUrl);
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `payment-proof-${order._id}.jpg`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            toast.success('Image downloaded successfully');
+        } catch (error) {
+            console.error('Error downloading image:', error);
+            toast.error('Failed to download image');
+        }
+    };
+
     if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">
@@ -127,7 +153,7 @@ const OrderDetails = () => {
                 <div className="p-6 border-b">
                     <div className="flex justify-between items-center">
                         <div>
-                            <h2 className="text-lg font-semibold">Order #{order._id.slice(-6)}</h2>
+                            <h2 className="text-lg font-semibold">Order #{order._id}</h2>
                             <p className="text-gray-500">Placed on {new Date(order.createdAt).toLocaleDateString()}</p>
                         </div>
                         <div className="flex items-center space-x-4">
@@ -212,18 +238,62 @@ const OrderDetails = () => {
                         {order.paymentImage && (
                             <div className="md:col-span-2">
                                 <p className="text-gray-600 mb-2">Payment Proof</p>
-                                <img
-                                    src={order.paymentImage.url}
-                                    alt="Payment Proof"
-                                    className="w-48 h-48 object-cover rounded-lg"
-                                />
+                                <div className="flex flex-col space-y-4">
+                                    <img
+                                        src={order.paymentImage.url}
+                                        alt="Payment Proof"
+                                        className="w-48 h-48 object-cover rounded-lg"
+                                    />
+                                    <div className="flex space-x-4">
+                                        <button
+                                            onClick={() => handleImageClick(order.paymentImage.url)}
+                                            className="bg-slate-300 text-black px-4 py-2 rounded-md hover:bg-slate-500 transition-colors"
+                                        >
+                                            View Image
+                                        </button>
+                                        <button
+                                            onClick={() => handleDownload(order.paymentImage.url)}
+                                            className="bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-colors"
+                                        >
+                                            Download Image
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         )}
                     </div>
                 </div>
             </div>
-           
 
+            {/* Image Modal */}
+            {showImageModal && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-white p-4 rounded-lg max-w-4xl max-h-[90vh] overflow-auto">
+                        <div className="flex justify-between items-center mb-4">
+                            <h3 className="text-lg font-semibold">Payment Proof</h3>
+                            <button
+                                onClick={() => setShowImageModal(false)}
+                                className="text-gray-500 hover:text-gray-700"
+                            >
+                                ✕
+                            </button>
+                        </div>
+                        <img
+                            src={selectedImage}
+                            alt="Payment Proof"
+                            className="max-w-full h-auto"
+                        />
+                        <div className="mt-4 flex justify-end">
+                            <button
+                                onClick={() => handleDownload(selectedImage)}
+                                className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700"
+                            >
+                                Download Image
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

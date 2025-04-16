@@ -107,14 +107,14 @@ const AllOrders = () => {
                   Pending
                 </button>
                 <button
-                  onClick={() => setSelectedStatus('processing')}
+                  onClick={() => setSelectedStatus('cancelled')}
                   className={`px-4 py-2 rounded-md text-sm font-medium ${
-                    selectedStatus === 'processing'
+                    selectedStatus === 'cancelled'
                       ? 'bg-blue-600 text-white'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                   }`}
                 >
-                  Processing
+                  Cancelled
                 </button>
                 <button
                   onClick={() => setSelectedStatus('completed')}
@@ -150,6 +150,7 @@ const AllOrders = () => {
                       </div>
                       <span className={`mt-2 sm:mt-0 px-3 py-1 rounded-full text-sm font-medium ${getOrderStatus(order.status).color}`}>
                         {getOrderStatus(order.status).text}
+                        {`status: ${order.status}`}
                       </span>
                     </div>
 

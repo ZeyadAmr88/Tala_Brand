@@ -75,7 +75,7 @@ export default function Login() {
   })
  
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-3 sm:px-6 lg:px-8 bg-gray-50 py-8 sm:py-12">
+    <div className="flex flex-col items-center justify-center min-h-screen px-3 sm:px-6 lg:px-8 bg-gray-50 py-28 sm:py-28">
       <div className="w-full max-w-md p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 bg-white shadow-xl rounded-xl border border-gray-100">
         <div className="text-center">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 sm:mb-2">Welcome Back</h2>
