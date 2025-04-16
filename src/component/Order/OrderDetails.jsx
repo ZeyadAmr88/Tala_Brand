@@ -55,6 +55,26 @@ const OrderDetails = () => {
         }
     };
 
+    const handleStatusChange = async (newStatus) => {
+        try {
+            const token = localStorage.getItem("userToken");
+            await axios.patch(
+                `https://tala-store.vercel.app/order/${id}/status`,
+                { status: newStatus },
+                {
+                    headers: {
+                        token: token
+                    }
+                }
+            );
+            toast.success('Order status updated successfully');
+            fetchOrderDetails(); // Refresh order details
+        } catch (error) {
+            console.error('Error updating order status:', error);
+            toast.error('Failed to update order status');
+        }
+    };
+
     const getStatusColor = (status) => {
         switch (status) {
             case 'pending':
@@ -91,7 +111,7 @@ const OrderDetails = () => {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 mt-20">
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-2xl font-bold">Order Details</h1>
                 <button
@@ -110,9 +130,20 @@ const OrderDetails = () => {
                             <h2 className="text-lg font-semibold">Order #{order._id.slice(-6)}</h2>
                             <p className="text-gray-500">Placed on {new Date(order.createdAt).toLocaleDateString()}</p>
                         </div>
-                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>
-                            {order.status}
-                        </span>
+                        <div className="flex items-center space-x-4">
+                            <select
+                                value={order.status}
+                                onChange={(e) => handleStatusChange(e.target.value)}
+                                className="px-3 py-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            >
+                                <option value="pending">Pending</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                            <span className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>
+                                {order.status}
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -191,14 +222,7 @@ const OrderDetails = () => {
                     </div>
                 </div>
             </div>
-            <div className='flex justify-center mt-5'>
-                <button
-                    onClick={() => navigate('/dashboard/manage_orders')}
-                    className="px-4 py-2  text-white rounded-md bg-pink-600 hover:bg-pink-300"
-                >
-                    Back to Orders
-                </button>
-            </div>
+           
 
         </div>
     );

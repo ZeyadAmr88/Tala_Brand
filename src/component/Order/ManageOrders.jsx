@@ -9,13 +9,14 @@ const ManageOrders = () => {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [statusFilter, setStatusFilter] = useState('all');
 
     useEffect(() => {
         if (localStorage.getItem("userToken")) {
             fetchOrders();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentPage]);
+    }, [currentPage, statusFilter]);
 
     const fetchOrders = async () => {
         try {
@@ -27,6 +28,7 @@ const ManageOrders = () => {
                 params: {
                     page: currentPage,
                     limit: 10,
+                    status: statusFilter !== 'all' ? statusFilter : undefined,
                 },
             });
             setOrders(response.data.results);
@@ -58,6 +60,11 @@ const ManageOrders = () => {
         }
     };
 
+    const handleStatusFilterChange = (e) => {
+        setStatusFilter(e.target.value);
+        setCurrentPage(1); // Reset to first page when filter changes
+    };
+
     const getStatusColor = (status) => {
         switch (status) {
             case 'pending':
@@ -80,8 +87,22 @@ const ManageOrders = () => {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <h1 className="text-2xl md:text-3xl font-bold mb-8">Manage Orders</h1>
+        <div className="container mx-auto px-4 py-8 mt-20">
+            <div className="flex justify-between items-center mb-8">
+                <h1 className="text-2xl md:text-3xl font-bold">Manage Orders</h1>
+                <div className="flex items-center space-x-4">
+                    <select
+                        value={statusFilter}
+                        onChange={handleStatusFilterChange}
+                        className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    >
+                        <option value="all">All Status</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+            </div>
 
             <div className="overflow-x-auto rounded-lg shadow">
                 <table className="min-w-full bg-white">
