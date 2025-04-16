@@ -29,7 +29,7 @@ const NavBar = () => {
   const accountRef = useRef(null)
   const menuRef = useRef(null)
 
-  const { userData, setUserData } = useContext(UserContext)
+  const { userData, logout } = useContext(UserContext)
   const { cartItems } = useContext(CartContext)
   const { favorites } = useFavorites()
 
@@ -66,9 +66,8 @@ const NavBar = () => {
   const toggleMenu = () => setIsOpen(!isOpen)
   const toggleAccount = () => setIsAccountOpen(!isAccountOpen)
 
-  const logout = () => {
-    localStorage.removeItem("userToken")
-    setUserData(null)
+  const handleLogout = () => {
+    logout()
     navigate("/login")
   }
 
@@ -173,28 +172,40 @@ const NavBar = () => {
                     onClick={toggleAccount}
                     className="flex items-center space-x-2 p-2 text-white hover:text-pink-300 transition-colors duration-200"
                   >
-                    <FaUserCircle className="w-5 h-5" />
+                    <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-white">
+                      {userData?.username ? userData.username[0].toUpperCase() : <FaUserCircle className="w-5 h-5" />}
+                    </div>
                     <span className="hidden md:inline text-sm font-medium">
-                      {userData?.name || 'Account'}
+                      {userData?.username}
                     </span>
                     <FaChevronDown className={`w-3 h-3 transition-transform duration-200 ${isAccountOpen ? 'transform rotate-180' : ''}`} />
                   </button>
 
                   {isAccountOpen && (
                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 animate-fadeIn">
-                      <div className="px-4 py-2 border-b border-gray-100">
-                        <p className="text-sm font-medium text-gray-900">Zeyad</p>
+                      <div className="px-4 py-3 border-b border-gray-100">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-600 font-semibold">
+                            {userData?.username ? userData.username[0].toUpperCase() : 'A'}
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-gray-900">{userData?.username}</p>
+                            <p className="text-xs text-gray-500">{userData?.email}</p>
+                          </div>
+                        </div>
                       </div>
-                      <Link
-                        to="/allorders"
-                        className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
-                        onClick={() => setIsAccountOpen(false)}
-                      >
-                        <FaBoxOpen className="w-4 h-4" />
-                        <span>My Orders</span>
-                      </Link>
+                      {userData?.role !== "admin" && (
+                        <Link
+                          to="/allorders"
+                          className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
+                          onClick={() => setIsAccountOpen(false)}
+                        >
+                          <FaBoxOpen className="w-4 h-4" />
+                          <span>My Orders</span>
+                        </Link>
+                      )}
                       <button
-                        onClick={logout}
+                        onClick={handleLogout}
                         className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-red-500 hover:text-white flex items-center space-x-2"
                       >
                         <FaSignOutAlt className="w-4 h-4" />

@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useCart } from '../../component/Context/CartContext'
+import { useOrders } from '../Context/OrderContext'
+import { UserContext } from '../Context/UserContext'
+import { useContext } from 'react'
 import { toast } from 'react-hot-toast'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
@@ -10,13 +13,15 @@ import { Link } from 'react-router-dom'
 const CheckOut = () => {
   const navigate = useNavigate()
   const { cartItems, clearCart, refreshCart, getCartItems, deleteProduct } = useCart()
+  const { createOrder } = useOrders()
+  const { userData, loading: userLoading } = useContext(UserContext)
   const [paymentMethod, setPaymentMethod] = useState('cash')
   const [paymentProof, setPaymentProof] = useState(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [cartProducts, setCartProducts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
-  const SHIPPING_FEE = 10 // Fixed shipping fee
+  const [selectedCity, setSelectedCity] = useState('')
 
   // Add validation state
   const [validationErrors, setValidationErrors] = useState({})
@@ -30,7 +35,8 @@ const CheckOut = () => {
     floor: /^[0-9]{1,3}$/, // 1-3 digits
     apartment: /^[0-9]{1,4}$/, // 1-4 digits
     landmark: /^[a-zA-Z0-9\s\-.,]{0,100}$/, // Optional, alphanumeric with some special chars
-    area: /^[a-zA-Z\s]{3,50}$/ // Only letters and spaces, 3-50 characters
+    area: /^[a-zA-Z\s]{3,50}$/, // Only letters and spaces, 3-50 characters
+    city: /^(Cairo|Giza)$/ // Only Cairo or Giza
   }
 
   // Error messages
@@ -42,7 +48,8 @@ const CheckOut = () => {
     floor: 'Floor number should be 1-3 digits',
     apartment: 'Apartment number should be 1-4 digits',
     landmark: 'Landmark should be less than 100 characters',
-    area: 'Area should contain only letters and spaces (3-50 characters)'
+    area: 'Area should contain only letters and spaces (3-50 characters)',
+    city: 'Please select a valid city (Cairo or Giza)'
   }
 
   const [formData, setFormData] = useState({
@@ -54,25 +61,31 @@ const CheckOut = () => {
     apartment: '',
     landmark: '',
     area: '',
+    city: ''
   })
 
-  // Remove the user data query and add temporary user data
-  const [userData] = useState({
-    name: 'John Doe', // Temporary user data
-    phone: '1234567890',
-    email: 'john@example.com'
-  })
+  // Check authentication only after loading is complete
+  useEffect(() => {
+    if (!userLoading && !userData?.token) {
+      // Save current path for redirect after login
+      localStorage.setItem('redirectAfterLogin', window.location.pathname);
+      toast.error('Please login to continue checkout')
+      navigate('/login')
+    }
+  }, [userData, userLoading, navigate])
 
   useEffect(() => {
     const loadCart = async () => {
       try {
+        // Don't try to load cart if user isn't logged in
+        if (!userData?.token) return;
+
         setIsLoading(true)
         console.log('Loading cart data...')
         
         // Check if we have cart items in the context
         if (cartItems?.products) {
           console.log('Using cart items from context:', cartItems.products)
-          // Map the products to the correct structure
           const mappedProducts = cartItems.products.map(item => ({
             _id: item.productId._id,
             name: item.productId.name,
@@ -107,7 +120,7 @@ const CheckOut = () => {
     }
 
     loadCart()
-  }, [cartItems, getCartItems])
+  }, [cartItems, getCartItems, userData])
 
   // Add a debug effect to monitor cart data
   useEffect(() => {
@@ -156,6 +169,16 @@ const CheckOut = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0]
     if (file) {
+      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+        toast.error('File size should be less than 5MB')
+        e.target.value = null
+        return
+      }
+      if (!file.type.startsWith('image/')) {
+        toast.error('Please upload an image file')
+        e.target.value = null
+        return
+      }
       setPaymentProof(file)
     }
   }
@@ -168,8 +191,29 @@ const CheckOut = () => {
     }, 0)
   }
 
+  const calculateShippingFee = () => {
+    switch (selectedCity) {
+      case 'Cairo':
+        return 80
+      case 'Giza':
+        return 50
+      default:
+        return 0
+    }
+  }
+
   const calculateTotal = () => {
-    return calculateSubtotal() + SHIPPING_FEE
+    return calculateSubtotal() + calculateShippingFee()
+  }
+
+  const handleCityChange = (e) => {
+    const city = e.target.value
+    setSelectedCity(city)
+    setFormData(prev => ({
+      ...prev,
+      city: city
+    }))
+    validateField('city', city)
   }
 
   const handleSubmit = async (e) => {
@@ -180,56 +224,55 @@ const CheckOut = () => {
       return
     }
 
+    if (!cartItems?._id) {
+      toast.error('No cart found. Please add items to your cart first.')
+      return
+    }
+
+    // Check if payment proof is required and provided
+    if (paymentMethod === 'online' && !paymentProof) {
+      toast.error('Please upload payment proof for online payment')
+      return
+    }
+
     setIsSubmitting(true)
 
     try {
-      // Create order object
-      const order = {
-        id: Date.now(), // Temporary unique ID
-        date: new Date().toISOString(),
-        status: 'pending',
-        products: cartProducts.map(item => ({
-          productId: item._id,
-          name: item.name,
-          price: item.price,
-          quantity: item.quantity,
-          image: item.mainImage?.url
-        })),
-        shippingInfo: formData,
-        paymentMethod,
-        total: calculateTotal(),
-        paymentProof: paymentProof ? URL.createObjectURL(paymentProof) : null
+      // Create order data object
+      const orderData = {
+        cartId: cartItems._id,
+        name: formData.name,
+        phone: formData.phone,
+        address: `${formData.building} ${formData.street}, ${formData.area}, ${formData.city}`,
+        paymentType: paymentMethod === 'online' ? 'instapay' : 'cash',
+        paymentImage: paymentProof
       }
 
-      // Get existing orders from localStorage or initialize empty array
-      const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]')
-      
-      // Add new order to the array
-      existingOrders.push(order)
-      
-      // Save updated orders array to localStorage
-      localStorage.setItem('orders', JSON.stringify(existingOrders))
+      console.log('Submitting order with data:', orderData)
 
-      // Delete each product from the cart individually
-      for (const product of cartProducts) {
+      // Create the order using OrderContext
+      const result = await createOrder(orderData)
+
+      if (result && result._id) {
+        toast.success('Order placed successfully!')
+        
         try {
-          await deleteProduct(product._id)
-          console.log(`Product ${product._id} deleted successfully`)
-        } catch (error) {
-          console.error(`Error deleting product ${product._id}:`, error)
+          // Clear the cart first
+          await clearCart()
+          // Reset local cart products state
+          setCartProducts([])
+          // Navigate to orders page after successful cart clear
+          navigate('/allorders')
+        } catch (clearError) {
+          console.error('Error clearing cart:', clearError)
+          // Even if cart clearing fails, still navigate to orders
+          navigate('/allorders')
         }
       }
-
-      // Refresh the cart to ensure it's empty
-      await refreshCart()
-      // Reset local cart products state
-      setCartProducts([])
-
-      toast.success('Order placed successfully!')
-      navigate('/allorders')
     } catch (error) {
       console.error('Error in handleSubmit:', error)
-      toast.error('Something went wrong while placing your order')
+      const errorMessage = error.response?.data?.message || 'Something went wrong while placing your order'
+      toast.error(errorMessage)
     } finally {
       setIsSubmitting(false)
     }
@@ -265,8 +308,8 @@ const CheckOut = () => {
             <p>{calculateSubtotal().toFixed(2)}{" "}EGP</p>
           </div>
           <div className="flex justify-between text-sm text-gray-600">
-            <p>Shipping Fee</p>
-            <p>{SHIPPING_FEE.toFixed(2)}{" "}EGP</p>
+            <p>Shipping ({selectedCity || 'Select city'})</p>
+            <p>{calculateShippingFee().toFixed(2)}{" "}EGP</p>
           </div>
           <div className="flex justify-between text-base font-medium text-gray-900">
             <p>Total</p>
@@ -277,12 +320,20 @@ const CheckOut = () => {
     </div>
   )
 
-  if (isLoading) {
+  // Show loading state while checking authentication or loading cart
+  if (userLoading || isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 py-28 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="bg-white rounded-lg shadow-lg overflow-hidden p-8 text-center">
-            <p className="text-gray-600">Loading cart items...</p>
+            <div className="animate-pulse flex flex-col items-center">
+              <div className="h-8 w-48 bg-gray-200 rounded mb-4"></div>
+              <div className="space-y-3 w-full">
+                <div className="h-20 bg-gray-200 rounded"></div>
+                <div className="h-20 bg-gray-200 rounded"></div>
+                <div className="h-20 bg-gray-200 rounded"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -335,17 +386,11 @@ const CheckOut = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-28 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="bg-white rounded-lg shadow-lg overflow-hidden"
-        >
-          <div className="p-6 sm:p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Checkout</h2>
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Shipping Information Form */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h2 className="text-2xl font-bold mb-6">Shipping Information</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
               {/* Personal Information */}
               <div className="space-y-4">
                 <h3 className="text-lg font-medium text-gray-900">Personal Information</h3>
@@ -443,7 +488,6 @@ const CheckOut = () => {
                       name="floor"
                       value={formData.floor}
                       onChange={handleInputChange}
-                      required
                       className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-pink-500 focus:ring-pink-500 ${
                         validationErrors.floor ? 'border-red-500' : ''
                       }`}
@@ -511,6 +555,28 @@ const CheckOut = () => {
                 </div>
               </div>
 
+              {/* City Selection */}
+              <div>
+                <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                  City
+                </label>
+                <select
+                  id="city"
+                  name="city"
+                  value={selectedCity}
+                  onChange={handleCityChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                  required
+                >
+                  <option value="">Select a city</option>
+                  <option value="Cairo">Cairo</option>
+                  <option value="Giza">Giza</option>
+                </select>
+                {validationErrors.city && (
+                  <p className="mt-1 text-sm text-red-600">{validationErrors.city}</p>
+                )}
+              </div>
+
               {/* Payment Method */}
               <div className="space-y-4">
                 <h3 className="text-lg font-medium text-gray-900">Payment Method</h3>
@@ -573,9 +639,6 @@ const CheckOut = () => {
                 </div>
               </div>
 
-              {/* Order Summary */}
-              {renderOrderSummary()}
-
               {/* Submit Button */}
               <div className="pt-6">
                 <button
@@ -587,11 +650,17 @@ const CheckOut = () => {
                 </button>
               </div>
             </form>
+          </div>
+
+          {/* Order Summary */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
+            {renderOrderSummary()}
+          </div>
         </div>
-        </motion.div>
       </div>
     </div>
-    )
+  )
 }
 
 export default CheckOut

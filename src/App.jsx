@@ -24,6 +24,7 @@ import ManageCategory from './component/Category/ManageCategory'
 import CategoryForm from './component/Category/CategoryForm'
 import ProtectedAdminRoute from './component/ProtectedRoute/ProtectedAdminRoute'
 import { FavoritesProvider } from './component/Context/FavoritesContext'
+import { OrderProvider } from './component/Context/OrderContext'
 import Favorites from './component/Favorites/Favorites'
 import ScrollToTop from './component/common/ScrollToTop'
 import ManageOrders from './component/Order/ManageOrders'
@@ -64,13 +65,15 @@ function App() {
     <QueryClientProvider client={query}>
       <UserContextProvider>
         <CartContextProvider>
-          <FavoritesProvider>
-            <RouterProvider router={routes}>
-              <ScrollToTop />
-              <ReactQueryDevtools />
-              <Toaster />
-            </RouterProvider>
-          </FavoritesProvider>
+          <OrderProvider>
+            <FavoritesProvider>
+              <RouterProvider router={routes}>
+                <ScrollToTop />
+                <ReactQueryDevtools />
+                <Toaster />
+              </RouterProvider>
+            </FavoritesProvider>
+          </OrderProvider>
         </CartContextProvider>
       </UserContextProvider>
     </QueryClientProvider>

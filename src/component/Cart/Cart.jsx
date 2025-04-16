@@ -281,14 +281,8 @@ export default function Cart() {
             <div className="border-t border-gray-200 p-4 sm:p-6">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0">
                 <div className="space-y-2">
-                  <div className="text-base sm:text-lg font-medium text-gray-900">
+                  <div className="text-base sm:text-lg font-bold text-gray-900">
                     Subtotal: {totalPrice} EGP
-                  </div>
-                  <div className="text-base sm:text-lg font-medium text-gray-900">
-                    Shipping: {shippingCost} EGP
-                  </div>
-                  <div className="text-lg sm:text-xl font-bold text-gray-900">
-                    Total: {grandTotal} EGP
                   </div>
                 </div>
                 <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
