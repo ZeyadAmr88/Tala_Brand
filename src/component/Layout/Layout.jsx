@@ -2,6 +2,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/Navbar";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../Context/UserContext";
+import Footer from "../Footer/Footer";
 
 export default function Layout() {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ export default function Layout() {
       <div>
         <Outlet />
       </div>
-      
+      <Footer />
     </>
   );
 }
