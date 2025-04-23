@@ -67,17 +67,17 @@ function App() {
         <CartContextProvider>
           <OrderProvider>
             <FavoritesProvider>
-              <RouterProvider router={routes}>
-                <ScrollToTop />
-                <ReactQueryDevtools />
-                <Toaster />
-              </RouterProvider>
+              <RouterProvider router={routes} />
+              <ReactQueryDevtools />
+              <Toaster position="top-center" reverseOrder={false} />
             </FavoritesProvider>
           </OrderProvider>
         </CartContextProvider>
       </UserContextProvider>
     </QueryClientProvider>
-  )
+  );
 }
+
+
 
 export default App

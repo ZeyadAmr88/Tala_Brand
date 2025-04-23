@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { CartContext } from "../Context/CartContext";
 import { useFavorites } from "../Context/FavoritesContext";
 import Loader from "../Loader/Loader";
+import { toast } from "react-hot-toast";
 
 export default function ProductDetails() {
     let { addToCart } = useContext(CartContext);
@@ -15,6 +16,8 @@ export default function ProductDetails() {
     const [details, setDetails] = useState(null);
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [userRating, setUserRating] = useState(0);
+    const [hoverRating, setHoverRating] = useState(0);
 
     const handleFavoriteClick = () => {
         if (details) {
@@ -23,6 +26,34 @@ export default function ProductDetails() {
             } else {
                 addToFavorites(details);
             }
+        }
+    };
+
+    const handleRating = async (rating) => {
+        try {
+            const token = localStorage.getItem('userToken');
+            if (!token) {
+                toast.error('Please login to rate this product');
+                return;
+            }
+
+            const response = await axios.patch(
+                `https://tala-store.vercel.app/product/${id}/rate`,
+                { rating },
+                {
+                    headers: {
+                        token: token
+                    }
+                }
+            );
+
+            if (response.data.success) {
+                toast.success('Rating submitted successfully');
+                getProductDetails(id); // Refresh product details
+            }
+        } catch (error) {
+            console.error('Error submitting rating:', error);
+            toast.error(error.response?.data?.message || 'Failed to submit rating');
         }
     };
 
@@ -139,21 +170,28 @@ export default function ProductDetails() {
                                             <div className="flex items-center mt-2">
                                                 <div className="flex items-center">
                                                     {[...Array(5)].map((_, i) => (
-                                                        <svg
+                                                        <button
                                                             key={i}
-                                                            className={`w-5 h-5 ${i < Math.floor(details.ratingsAverage || 0)
+                                                            onClick={() => handleRating(i + 1)}
+                                                            onMouseEnter={() => setHoverRating(i + 1)}
+                                                            onMouseLeave={() => setHoverRating(0)}
+                                                            className="focus:outline-none"
+                                                        >
+                                                            <svg
+                                                                className={`w-5 h-5 ${i < (hoverRating || Math.floor(details.averageRating || 0))
                                                                     ? 'text-yellow-400'
                                                                     : 'text-gray-300'
-                                                                }`}
-                                                            fill="currentColor"
-                                                            viewBox="0 0 20 20"
-                                                        >
-                                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                        </svg>
+                                                                    }`}
+                                                                fill="currentColor"
+                                                                viewBox="0 0 20 20"
+                                                            >
+                                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                            </svg>
+                                                        </button>
                                                     ))}
                                                 </div>
                                                 <span className="ml-2 text-gray-600">
-                                                    {details.ratingsAverage || "No ratings yet"}
+                                                    {details.averageRating ? details.averageRating.toFixed(1) : "No ratings yet"}
                                                 </span>
                                             </div>
                                         </div>
@@ -183,9 +221,8 @@ export default function ProductDetails() {
                                                 className="p-3 rounded-lg border-2 border-main transition-all duration-300 hover:bg-main hover:text-white transform hover:-translate-y-1"
                                             >
                                                 <svg
-                                                    className={`w-6 h-6 ${
-                                                        isFavorite(details._id) ? "text-red-500 fill-current" : "text-main"
-                                                    }`}
+                                                    className={`w-6 h-6 ${isFavorite(details._id) ? "text-red-500 fill-current" : "text-main"
+                                                        }`}
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 24 24"
                                                     stroke="currentColor"

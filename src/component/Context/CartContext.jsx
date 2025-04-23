@@ -7,11 +7,11 @@ export let CartContext = createContext();
 
 // Custom hook to use cart context
 export function useCart() {
-  const context = useContext(CartContext);
-  if (!context) {
-    throw new Error('useCart must be used within a CartContextProvider');
-  }
-  return context;
+    const context = useContext(CartContext);
+    if (!context) {
+        throw new Error('useCart must be used within a CartContextProvider');
+    }
+    return context;
 }
 
 // eslint-disable-next-line react/prop-types
@@ -112,11 +112,11 @@ export default function CartContextProvider({ children }) {
             const { data } = await axios.get(
                 `https://tala-store.vercel.app/cart`,
                 { headers }
-                
+
             );
             console.log("Response =>", data.data);
             return data;
-            
+
         } catch (error) {
             console.error("Error fetching cart:", error);
             return null;
@@ -126,14 +126,18 @@ export default function CartContextProvider({ children }) {
     async function clearCart() {
         if (isAdmin) return;
         try {
-            await axios.delete(`https://tala-store.vercel.app/cart`, {
-                headers,
-            });
-            setCartItems(null);
-            toast.success("Cart cleared successfully");
+            const response = await axios.put(
+                `https://tala-store.vercel.app/cart/clear`,
+                {},
+                { headers }
+            );
+            if (response.data.success) {
+                setCartItems(null);
+                toast.success("Cart cleared successfully");
+            }
         } catch (error) {
             console.error("Error clearing cart:", error);
-            toast.error("Failed to clear cart");
+            toast.error(error.response?.data?.message || "Failed to clear cart");
         }
     }
 

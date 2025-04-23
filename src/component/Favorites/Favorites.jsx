@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useFavorites } from "../Context/FavoritesContext";
 import { CartContext } from "../Context/CartContext";
+import { Heart } from "lucide-react";
 
 export default function Favorites() {
   const { favorites, removeFromFavorites } = useFavorites();
@@ -27,9 +28,14 @@ export default function Favorites() {
             className="flex flex-col items-center justify-center h-[60vh] bg-white rounded-lg shadow-sm p-4 sm:p-8"
           >
             <div className="text-center">
-              <div className="text-5xl sm:text-6xl mb-4">❤️</div>
+              <div className="relative h-32">
+                <div className="absolute top-1/2 left-1/2  -translate-x-1/2 -translate-y-1/2 animate-bounce">
+                  <Heart className="h-12 w-12 text-pink-400" fill="#f472b6" />
+                </div>
+              </div>
+
               <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-2">Your Favorites is Empty</h2>
-              <p className="text-gray-600 mb-6">Looks like you haven't added any items to your favorites yet.</p>
+              <p className="text-gray-600 mb-6">Looks like you haven&apos;t added any items to your favorites yet.</p>
               <Link 
                 to="/" 
                 className="inline-block bg-main text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium hover:bg-pink-700 transition-colors duration-300"

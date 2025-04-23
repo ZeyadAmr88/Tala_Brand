@@ -35,9 +35,8 @@ export default function RecentProducts({ product }) {
                 className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white shadow-md hover:bg-gray-100 transition-colors"
             >
                 <svg
-                    className={`w-6 h-6 ${
-                        isFavorite(product?._id) ? "text-red-500 fill-current" : "text-gray-400"
-                    }`}
+                    className={`w-6 h-6 ${isFavorite(product?._id) ? "text-red-500 fill-current" : "text-gray-400"
+                        }`}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -54,7 +53,7 @@ export default function RecentProducts({ product }) {
             <Link to={`/productdetails/${product?._id}`} className="block">
                 <div className="flex justify-center mb-3">
                     <img
-                        src={ product?.defaultImage?.url}
+                        src={product?.defaultImage?.url}
                         alt={product?.name || "No Name"}
                         className="object-contain h-[15rem] w-full rounded-lg"
                     />
@@ -68,7 +67,7 @@ export default function RecentProducts({ product }) {
                     <h3 className="text-black font-bold">{product?.finalPrice ? `${product.finalPrice} EGP` : "No Price Available"}</h3>
                     <h3 className="text-black flex items-center">
                         <i className="fas fa-star text-yellow-400 mr-1"></i>
-                        {product?.ratingsAverage || "No Rating"}
+                        {product?.averageRating ? product.averageRating.toFixed(1) : "0"}
                     </h3>
                 </div>
             </Link>

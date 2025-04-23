@@ -10,6 +10,8 @@ const ManageOrders = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [statusFilter, setStatusFilter] = useState('all');
+    const [searchId, setSearchId] = useState('');
+
 
     useEffect(() => {
         if (localStorage.getItem("userToken")) {
@@ -85,12 +87,23 @@ const ManageOrders = () => {
             </div>
         );
     }
+    const filteredOrders = searchId.trim()
+        ? orders.filter(order => order._id.toLowerCase().includes(searchId.toLowerCase()))
+        : orders;
+
 
     return (
         <div className="container mx-auto px-4 py-8 mt-20">
             <div className="flex justify-between items-center mb-8">
                 <h1 className="text-2xl md:text-3xl font-bold">Manage Orders</h1>
                 <div className="flex items-center space-x-4">
+                    <input
+                        type="text"
+                        placeholder="Search by Order ID"
+                        value={searchId}
+                        onChange={(e) => setSearchId(e.target.value)}
+                        className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    />
                     <select
                         value={statusFilter}
                         onChange={handleStatusFilterChange}
@@ -102,6 +115,8 @@ const ManageOrders = () => {
                         <option value="cancelled">Cancelled</option>
                     </select>
                 </div>
+
+            
             </div>
 
             <div className="overflow-x-auto rounded-lg shadow">
@@ -132,14 +147,14 @@ const ManageOrders = () => {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200">
-                        {orders.map((order) => (
+                        {filteredOrders.map((order) => (
                             <tr key={order._id} className="hover:bg-gray-50">
                                 <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
                                     <Link
                                         to={`/dashboard/order/${order._id}`}
                                         className="text-indigo-600 hover:text-indigo-900 font-medium"
                                     >
-                                        {order._id.slice(-6)}
+                                        {order._id}
                                     </Link>
                                 </td>
                                 <td className="px-4 py-3 text-sm">

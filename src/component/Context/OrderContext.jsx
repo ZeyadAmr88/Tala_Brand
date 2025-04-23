@@ -5,45 +5,39 @@ import { toast } from 'react-hot-toast';
 
 export const OrderContext = createContext();
 
+// eslint-disable-next-line react/prop-types
 export function OrderProvider({ children }) {
     const [orders, setOrders] = useState([]);
     const [currentOrder, setCurrentOrder] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [pagination, setPagination] = useState({
-        page: 1,
-        limit: 10,
-        total: 0,
-        pages: 1
-    });
     const { userData } = useContext(UserContext);
 
-    const getAllOrders = async (page = 1) => {
+    const getAllOrders = async () => {
         setLoading(true)
         try {
+            const storedToken = localStorage.getItem('userToken');
             const config = {
                 headers: {
-                    'Authorization': `Bearer ${userData?.token}`
+                    'token': storedToken
                 }
             }
 
+
             const response = await axios.get(
-                `https://tala-store.vercel.app/order/user?page=${page}`,
+                'https://tala-store.vercel.app/order/user/orders',
                 config
             )
+            console.log("333", response);
+
 
             if (response.data.success) {
-                setOrders(response.data.orders)
-                setPagination({
-                    currentPage: response.data.currentPage,
-                    numberOfPages: response.data.numberOfPages,
-                    limit: response.data.limit
-                })
+                setOrders(response.data.results)
             }
         } catch (error) {
             console.error('Error fetching orders:', error)
             const errorMessage = error.response?.data?.message || 'Failed to fetch orders'
             toast.error(errorMessage)
-            
+
             if (error.response?.status === 401) {
                 // Token expired or invalid
                 localStorage.removeItem('userToken')
@@ -63,14 +57,14 @@ export function OrderProvider({ children }) {
 
             // Create FormData object
             const formData = new FormData()
-            
+
             // Append all order data
             formData.append('cartId', orderData.cartId)
             formData.append('name', orderData.name)
             formData.append('phone', orderData.phone)
             formData.append('address', orderData.address)
             formData.append('paymentType', orderData.paymentType)
-            
+
             // Always append payment image if it exists
             if (orderData.paymentImage) {
                 formData.append('paymentImage', orderData.paymentImage)
@@ -108,10 +102,10 @@ export function OrderProvider({ children }) {
                 window.location.href = '/login'
                 return null
             }
-            
+
             const errorMessage = error.response?.data?.message || error.message || 'Failed to create order'
             toast.error(errorMessage)
-            
+
             if (error.response?.status === 401) {
                 // Token expired or invalid
                 localStorage.removeItem('userToken')
@@ -164,9 +158,9 @@ export function OrderProvider({ children }) {
 
             if (response.data.success) {
                 // Update the order in the orders list
-                setOrders(prevOrders => 
-                    prevOrders.map(order => 
-                        order._id === orderId 
+                setOrders(prevOrders =>
+                    prevOrders.map(order =>
+                        order._id === orderId
                             ? { ...order, status: newStatus }
                             : order
                     )
@@ -193,7 +187,7 @@ export function OrderProvider({ children }) {
 
     // Helper function to check if status update is allowed
     const canUpdateStatus = (currentStatus) => {
-        return currentStatus !== 'completed' && currentStatus !== 'cancelled';
+        return currentStatus !== 'confirmed' && currentStatus !== 'cancelled';
     };
 
     // Helper function to format order status
@@ -203,8 +197,8 @@ export function OrderProvider({ children }) {
                 return { text: 'Pending', color: 'bg-yellow-100 text-yellow-800' };
             case 'processing':
                 return { text: 'Processing', color: 'bg-blue-100 text-blue-800' };
-            case 'completed':
-                return { text: 'Completed', color: 'bg-green-100 text-green-800' };
+            case 'confirmed':
+                return { text: 'confirmed', color: 'bg-green-100 text-green-800' };
             case 'cancelled':
                 return { text: 'Cancelled', color: 'bg-red-100 text-red-800' };
             default:
@@ -242,7 +236,6 @@ export function OrderProvider({ children }) {
         orders,
         currentOrder,
         loading,
-        pagination,
         createOrder,
         getAllOrders,
         getOneOrder,

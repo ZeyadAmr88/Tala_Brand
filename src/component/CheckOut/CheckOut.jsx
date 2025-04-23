@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 
 const CheckOut = () => {
   const navigate = useNavigate()
-  const { cartItems, clearCart, refreshCart, getCartItems, deleteProduct } = useCart()
+  const { cartItems, clearCart, getCartItems, } = useCart()
   const { createOrder } = useOrders()
   const { userData, loading: userLoading } = useContext(UserContext)
   const [paymentMethod, setPaymentMethod] = useState('cash')
@@ -29,7 +29,7 @@ const CheckOut = () => {
   // Validation patterns
   const validationPatterns = {
     name: /^[a-zA-Z\s]{3,50}$/, // Only letters and spaces, 3-50 characters
-    phone: /^01[0125][0-9]{8}$/, // Egyptian phone number format
+    phone: /^(\+2)?01[0125][0-9]{8}$/, // Egyptian phone number format
     street: /^[a-zA-Z0-9\s\-.,]{5,100}$/, // Alphanumeric with some special chars
     building: /^[0-9]{1,5}$/, // 1-5 digits
     floor: /^[0-9]{1,3}$/, // 1-3 digits

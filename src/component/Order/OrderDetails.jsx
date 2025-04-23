@@ -154,7 +154,9 @@ const OrderDetails = () => {
                     <div className="flex justify-between items-center">
                         <div>
                             <h2 className="text-lg font-semibold">Order #{order._id}</h2>
-                            <p className="text-gray-500">Placed on {new Date(order.createdAt).toLocaleDateString()}</p>
+                            <p className="text-gray-500">
+                                Placed on {new Date(order.createdAt).toLocaleDateString('en-GB')}
+                            </p>
                         </div>
                         <div className="flex items-center space-x-4">
                             <select
@@ -213,10 +215,10 @@ const OrderDetails = () => {
                                     <h4 className="font-medium">{item.product?.name}</h4>
                                     <p className="text-gray-500">Category: {item.product?.category?.name}</p>
                                     <p className="text-gray-500">Quantity: {item.quantity}</p>
-                                    <p className="text-gray-500">Price: ${item.product?.price}</p>
+                                    <p className="text-gray-500">Price: EGP {item.product?.price}</p>
                                 </div>
                                 <div className="text-right">
-                                    <p className="font-medium">${item.product?.price * item.quantity}</p>
+                                    <p className="font-medium">EGP {item.product?.price * item.quantity}</p>
                                 </div>
                             </div>
                         ))}
@@ -233,7 +235,7 @@ const OrderDetails = () => {
                         </div>
                         <div>
                             <p className="text-gray-600">Total Amount</p>
-                            <p className="font-medium text-xl">${order.totalPrice}</p>
+                            <p className="font-medium text-xl">EGP {order.totalPrice}</p>
                         </div>
                         {order.paymentImage && (
                             <div className="md:col-span-2">
