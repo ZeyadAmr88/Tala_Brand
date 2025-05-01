@@ -7,9 +7,7 @@ const Parent = () => {
     async function getProducts() {
         try {
             const response = await axios.get('https://tala-store.vercel.app/product');
-            console.log("API Response:", response.data); // تأكد من أن البيانات صحيحة
             setProducts(response.data.products || []); // ✅ تجنب الأخطاء عند عدم وجود بيانات
-            console.log(response)
         } catch (error) {
             console.error("Error fetching products:", error);
         }

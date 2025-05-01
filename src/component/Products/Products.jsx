@@ -60,7 +60,6 @@ export default function Products() {
       ]
 
       setAvailableCategories(extractedCategories)
-      console.log("Available categories in data:", extractedCategories)
     }
   }, [data])
 
@@ -153,19 +152,7 @@ export default function Products() {
     if (selectedCategory !== "All categories") {
       results = results.filter((product) => productMatchesCategory(product, selectedCategory))
 
-      // Debug logging for category filtering
-      console.log(`Filtering for category: "${selectedCategory}"`)
-      console.log(`Found ${results.length} products matching category`)
-      if (results.length === 0) {
-        console.log("Sample products and their categories:")
-        data.slice(0, 5).forEach((product, index) => {
-          console.log(`Product ${index}:`, {
-            name: product.name || product.title,
-            category: product.category,
-            categoryType: typeof product.category,
-          })
-        })
-      }
+      
     }
 
     // Filter by search query
@@ -222,18 +209,7 @@ export default function Products() {
     return results
   }, [data, searchQuery, selectedCategory, priceRange, selectedAvailability, sortOption])
 
-  // Debug logging for category issues
-  useEffect(() => {
-    if (selectedCategory !== "All categories" && filteredProducts.length === 0 && data && data.length > 0) {
-      console.log("Debug - Selected category:", selectedCategory)
-      console.log(
-        "Debug - Available categories in data:",
-        data.map((p) => p.category),
-      )
-      console.log("Debug - Sample product:", data[0])
-    }
-  }, [selectedCategory, filteredProducts.length, data])
-
+  
   // Reset to first page when filters change
   useEffect(() => {
     setCurrentPage(1)

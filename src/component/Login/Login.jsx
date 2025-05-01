@@ -22,8 +22,6 @@ export default function Login() {
     try {
       setLoading(true);
       const { data } = await axios.post(`https://tala-store.vercel.app/auth/signin`, values);
-      console.log("🟡 API Response:", data); // أطبع الـ response بالكامل
-      console.log("🟢 data.results:", data.results);
       
 
       if (data.results.token) {
