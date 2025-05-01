@@ -74,12 +74,13 @@ export default function Cart() {
 
   // Calculate total price with null checks
   const totalPrice = cartItems?.products?.reduce((total, item) => {
+    
     const product = item?.productId || item;
-    return total + (product?.price || 0) * (item?.quantity || 0);
+    console.log("product",product);
+    
+    return total + (Number(product?.finalPrice) || 0) * (item?.quantity || 0);
   }, 0) || 0;
 
-  const shippingCost = 50; // Example shipping cost
-  const grandTotal = totalPrice + shippingCost;
 
   return (
     <div className="min-h-screen bg-gray-50 py-28 sm:py-28">
@@ -158,7 +159,7 @@ export default function Cart() {
                         </td>
                         <td className="px-4 sm:px-6 py-4">
                           <div className="text-sm text-gray-900">
-                            {product?.price || 0} EGP
+                            {Number(product?.finalPrice) || 0} EGP
                           </div>
                         </td>
                         <td className="px-4 sm:px-6 py-4">
@@ -186,7 +187,7 @@ export default function Cart() {
                         </td>
                         <td className="px-4 sm:px-6 py-4">
                           <div className="text-sm font-medium text-gray-900">
-                            {(product?.price || 0) * (item?.quantity || 0)} EGP
+                            {Number(product?.finalPrice) * (item?.quantity || 0)} EGP
                           </div>
                         </td>
                         <td className="px-4 sm:px-6 py-4">
@@ -234,7 +235,7 @@ export default function Cart() {
                           {product?.name || "Unnamed Product"}
                         </div>
                         <div className="mt-1 text-sm text-gray-500">
-                          Price: {product?.price || 0} EGP
+                          Price: {Number(product?.finalPrice) || 0} EGP
                         </div>
                         <div className="mt-2 flex items-center space-x-2">
                           <button
@@ -259,7 +260,7 @@ export default function Cart() {
                         </div>
                         <div className="mt-2 flex justify-between items-center">
                           <div className="text-sm font-medium text-gray-900">
-                            Total: {(product?.price || 0) * (item?.quantity || 0)} EGP
+                            Total: {(Number(product?.finalPrice) || 0) * (item?.quantity || 0)} EGP
                           </div>
                           <button
                             onClick={() => handleDeleteProduct(product?._id)}

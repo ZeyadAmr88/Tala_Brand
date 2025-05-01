@@ -8,7 +8,6 @@ export default function UserContextProvider({ children }) {
     const [isAdmin, setIsAdmin] = useState(false); // حالة لتخزين صلاحيات الأدمن
 
     const logout = () => {
-        console.log("🚪 Logout called, clearing all data");
         localStorage.removeItem("userToken");
         localStorage.removeItem("userPassword");
         localStorage.removeItem("username");
@@ -16,15 +15,12 @@ export default function UserContextProvider({ children }) {
         localStorage.removeItem("email");
         setUserData(null);
         setIsAdmin(false);
-        console.log("✅ All data cleared, user logged out");
     };
 
     useEffect(() => {
         const storedToken = localStorage.getItem("userToken");
         const storedRole = localStorage.getItem("userRole"); // ✅ جِبنا الدور من التخزين
         const storedUsername = localStorage.getItem("username"); // ✅ جِبنا الدور من التخزين
-        console.log(`Role: ${storedRole}`);
-        console.log(`Username: ${storedUsername}`);
         
 
         if (storedToken) {

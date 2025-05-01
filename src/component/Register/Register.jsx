@@ -26,8 +26,7 @@ export default function Register() {
       setApiError("");
 
       const { data } = await axios.post(`https://tala-store.vercel.app/auth/signup`, values);
-      console.log("test", data);
-      navigate("/"); console.log("navigate")
+      navigate("/"); 
 
       localStorage.setItem("userToken", data.results.token);
       setUserData(data.results.token);

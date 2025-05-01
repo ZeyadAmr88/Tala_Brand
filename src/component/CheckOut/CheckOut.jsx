@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
 import { useCart } from '../../component/Context/CartContext'
 import { useOrders } from '../Context/OrderContext'
 import { UserContext } from '../Context/UserContext'
@@ -81,15 +79,14 @@ const CheckOut = () => {
         if (!userData?.token) return;
 
         setIsLoading(true)
-        console.log('Loading cart data...')
         
         // Check if we have cart items in the context
         if (cartItems?.products) {
-          console.log('Using cart items from context:', cartItems.products)
           const mappedProducts = cartItems.products.map(item => ({
+            
             _id: item.productId._id,
             name: item.productId.name,
-            price: item.productId.price,
+            finalPrice: item.productId.finalPrice,
             quantity: item.quantity,
             mainImage: item.productId.defaultImage
           }))
@@ -104,7 +101,7 @@ const CheckOut = () => {
           const mappedProducts = cartData.products.map(item => ({
             _id: item.productId._id,
             name: item.productId.name,
-            price: item.productId.price,
+            finalPrice: item.productId.finalPrice,
             quantity: item.quantity,
             mainImage: item.productId.defaultImage
           }))
@@ -124,8 +121,6 @@ const CheckOut = () => {
 
   // Add a debug effect to monitor cart data
   useEffect(() => {
-    console.log('Cart Items:', cartItems)
-    console.log('Cart Products:', cartProducts)
   }, [cartItems, cartProducts])
 
   const validateField = (name, value) => {
@@ -155,7 +150,6 @@ const CheckOut = () => {
 
   const validateForm = () => {
     let isValid = true
-    const newErrors = {}
 
     Object.keys(formData).forEach(key => {
       if (!validateField(key, formData[key])) {
@@ -186,8 +180,8 @@ const CheckOut = () => {
   const calculateSubtotal = () => {
     if (!cartProducts || !Array.isArray(cartProducts)) return 0
     return cartProducts.reduce((total, item) => {
-      if (!item?.price || !item?.quantity) return total
-      return total + (Number(item.price) * item.quantity)
+      if (!Number(item?.finalPrice) || !item?.quantity) return total
+      return total + (Number(item.finalPrice) * item.quantity)
     }, 0)
   }
 
@@ -248,7 +242,6 @@ const CheckOut = () => {
         paymentImage: paymentProof
       }
 
-      console.log('Submitting order with data:', orderData)
 
       // Create the order using OrderContext
       const result = await createOrder(orderData)
@@ -279,6 +272,8 @@ const CheckOut = () => {
   }
 
   const renderOrderSummary = () => (
+    
+    
     <div className="border-t border-gray-200 pt-6">
       <h3 className="text-lg font-medium text-gray-900">Order Summary</h3>
       <div className="mt-4 space-y-4">
@@ -298,7 +293,7 @@ const CheckOut = () => {
               </div>
             </div>
             <p className="text-sm font-medium text-gray-900">
-              {((Number(item?.price) || 0) * (item?.quantity || 0)).toFixed(2)}{" "}EGP
+              {((Number(item?.finalPrice) || 0) * (item?.quantity || 0)).toFixed(2)}{" "}EGP
             </p>
           </div>
         ))}
@@ -370,7 +365,7 @@ const CheckOut = () => {
             className="bg-white rounded-lg shadow-lg overflow-hidden p-8 text-center"
           >
             <h2 className="text-2xl font-bold text-gray-900 mb-4">Your Cart is Empty</h2>
-            <p className="text-gray-600 mb-6">Looks like you haven't added any items to your cart yet.</p>
+            <p className="text-gray-600 mb-6">Looks like you haven&apos;t added any items to your cart yet.</p>
             <Link
               to="/products"
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-pink-600 hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
@@ -614,7 +609,7 @@ const CheckOut = () => {
                 {/* Payment Instructions */}
                 <div className="bg-pink-50 p-4 rounded-lg">
                   <p className="text-sm text-gray-700">
-                    Please send the {paymentMethod === 'cash' ? 'shipping fee' : 'total amount'} to Instapay number: <span className="font-semibold">01020516108</span>
+                    Please send the {paymentMethod === 'cash' ? 'shipping fee' : 'total amount'} to Instapay number: <span className="font-semibold">011-122-09748</span>
                   </p>
                 </div>
 

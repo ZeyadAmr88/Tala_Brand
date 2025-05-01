@@ -35,14 +35,14 @@ let query = new QueryClient()
 let routes = createBrowserRouter([
   {
     path: '', element: <Layout />, children: [
-      { index: true, element: <ProtectedRoute><Home /></ProtectedRoute> },
+      { index: true, element: <Home /> },
       { path: 'cart', element: <ProtectedRoute><Cart /></ProtectedRoute> },
-      { path: 'categories', element: <ProtectedRoute><Category /></ProtectedRoute> },
-      { path: 'products', element: <ProtectedRoute><Products /></ProtectedRoute> },
-      { path: 'productdetails/:id', element: <ProtectedRoute><ProductDetails /></ProtectedRoute> },
+      { path: 'categories', element: <Category /> },
+      { path: 'products', element: <Products /> },
+      { path: 'productdetails/:id', element:<ProductDetails /> },
       { path: 'checkout', element: <ProtectedRoute><CheckOut /></ProtectedRoute> },
       { path: 'allorders', element: <ProtectedRoute><AllOrders /></ProtectedRoute> },
-      { path: 'favorites', element: <ProtectedRoute><Favorites /></ProtectedRoute> },
+      { path: 'favorites', element: <Favorites /> },
       { path: 'register', element: <Register /> },
       { path: '/login', element: <Login /> },
       { path: '*', element: <NotFound /> },
