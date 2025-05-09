@@ -37,7 +37,6 @@ export default function Register() {
     } catch (err) {
       setApiError(err.response?.data?.message);
       setRegistrationSuccess(false);
-      console.log(err)
     } finally {
       setLoading(false);
     }

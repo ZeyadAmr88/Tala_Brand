@@ -75,9 +75,7 @@ export default function Cart() {
   // Calculate total price with null checks
   const totalPrice = cartItems?.products?.reduce((total, item) => {
     
-    const product = item?.productId || item;
-    console.log("product",product);
-    
+    const product = item?.productId || item;    
     return total + (Number(product?.finalPrice) || 0) * (item?.quantity || 0);
   }, 0) || 0;
 
