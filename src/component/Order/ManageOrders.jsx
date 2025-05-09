@@ -367,7 +367,6 @@ const ManageOrders = () => {
                                 {item.product?.name}
                               </p>
                               <p className="text-gray-500 text-xs">
-                                {console.log("product m",item.product)}
                                 {item.quantity} x {item.product?.finalPrice} EGP
                               </p>
                             </div>

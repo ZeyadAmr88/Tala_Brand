@@ -8,7 +8,6 @@ import { useOrders } from "../Context/OrderContext"
 const AllOrders = () => {
   const { orders, loading, getAllOrders, getOrderStatus, formatOrderDate, calculateOrderTotal, getPaymentImageUrl } =
     useOrders()
-  console.log("orders", orders)
 
   const [selectedStatus, setSelectedStatus] = useState("all")
 
@@ -142,7 +141,6 @@ const AllOrders = () => {
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4">
                       <div>
                         <h3 className="text-lg font-medium text-gray-900">Order #{order._id}</h3>
-                        {console.log("allorders order", order)}
                         <p className="text-sm text-gray-500">{formatOrderDate(order.createdAt)}</p>
                       </div>
                       <span
@@ -168,8 +166,6 @@ const AllOrders = () => {
                               <p className="text-sm font-medium text-gray-900">{item.product?.name}</p>
                               <p className="text-sm text-gray-500">
                                 Qty: {item.quantity} x {Number(item.product?.finalPrice)} EGP
-                                {console.log("allorders product", item.product)}
-                                {console.log("allorders item", item)}
                               </p>
                             </div>
                             <p className="text-sm font-medium text-gray-900">
