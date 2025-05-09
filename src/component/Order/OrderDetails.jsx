@@ -384,7 +384,6 @@ const OrderDetails = () => {
                       <p className="text-gray-500">
                         Unit Price:{" "}
                         <span className="text-gray-700">
-                          {console.log("product d", item.product)}
                           EGP {item.product?.finalPrice}
                         </span>
                       </p>
