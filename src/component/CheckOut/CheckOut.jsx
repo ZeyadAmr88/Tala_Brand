@@ -34,7 +34,7 @@ const CheckOut = () => {
     apartment: /^[0-9]{1,4}$/, // 1-4 digits
     landmark: /^[a-zA-Z0-9\s\-.,]{0,100}$/, // Optional, alphanumeric with some special chars
     area: /^[a-zA-Z\s]{3,50}$/, // Only letters and spaces, 3-50 characters
-    city: /^(Cairo|Giza)$/ // Only Cairo or Giza
+    city: /^(Cairo|Giza|Outside Cairo and Giza)$/ // Only Cairo or Giza
   }
 
   // Error messages
@@ -47,7 +47,7 @@ const CheckOut = () => {
     apartment: 'Apartment number should be 1-4 digits',
     landmark: 'Landmark should be less than 100 characters',
     area: 'Area should contain only letters and spaces (3-50 characters)',
-    city: 'Please select a valid city (Cairo or Giza)'
+    city: 'Please select a valid city'
   }
 
   const [formData, setFormData] = useState({
@@ -188,9 +188,11 @@ const CheckOut = () => {
   const calculateShippingFee = () => {
     switch (selectedCity) {
       case 'Cairo':
-        return 80
+        return 70
       case 'Giza':
-        return 50
+        return 40
+      case 'Outside Cairo and Giza':
+        return 90
       default:
         return 0
     }
@@ -566,6 +568,7 @@ const CheckOut = () => {
                   <option value="">Select a city</option>
                   <option value="Cairo">Cairo</option>
                   <option value="Giza">Giza</option>
+                  <option value="Outside Cairo and Giza">Outside Cairo and Giza</option>
                 </select>
                 {validationErrors.city && (
                   <p className="mt-1 text-sm text-red-600">{validationErrors.city}</p>
@@ -609,7 +612,7 @@ const CheckOut = () => {
                 {/* Payment Instructions */}
                 <div className="bg-pink-50 p-4 rounded-lg">
                   <p className="text-sm text-gray-700">
-                    Please send the {paymentMethod === 'cash' ? 'shipping fee' : 'total amount'} to Instapay number: <span className="font-semibold">011-122-09748</span>
+                    Please send the {paymentMethod === 'cash' ? 'shipping fee' : 'total amount'} to Instapay or Etisalat cash <br /> number: <span className="font-semibold">011-122-09748</span>
                   </p>
                 </div>
 
