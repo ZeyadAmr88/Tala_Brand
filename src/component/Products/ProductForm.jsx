@@ -146,7 +146,9 @@ const ProductForm = () => {
       productFormData.append("price", formData.price);
       productFormData.append("avaliableItems", formData.avaliableItems);
       productFormData.append("category", formData.category);
-      productFormData.append("discount", formData.discount);
+      if (formData.discount && formData.discount.trim() !== "") {
+        productFormData.append("discount", formData.discount);
+      }
 
       if (defaultImage) {
         productFormData.append("defaultImage", defaultImage);
@@ -281,7 +283,6 @@ const ProductForm = () => {
                 className="shadow-sm h-10 pl-3 border border-slate-800 focus:ring-pink-500 focus:border-pink-500 block w-full sm:text-sm rounded-md"
               />
             </div>
-
 
             {/* Description */}
             <div className="sm:col-span-6">
